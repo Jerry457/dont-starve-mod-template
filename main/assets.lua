@@ -3,6 +3,8 @@ modimport("main/prefab_files")
 Assets = {
     -- Asset("IMAGE", "images/inventoryimages.xml"),
     -- Asset("ATLAS", "images/minimap.xml" ),
+    Asset("ATLAS", "images/wendy_skillicons.xml" ),
+
 }
 
 PreloadAssets = {

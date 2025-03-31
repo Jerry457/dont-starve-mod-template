@@ -2,6 +2,28 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local skilltree_defs = require("prefabs/skilltree_defs")
 
+
+local skillTreeIconsAtlasLookup = GlassicAPI.UpvalueUtil.GetUpvalue(GetSkilltreeIconAtlas, "skillTreeIconsAtlasLookup")
+skillTreeIconsAtlasLookup["wendy_lunar_2.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_shadow_2.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_smallghost_2.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_smallghost_3.tex"] = "images/wendy_skillicons.xml"
+
+skillTreeIconsAtlasLookup["mystical_observation.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_poetry.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["abigail_gardening_notes.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["mourningflower_1.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["mourningflower_2.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["mourningflower_3.tex"] = "images/wendy_skillicons.xml"
+
+skillTreeIconsAtlasLookup["wendy_avenging_ghost.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_gravestone_1.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_makegravemounds.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_ghostflower_butterfly.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_ghostflower_hat.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_ghostflower_grave.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_ghostcommand_3.tex"] = "images/wendy_skillicons.xml"
+
 -- Positions
 local TILEGAP = 38
 local TILE = 50
@@ -63,6 +85,7 @@ end
 package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
     local skills_data = BuildSkillsData(SkillTreeFns, ...)
 
+    print("Wendy SkillTree Data:", COL5 + TILEGAP / 2 + 8, A_BASE_H, A_BASE_H + TILEGAP)
     skills_data.SKILLS["wendy_shadow_lock_3"] = MakeSisturnLock({ pos = {COL5 + TILEGAP / 2 + 8, A_BASE_H} })
     skills_data.SKILLS["wendy_lunar_lock_3"] = MakeSisturnLock({ pos = {COL5 + TILEGAP / 2 + 8, A_BASE_H + TILEGAP} })
 
