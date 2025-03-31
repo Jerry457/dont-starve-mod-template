@@ -1,5 +1,5 @@
 -- This information tells other players more about the mod
-name = ""  ---mod名字
+name = "wendy_skilltree"  ---mod名字
 version = "" -- mod版本 上传mod需要两次的版本不一样
 description =""  --mod描述
 author = "" --作者

@@ -1,6 +1,7 @@
-﻿local files = {
+local files = {
     "postinit/entityscript.lua",
     "postinit/loottables.lua",
+    "postinit/prefabs/skilltree_wendy.lua",
     "postinit/stategraphs/SGcommon.lua",
     "postinit/stategraphs/SGwilson.lua",
     "postinit/stategraphs/SGwilson_client.lua"
