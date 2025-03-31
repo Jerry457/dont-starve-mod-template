@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../data/scripts"
+		}
+	],
+	"settings": {
+		"filewatcher.commands": [
+			{
+				"match": "(postinit|scripts[/\\\\]prefabs)[/\\\\].*",
+				"isAsync": true,
+				"cmd": "powershell -ExecutionPolicy Bypass -File \"${workspaceRoot}/filewatcher.ps1\"",
+				"event": "onFileChange"
+			},
+			{
+				"match": "(postinit|scripts[/\\\\]prefabs)[/\\\\].*",
+				"isAsync": true,
+				"cmd": "powershell -ExecutionPolicy Bypass -File \"${workspaceRoot}/filewatcher.ps1\"",
+				"event": "onFileRename"
+			},
+			{
+				"match": "(postinit|scripts[/\\\\]prefabs)[/\\\\].*",
+				"isAsync": true,
+				"cmd": "powershell -ExecutionPolicy Bypass -File \"${workspaceRoot}/filewatcher.ps1\"",
+				"event": "onFileCreate"
+			},
+			{
+				"match": "(postinit|scripts[/\\\\]prefabs)[/\\\\].*",
+				"isAsync": true,
+				"cmd": "powershell -ExecutionPolicy Bypass -File \"${workspaceRoot}/filewatcher.ps1\"",
+				"event": "onFileDelete"
+			},
+			{
+				"match": "(postinit|scripts[/\\\\]prefabs)[/\\\\].*",
+				"isAsync": true,
+				"cmd": "powershell -ExecutionPolicy Bypass -File \"${workspaceRoot}/filewatcher.ps1\"",
+				"event": "onFolderDelete"
+			}
+		]
+	}
+}
