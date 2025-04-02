@@ -4,7 +4,7 @@ local loc = require("languages/loc")
 
 local language = loc.GetLanguage and loc.GetLanguage()
 if language == LANGUAGE.CHINESE_S or language == LANGUAGE.CHINESE_S_RAIL then
-    require("localization/strings_zh")
+    require("localization/ws_strings_zh")
 else
-    require("localization/strings_en")
+    require("localization/ws_strings_en")
 end

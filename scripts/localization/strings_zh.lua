@@ -1,1 +1,0 @@
-STRINGS.SKILLTREE.SISTURN_LOCK_DESC = "学习三级受佑姐妹骨灰罐技能"

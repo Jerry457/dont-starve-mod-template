@@ -6,12 +6,7 @@ local AddStategraphActionHandler = AddStategraphActionHandler
 GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
-    -- ActionHandler(ACTIONS.GK_EQUIPSLOT_LEARN, "dolongaction"),
-    -- ActionHandler(ACTIONS.GLUTTONY_EAT, function(inst, action)
-    --     if not inst.sg:HasStateTag("busy") then
-    --         return "quickeat"
-    --     end
-    -- end),
+    ActionHandler(ACTIONS.SUMMON_SMALLGHOST, "dolongaction"),
 }
 
 local states = {

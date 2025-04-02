@@ -6,6 +6,7 @@ local AddStategraphActionHandler = AddStategraphActionHandler
 GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
+    ActionHandler(ACTIONS.SUMMON_SMALLGHOST, "dolongaction"),
 }
 
 local states = {
