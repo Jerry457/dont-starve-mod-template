@@ -7,6 +7,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
     ActionHandler(ACTIONS.SUMMON_SMALLGHOST, "dolongaction"),
+    ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
 }
 
 local states = {

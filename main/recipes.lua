@@ -1,3 +1,4 @@
+local AddRecipePostInit = AddRecipePostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 -- GlassicAPI.AddTech("GK_SMITH")  -- 科技
@@ -15,3 +16,13 @@ GLOBAL.setfenv(1, GLOBAL)
 --     { builder_tag = "goblinkiller" },
 --     { "CHARACTER", "CONTAINERS" }
 -- )
+
+AddRecipePostInit("graveurn", function(self)
+    self.builder_skill = ""
+    AllBuilderTaggedRecipes["graveurn"] = self.builder_tag or self.builder_skill
+end)
+
+AddRecipePostInit("wendy_gravestone", function(self)
+    self.builder_skill = "wendy_smallghost_2"
+    AllBuilderTaggedRecipes["wendy_gravestone"] = self.builder_tag or self.builder_skill
+end)

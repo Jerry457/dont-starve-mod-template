@@ -5,6 +5,8 @@ local SkillTreeUpdater = require("components/skillTreeUpdater")
 local skill_map = {
     wendy_smallghost_2 = "",
     wendy_smallghost_3 = "wendy_smallghost_1",
+
+    wendy_gravestone_1 = "wendy_smallghost_2",
 }
 
 local _IsActivated = SkillTreeUpdater.IsActivated
