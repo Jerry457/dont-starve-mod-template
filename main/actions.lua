@@ -62,6 +62,14 @@ ACTIONS.DEPLOY.strfn = function(act, ...)
     return _strfn(act, ...)
 end
 
+local _strfn = ACTIONS.UPGRADE.strfn
+ACTIONS.UPGRADE.strfn = function(act, ...)
+    if act.invobject and act.invobject:HasTag(UPGRADETYPES.GRAVESTONE .. "_upgrader") then
+        return "CONDOLENCE_BOUQUET"
+    end
+    return _strfn(act, ...)
+end
+
 AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
 
