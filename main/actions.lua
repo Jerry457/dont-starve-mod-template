@@ -50,6 +50,18 @@ ACTIONS.GRAVE_RELOCATION.strfn = function(act)
     return str
 end
 
+local _strfn = ACTIONS.DEPLOY.strfn
+ACTIONS.DEPLOY.strfn = function(act, ...)
+    if act.invobject then
+        if act.invobject.prefab == "possessed_ghostflower_mound" then
+            return "REINTERMENT"
+        elseif act.invobject.prefab == "possessed_ghostflower_gravestone" then
+            return "RELOCATION"
+        end
+    end
+    return _strfn(act, ...)
+end
+
 AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
 
