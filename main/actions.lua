@@ -50,7 +50,7 @@ ACTIONS.GRAVE_RELOCATION.strfn = function(act)
     return str
 end
 
-local _strfn = ACTIONS.DEPLOY.strfn
+local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
 ACTIONS.DEPLOY.strfn = function(act, ...)
     if act.invobject then
         if act.invobject.prefab == "possessed_ghostflower_mound" then
@@ -59,15 +59,15 @@ ACTIONS.DEPLOY.strfn = function(act, ...)
             return "RELOCATION"
         end
     end
-    return _strfn(act, ...)
+    return DEPLOY_strfn(act, ...)
 end
 
-local _strfn = ACTIONS.UPGRADE.strfn
+local UPGRADE_strfn = ACTIONS.UPGRADE.strfn
 ACTIONS.UPGRADE.strfn = function(act, ...)
     if act.invobject and act.invobject:HasTag(UPGRADETYPES.GRAVESTONE .. "_upgrader") then
         return "CONDOLENCE_BOUQUET"
     end
-    return _strfn(act, ...)
+    return UPGRADE_strfn(act, ...)
 end
 
 AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
