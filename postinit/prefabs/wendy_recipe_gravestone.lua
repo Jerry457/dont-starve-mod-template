@@ -11,7 +11,6 @@ local function OnWritingEnded(inst, data)
         return ent.prefab == "mound"
     end)
 
-
     local ix, iy, iz = inst.Transform:GetWorldPosition()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
 
@@ -23,9 +22,9 @@ local function OnWritingEnded(inst, data)
     gravestone.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
     if mound then
-        local mound_data = mound:GetSaveRecord()
+        local mound_record = mound:GetSaveRecord()
         mound:Remove()
-        gravestone.mound:SetPersistData(mound_data)
+        gravestone.mound:SetPersistData(mound_record.data)
     end
 
     if inst.components.writeable:IsWritten() then

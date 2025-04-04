@@ -4,7 +4,6 @@ GLOBAL.setfenv(1, GLOBAL)
 AddSimPostInit(function()
     local _CanDeployRecipeAtPoint = Map.CanDeployRecipeAtPoint
     Map.CanDeployRecipeAtPoint = function(self, pt, recipe, rot, ...)
-        print(recipe.build_mode)
         if BUILDMODE.ANY_WHERE == recipe.build_mode then
             local x, y, z = pt:Get()
             local is_valid_ground = self:IsPassableAtPointWithPlatformRadiusBias(x, y, z, true, false, TUNING.BOAT.NO_BUILD_BORDER_RADIUS, true)
