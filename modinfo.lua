@@ -1,6 +1,6 @@
 -- This information tells other players more about the mod
 
-version = "0.0.2" -- mod版本 上传mod需要两次的版本不一样
+version = "0.0.3" -- mod版本 上传mod需要两次的版本不一样
 name = "wendy_skilltree(" .. version .. ")"  ---mod名字
 description = version .. ""  --mod描述
 author = "" --作者

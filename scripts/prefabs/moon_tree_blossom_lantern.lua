@@ -3,6 +3,20 @@ local assets =
     Asset("ANIM", "anim/moon_tree_blossom_lantern.zip"),
 }
 
+local brain = require("brains/moon_tree_blossom_lanternbrain")
+
+
+local HotSpringTag = { "watersource" }
+local function OnInit(inst)
+    inst:PushEvent("on_landed")
+
+    local target = FindEntity(inst, 2000, function(ent)
+        return ent.prefab == "hotspring"
+    end, HotSpringTag) or inst
+
+    inst.components.knownlocations:RememberLocation("home", target:GetPosition(), true)
+end
+
 local function GetIdleAnim(inst)
     local percent = inst.components.perishable:GetPercent()
     if percent < 0.3 then
@@ -54,7 +68,7 @@ local function fn()
     inst.entity:AddLight()
     inst.entity:AddNetwork()
 
-    MakeObstaclePhysics(inst, .2)
+    MakeCharacterPhysics(inst, 1, .5)
     MakeInventoryFloatable(inst, "small")
 
     inst.AnimState:SetBank("moon_tree_blossom_lantern")
@@ -84,12 +98,15 @@ local function fn()
     inst:AddComponent("inspectable")
 
     inst:AddComponent("locomotor")
-
-    inst:AddComponent("locomotor")
     inst.components.locomotor:EnableGroundSpeedMultiplier(false)
     inst.components.locomotor:SetTriggersCreep(false)
 	inst.components.locomotor.walkspeed = TUNING.MINIBOATLANTERN_SPEED
 	inst.components.locomotor.pathcaps = { allowocean = true, ignoreLand = true }
+
+	inst:SetStateGraph("SGmoon_tree_blossom_lantern")
+	inst:SetBrain(brain)
+
+    inst:AddComponent("knownlocations")
 
     inst:AddComponent("burnable")
     inst.components.burnable.fxprefab = nil
@@ -112,7 +129,7 @@ local function fn()
     inst.OnLoad = OnLoad
 
     inst:ListenForEvent("perishchange", OnPerishChange)
-    inst:DoTaskInTime(0, inst.PushEvent, "on_landed")
+    inst:DoTaskInTime(0, OnInit)
 
     return inst
 end

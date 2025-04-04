@@ -25,8 +25,4 @@ function MoonTreeBlossomLanternBrain:OnStart()
     self.bt = BT(self.inst, root)
 end
 
-function MoonTreeBlossomLanternBrain:OnInitializationComplete()
-    -- self.inst.components.knownlocations:RememberLocation("home", Point(self.inst.Transform:GetWorldPosition()), true)
-end
-
 return MoonTreeBlossomLanternBrain
