@@ -28,6 +28,15 @@ local function GetIdleAnim(inst)
     end
 end
 
+local function OnPerish(inst)
+    local x, y, z = inst.Transform:GetWorldPosition()
+    if TheWorld.Map:IsAboveGroundAtPoint(x, y, z) then
+        inst.components.perishable.onperishreplacement = "ghostflower"
+    else
+        inst:Remove()
+    end
+end
+
 local function OnPerishChange(inst)
     inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
 end
@@ -108,15 +117,15 @@ local function fn()
 
     inst:AddComponent("knownlocations")
 
-    inst:AddComponent("burnable")
-    inst.components.burnable.fxprefab = nil
+    -- inst:AddComponent("burnable")
+    -- inst.components.burnable.fxprefab = nil
     -- inst.components.burnable:AddBurnFX("campfirefire", Vector3(0, 0, 0))
-    inst.components.burnable:Ignite()
+    -- inst.components.burnable:Ignite()
 
     inst:AddComponent("perishable")
     inst.components.perishable:SetPerishTime(TUNING.PERISH_FAST)
     inst.components.perishable:StartPerishing()
-    inst.components.perishable.onperishreplacement = "ghostflower"
+    inst.components.perishable:SetOnPerishFn(OnPerish)
 
     inst:AddComponent("hauntable")
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
@@ -134,4 +143,5 @@ local function fn()
     return inst
 end
 
-return Prefab("moon_tree_blossom_lantern", fn, assets)
+return Prefab("moon_tree_blossom_lantern", fn, assets),
+    MakePlacer("moon_tree_blossom_lantern_placer", "moon_tree_blossom_lantern", "moon_tree_blossom_lantern", "idle1_full")

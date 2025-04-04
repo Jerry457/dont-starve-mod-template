@@ -17,6 +17,17 @@ GLOBAL.setfenv(1, GLOBAL)
 --     { "CHARACTER", "CONTAINERS" }
 -- )
 
+GlassicAPI.AddRecipe(
+    "moon_tree_blossom_lantern",
+    { Ingredient("moon_tree_blossom", 1) },
+    TECH.NONE,
+    {
+        builder_skill="wendy_smallghost_2",
+        build_mode = BUILDMODE.ANY_WHERE,
+        placer="moon_tree_blossom_lantern_placer",
+    }
+)
+
 AddRecipePostInit("graveurn", function(self)
     self.builder_skill = ""
     AllBuilderTaggedRecipes["graveurn"] = self.builder_tag or self.builder_skill
