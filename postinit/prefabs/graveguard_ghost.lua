@@ -7,38 +7,39 @@ local accept_items = {
     moon_tree_blossom = 3,
 }
 
-local function ShouldAcceptItem(inst, item, giver, count)
-    local skilltreeupdater = (giver and giver.components.skilltreeupdater) or nil
-
-    if skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_2") then
-        if target:HasTag("grave_relocation") and not target:HasTag("has_gravestone") then
-            table.insert(actions, ACTIONS.GRAVE_RELOCATION)
-        end
-    end
-
-    if accept_items[item.prefab] then
-        return false
-    end
-
-    if inst.items[item.prefab] >= accept_items[item.prefab] then
-        if giver and giver.components.talker then
-            giver.components.talker:Say(Getstrings())
-        end
-        return false
-    end
-
-    return
+local accepted_items = {}
+for k, v in pairs(accept_items) do
+    accepted_items[k] = 0
 end
 
-local function OnGetItemFromPlayer(inst, giver, item)
+for item in pairs(accept_items) do
+    AddPrefabPostInit(item, function(inst)
+        if not TheWorld.ismastersim then
+            return
+        end
 
+        inst:AddComponent("graveguard_ghost_item")
+    end)
 end
 
-local function OnRefuseItem(inst, item)
-    inst.sg:GoToState("refuse")
-    if inst.components.sleeper:IsAsleep() then
-        inst.components.sleeper:WakeUp()
+local function AcceptTest(inst, item)
+    if accepted_items[item.prefab] >= 3 then
+        return false, "ENOUGH"
     end
+
+    accepted_items[item.prefab] = accepted_items[item.prefab] + 1
+
+    if item.components.stackable then
+        item.components.stackable:Get():Remove()
+    else
+        item:Remove()
+    end
+
+    for i = 1, accept_items[item.prefab] do
+        inst.components.lootdropper:SpawnLootPrefab("ghostflower")
+    end
+
+    return true
 end
 
 AddPrefabPostInit("graveguard_ghost", function(inst)
@@ -46,14 +47,21 @@ AddPrefabPostInit("graveguard_ghost", function(inst)
         return
     end
 
-    inst.items = {}
+    inst:AddComponent("lootdropper")
+
+    inst.AcceptTest = AcceptTest
+end)
+
+local function OnCyclesChanged(inst)
     for k, v in pairs(accept_items) do
-        inst.items[k] = 0
+        accepted_items[k] = 0
+    end
+end
+
+AddPrefabPostInit("world", function(inst)
+    if not TheWorld.ismastersim then
+        return
     end
 
-    inst:AddComponent("trader")
-    inst.components.trader:SetAcceptTest(ShouldAcceptItem)
-    inst.components.trader.onaccept = OnGetItemFromPlayer
-    inst.components.trader.onrefuse = OnRefuseItem
-    inst.components.trader.deleteitemonaccept = true
+    inst:WatchWorldState("cycles", OnCyclesChanged)
 end)

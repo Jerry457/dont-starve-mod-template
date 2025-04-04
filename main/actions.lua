@@ -9,6 +9,7 @@ if not rawget(_G, "HotReloading") then
     local ACTIONS = {
         SUMMON_SMALLGHOST = Action({priority = 1, rmb = true}),
         GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
+        PRESENT = Action({priority = 1}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -50,6 +51,13 @@ ACTIONS.GRAVE_RELOCATION.strfn = function(act)
     return str
 end
 
+ACTIONS.PRESENT.fn = function(act)
+    local doer, target, invobject = act.doer, act.target, act.invobject
+    if target and target.AcceptTest then
+        return target:AcceptTest(invobject)
+    end
+end
+
 local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
 ACTIONS.DEPLOY.strfn = function(act, ...)
     if act.invobject then
@@ -84,6 +92,16 @@ AddComponentAction("USEITEM", "grave_relocation_item", function(inst, doer, targ
     if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_2", true) then
         if target:HasTag("grave_relocation") and not target:HasTag("has_gravestone") then
             table.insert(actions, ACTIONS.GRAVE_RELOCATION)
+        end
+    end
+end)
+
+AddComponentAction("USEITEM", "graveguard_ghost_item", function(inst, doer, target, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+
+    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_2", true) then
+        if target:HasTag("graveghost") then
+            table.insert(actions, ACTIONS.PRESENT)
         end
     end
 end)
