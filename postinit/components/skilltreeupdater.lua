@@ -11,7 +11,7 @@ local skill_map = {
 
 local _IsActivated = SkillTreeUpdater.IsActivated
 local function IsActivated(self, skill, ...)
-    local skill = skill_map[skill]
+    local skill = skill_map[skill] or skill
     return _IsActivated(self, skill, ...)
 end
 SkillTreeUpdater.IsActivated = IsActivated
