@@ -20,5 +20,5 @@ local _RefreshTree = SkillTreeBuilder.RefreshTree
 function SkillTreeBuilder:RefreshTree(...)
     SkillTreeUpdater.IsActivated = _IsActivated
     _RefreshTree(self, ...)
-    SkillTreeUpdater.IsActivated = _IsActivated
+    SkillTreeUpdater.IsActivated = IsActivated
 end
