@@ -53,7 +53,7 @@ local function OnTimerDone(inst, data)
         local x, y, z = inst.grave_bouquet.Transform:GetWorldPosition()
         inst.grave_bouquet:Remove()
         inst.grave_bouquet = nil
-        SpawnPrefab("ghostflower").Transform:SetPosition(x, y, z)
+        SpawnPrefab("ghostflower").Transform:SetPosition(x + 0.8, y, z + 0.8)
 
         inst.components.upgradeable:SetStage(1)
         inst.components.timer:StopTimer("spawn_petals_evil")

@@ -3,15 +3,19 @@ local assets =
     Asset("ANIM", "anim/moon_tree_blossom_lantern.zip"),
 }
 
-local function OnPerishChange(inst, data)
-    local percent = data and data.percent or 1
+local function GetIdleAnim(inst)
+    local percent = inst.components.perishable:GetPercent()
     if percent < 0.3 then
-        inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_less", true)
+        return "idle" .. inst.anim_index .. "_less"
     elseif percent < 0.8 then
-        inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_half", true)
+        return "idle" .. inst.anim_index .. "_half"
     else
-        inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_full", true)
+        return "idle" .. inst.anim_index .. "_full"
     end
+end
+
+local function OnPerishChange(inst)
+    inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
 end
 
 local function ReskinToolFilterFn(inst)
@@ -19,9 +23,7 @@ local function ReskinToolFilterFn(inst)
     if inst.anim_index > 3 then
         inst.anim_index = 1
     end
-    OnPerishChange(inst, {
-        percent = inst.components.perishable:GetPercent()
-    })
+    inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
 end
 
 local function SetOrientation(inst)
@@ -63,6 +65,7 @@ local function fn()
     inst.Light:SetFalloff(0.7)
     inst.Light:SetColour(0.01, 0.35, 1)
 
+    inst:AddTag("moon_tree_blossom_lantern")
     inst:AddTag("structure")
     inst:AddTag("rotatableobject")
     inst:AddTag("reskin_tool_target")
@@ -75,8 +78,18 @@ local function fn()
 
     inst.scale = 1
     inst.anim_index = math.random(1, 3)
+
     inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_full", true)
+
     inst:AddComponent("inspectable")
+
+    inst:AddComponent("locomotor")
+
+    inst:AddComponent("locomotor")
+    inst.components.locomotor:EnableGroundSpeedMultiplier(false)
+    inst.components.locomotor:SetTriggersCreep(false)
+	inst.components.locomotor.walkspeed = TUNING.MINIBOATLANTERN_SPEED
+	inst.components.locomotor.pathcaps = { allowocean = true, ignoreLand = true }
 
     inst:AddComponent("burnable")
     inst.components.burnable.fxprefab = nil
@@ -92,13 +105,13 @@ local function fn()
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_HUGE
 
-    inst:ListenForEvent("perishchange", OnPerishChange)
-
     inst.ReskinToolFilterFn = ReskinToolFilterFn
     inst.SetOrientation = SetOrientation
+    inst.GetIdleAnim = GetIdleAnim
     inst.OnSave = OnSave
     inst.OnLoad = OnLoad
 
+    inst:ListenForEvent("perishchange", OnPerishChange)
     inst:DoTaskInTime(0, inst.PushEvent, "on_landed")
 
     return inst
