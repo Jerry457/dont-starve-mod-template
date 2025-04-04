@@ -11,6 +11,10 @@ function SmallGhost_Summoner:Summon(grave)
         return false, "NOTHOME"
     end
 
+    if self.inst.questghost ~= nil then
+        return false, "ONEGHOST"
+    end
+
     if self.inst.components.timer:TimerExists("small_ghost_summon_cooldown") then
         return false, "COOLDOWN"
     end
@@ -38,10 +42,11 @@ function SmallGhost_Summoner:Summon(grave)
                 end)
             end
         end, ghost)
+    else
+        grave.ghost:DoTaskInTime(0, function(ghost)
+            ghost.components.questowner:BeginQuest(self.inst)
+        end)
     end
-    -- target.ghost:DoTaskInTime(0, function(ghost)
-    --     ghost.components.questowner:BeginQuest(self.inst)
-    -- end)
 
     return true
 end

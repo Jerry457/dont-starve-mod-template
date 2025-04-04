@@ -15,6 +15,7 @@ STRINGS.ACTIONS.GRAVE_RELOCATION = {
 
 STRINGS.CHARACTERS.WENDY.ACTIONFAIL.SUMMON_SMALLGHOST = {
     NOTHOME = "我感觉到他们不在家里",
+    ONEGHOST = "我一次只能渡一个灵魂达到目的地",
     COOLDOWN = "不总是能与他们沟通上",
 }
 

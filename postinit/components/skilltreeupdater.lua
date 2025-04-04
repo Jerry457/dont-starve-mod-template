@@ -10,9 +10,11 @@ local skill_map = {
 }
 
 local _IsActivated = SkillTreeUpdater.IsActivated
-local function IsActivated(self, skill, ...)
-    local skill = skill_map[skill] or skill
-    return _IsActivated(self, skill, ...)
+local function IsActivated(self, skill, ignore_map)
+    if not ignore_map then
+        local skill = skill_map[skill] or skill
+    end
+    return _IsActivated(self, skill)
 end
 SkillTreeUpdater.IsActivated = IsActivated
 

@@ -81,7 +81,7 @@ end)
 AddComponentAction("USEITEM", "grave_relocation_item", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
 
-    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_2") then
+    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_2", true) then
         if target:HasTag("grave_relocation") and not target:HasTag("has_gravestone") then
             table.insert(actions, ACTIONS.GRAVE_RELOCATION)
         end
