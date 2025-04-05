@@ -25,6 +25,7 @@ GlassicAPI.AddRecipe(
         builder_skill="wendy_smallghost_2",
         build_mode = BUILDMODE.ANY_WHERE,
         placer="moon_tree_blossom_lantern_placer",
+        min_spacing = 0.6,
     }
 )
 

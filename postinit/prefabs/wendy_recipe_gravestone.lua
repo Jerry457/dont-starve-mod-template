@@ -14,7 +14,7 @@ local function OnWritingEnded(inst, data)
     SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
 
     local gravestone = SpawnPrefab("gravestone")
-    gravestone.Transform:SetPosition(ix - 0.35355339059327, iy, iz - 0.35355339059327)
+    gravestone.Transform:SetPosition(ix, iy, iz)
     gravestone.random_stone_choice = tostring(math.random(4))
     gravestone.AnimState:PlayAnimation("grave"..gravestone.random_stone_choice.."_place")
     gravestone.AnimState:PushAnimation("grave"..gravestone.random_stone_choice)

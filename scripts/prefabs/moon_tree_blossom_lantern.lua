@@ -77,7 +77,7 @@ local function fn()
     inst.entity:AddLight()
     inst.entity:AddNetwork()
 
-    MakeCharacterPhysics(inst, 1, .5)
+    MakeInventoryPhysics(inst)
     MakeInventoryFloatable(inst, "small")
 
     inst.AnimState:SetBank("moon_tree_blossom_lantern")

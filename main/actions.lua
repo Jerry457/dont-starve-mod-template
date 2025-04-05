@@ -30,7 +30,7 @@ end
 ACTIONS.GRAVE_RELOCATION.fn = function(act)
     local doer, target, invobject = act.doer, act.target, act.invobject
     if invobject and invobject.components.grave_relocation_item then
-        invobject.components.grave_relocation_item:Relocation(doer, target)
+        invobject.components.grave_relocation_item:Relocation(doer, target, invobject)
         return true
     end
 end
