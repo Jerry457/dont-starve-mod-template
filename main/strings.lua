@@ -6,7 +6,7 @@ local language = loc.GetLanguage and loc.GetLanguage()
 local code = loc.GetLocaleCode(language)
 
 -- ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_REVIVE", "string")
-function ModifyTranslatedStrings(path, str, base)
+function ModifyTranslatedStrings(path, str)
     local parts = {}
 
     for part in string.gmatch(path, "([^.]+)") do
