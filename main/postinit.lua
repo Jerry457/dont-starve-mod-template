@@ -2,11 +2,14 @@ local files = {
     "postinit/entityscript.lua",
     "postinit/loottables.lua",
     "postinit/map.lua",
+    "postinit/components/pethealthbar.lua",
     "postinit/components/skilltreeupdater.lua",
+    "postinit/prefabs/abigail.lua",
     "postinit/prefabs/elixir_container.lua",
     "postinit/prefabs/flower_evil.lua",
     "postinit/prefabs/ghost.lua",
     "postinit/prefabs/ghostflower.lua",
+    "postinit/prefabs/ghostlyelixir_revive.lua",
     "postinit/prefabs/ghostly_elixirs.lua",
     "postinit/prefabs/graveguard_ghost.lua",
     "postinit/prefabs/gravestone.lua",
@@ -22,7 +25,8 @@ local files = {
     "postinit/prefabs/wendy_recipe_gravestone.lua",
     "postinit/stategraphs/SGcommon.lua",
     "postinit/stategraphs/SGwilson.lua",
-    "postinit/stategraphs/SGwilson_client.lua"
+    "postinit/stategraphs/SGwilson_client.lua",
+    "postinit/widgets/pethealthbadge.lua"
 }
 
 for _, file in ipairs(files) do
