@@ -1,5 +1,5 @@
 modimport("main/assets")
-
+modimport("main/fx")
 modimport("main/constants")
 modimport("main/tuning")
 modimport("main/strings")
