@@ -13,7 +13,7 @@ foreach ($postinitFile in $postinitFiles) {
 
 $postinitString = "local files = {`n" + ($postinits -join ",`n") + "`n}`n"
 $postinitString += "`nfor _, file in ipairs(files) do`n    modimport(file)`nend"
-$postinitString | Out-String | % { [System.IO.File]::WriteAllText((Join-Path $PSScriptRoot "main/postinit.lua"), $_, [System.Text.UTF8Encoding]::new($false)) }
+$postinitString | Out-String | ForEach-Object { [System.IO.File]::WriteAllText((Join-Path $PSScriptRoot "main/postinit.lua"), $_, [System.Text.UTF8Encoding]::new($false)) }
 
 $prefabFolder = Join-Path $PSScriptRoot "scripts/prefabs"
 $prefabFiles = Get-ChildItem $prefabFolder -Recurse -Filter *.lua
@@ -26,4 +26,4 @@ foreach ($prefabFile in $prefabFiles) {
     write-host $relativePath
 }
 $prefabString = "PrefabFiles = {`n" + ($prefabs -join ",`n") + "`n}"
-$prefabString | Out-String | % { [System.IO.File]::WriteAllText((Join-Path $PSScriptRoot "main/prefab_files.lua"), $_, [System.Text.UTF8Encoding]::new($false)) }
+$prefabString | Out-String | ForEach-Object { [System.IO.File]::WriteAllText((Join-Path $PSScriptRoot "main/prefab_files.lua"), $_, [System.Text.UTF8Encoding]::new($false)) }
