@@ -15,6 +15,7 @@ local fxs = {
         -- sound = "dontstarve/characters/wendy/abigail/buff/speed",
         fn = function(inst)
             inst.AnimState:OverrideSymbol("fx_speed_02", "abigail_vial_fx", "fx_revive_02")
+            FinalOffset3(inst)
         end,
     },
     {
