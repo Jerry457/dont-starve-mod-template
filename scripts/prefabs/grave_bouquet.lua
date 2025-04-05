@@ -19,6 +19,8 @@ local function common()
     inst.AnimState:SetBuild("grave_bouquet")
     inst.AnimState:PlayAnimation("idle")
 
+    inst.AnimState:SetFinalOffset(2)
+
     inst.entity:SetPristine()
 
     if not TheWorld.ismastersim then
