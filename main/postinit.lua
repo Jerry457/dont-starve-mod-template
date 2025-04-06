@@ -2,6 +2,7 @@ local files = {
     "postinit/entityscript.lua",
     "postinit/loottables.lua",
     "postinit/map.lua",
+    "postinit/components/decoratedgrave_ghostmanager.lua",
     "postinit/components/pethealthbar.lua",
     "postinit/components/skilltreeupdater.lua",
     "postinit/prefabs/abigail.lua",

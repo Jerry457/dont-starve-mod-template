@@ -56,11 +56,14 @@ package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
     wendy_smallghost_2.onactivate = function(inst, fromload)
         inst:AddTag(UPGRADETYPES.GRAVESTONE.."_upgradeuser")
         inst:AddTag("gravedigger_user")
+        inst:AddTag("wendy_smallghost_2")
+
     end
 
     wendy_smallghost_2.ondeactivate = function(inst, fromload)
         inst:RemoveTag(UPGRADETYPES.GRAVESTONE.."_upgradeuser")
         inst:RemoveTag("gravedigger_user")
+        inst:RemoveTag("wendy_smallghost_2")
     end
 
     skills_data.SKILLS["wendy_shadow_lock_3"] = MakeSisturnLock({ pos = { -13, 40 } })

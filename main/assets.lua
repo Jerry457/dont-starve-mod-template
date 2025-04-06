@@ -1,7 +1,7 @@
 modimport("main/prefab_files")
 
 Assets = {
-    -- Asset("IMAGE", "images/inventoryimages.xml"),
+    Asset("IMAGE", "images/ws_inventoryimages.xml"),
     -- Asset("ATLAS", "images/minimap.xml" ),
     Asset("ATLAS", "images/wendy_skillicons.xml" ),
 
@@ -17,4 +17,4 @@ ReloadPreloadAssets()
 modimport("main/glassic_api_loader")
 
 -- AddMinimapAtlas("images/gk_minimap.xml")
--- GlassicAPI.RegisterItemAtlas("inventoryimages", Assets)
+GlassicAPI.RegisterItemAtlas("ws_inventoryimages", Assets)

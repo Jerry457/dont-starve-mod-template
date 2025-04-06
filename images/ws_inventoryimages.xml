@@ -1,0 +1,6 @@
+<Atlas>
+    <Texture filename="ws_inventoryimages.tex" />
+    <Elements>
+        <Element name="moon_tree_blossom_lantern.tex" u1="0.0078125" v1="0.0078125" u2="0.9921875" v2="0.9921875" />
+    </Elements>
+</Atlas>
