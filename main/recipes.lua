@@ -26,6 +26,8 @@ GlassicAPI.AddRecipe(
         build_mode = BUILDMODE.ANY_WHERE,
         placer="moon_tree_blossom_lantern_placer",
         min_spacing = 0.6,
+        build_distance = 5,
+        sg_state = "spawn_mutated_creature",
     }
 )
 

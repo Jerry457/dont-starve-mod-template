@@ -1,4 +1,4 @@
-local SmallGhost_Summoner = Class(function(self, inst)
+local Spiritualism = Class(function(self, inst)
     self.inst = inst
 
     if not self.inst.components.timer then
@@ -6,7 +6,7 @@ local SmallGhost_Summoner = Class(function(self, inst)
     end
 end)
 
-function SmallGhost_Summoner:Summon(grave)
+function Spiritualism:Summon(grave)
     if grave.ghost and grave.ghost:IsValid() then
         return false, "NOTHOME"
     end
@@ -51,4 +51,4 @@ function SmallGhost_Summoner:Summon(grave)
     return true
 end
 
-return SmallGhost_Summoner
+return Spiritualism

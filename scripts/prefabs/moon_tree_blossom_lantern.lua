@@ -88,6 +88,9 @@ local function fn()
     inst.Light:SetFalloff(0.7)
     inst.Light:SetColour(0.01, 0.35, 1)
 
+    inst.AnimState:SetSymbolBloom("fire")
+    inst.AnimState:SetSymbolLightOverride("fire", .5)
+
     inst:AddTag("moon_tree_blossom_lantern")
     inst:AddTag("structure")
     inst:AddTag("rotatableobject")

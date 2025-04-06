@@ -5,6 +5,8 @@ Assets = {
     -- Asset("ATLAS", "images/minimap.xml" ),
     Asset("ATLAS", "images/wendy_skillicons.xml" ),
 
+    Asset("ANIM", "anim/player_pray.zip" ),
+    Asset("ANIM", "anim/player_prayonly.zip" ),
 }
 
 PreloadAssets = {

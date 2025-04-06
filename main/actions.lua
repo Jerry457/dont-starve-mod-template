@@ -7,7 +7,7 @@ local HIGH_ACTION_PRIORITY = 10
 
 if not rawget(_G, "HotReloading") then
     local ACTIONS = {
-        SUMMON_SMALLGHOST = Action({priority = 1, rmb = true}),
+        SPIRITUALISM = Action({priority = 1, rmb = true}),
         GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
         PRESENT = Action({priority = 1}),
     }
@@ -19,10 +19,10 @@ if not rawget(_G, "HotReloading") then
     end
 end
 
-ACTIONS.SUMMON_SMALLGHOST.fn = function(act)
+ACTIONS.SPIRITUALISM.fn = function(act)
     local doer, target = act.doer, act.target
     if doer and target then
-        return doer.components.smallghost_summoner:Summon(target)
+        return doer.components.spiritualism:Summon(target)
     end
     return false
 end
@@ -82,7 +82,7 @@ AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
 
     if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_1") then
-        table.insert(actions, ACTIONS.SUMMON_SMALLGHOST)
+        table.insert(actions, ACTIONS.SPIRITUALISM)
     end
 end)
 
