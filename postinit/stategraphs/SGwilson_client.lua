@@ -19,5 +19,5 @@ for _, actionhandler in ipairs(actionhandlers) do
     AddStategraphActionHandler("wilson_client", actionhandler)
 end
 
-AddStategraphPostInit("SGwilson_client", function(sg)
+AddStategraphPostInit("wilson_client", function(sg)
 end)
