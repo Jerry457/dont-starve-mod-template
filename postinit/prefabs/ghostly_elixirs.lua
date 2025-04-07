@@ -42,7 +42,7 @@ local function HookPotions(inst)
     potion_tunings["ghostlyelixir_revive"].ONDETACH = function(inst, target)
         SetbonusHaelath(target, 0)
     end
-    potion_tunings["ghostlyelixir_revive"].DURATION = 1.79769313486231e+308
+    potion_tunings["ghostlyelixir_revive"].DURATION = 9999
 end
 
 
