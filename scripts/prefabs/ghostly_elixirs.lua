@@ -324,7 +324,7 @@ local potion_tunings =
         fx = "ghostlyelixir_shadow_fx",
         dripfx = "ghostlyelixir_shadow_dripfx",
         skill_modifier_long_duration = true,
-        buff_type = "super_elixir_buff",
+        -- buff_type = "super_elixir_buff",
     },
     ghostlyelixir_lunar =
     {
@@ -342,7 +342,7 @@ local potion_tunings =
             target.components.planardamage:RemoveBonus(inst, "ghostlyelixir_lunarbonus")
         end,
         skill_modifier_long_duration = true,
-        buff_type = "super_elixir_buff"
+        -- buff_type = "super_elixir_buff"
     },
 }
 
