@@ -19,6 +19,7 @@ local files = {
     "postinit/prefabs/petals.lua",
     "postinit/prefabs/petals_evil.lua",
     "postinit/prefabs/reskin_tool.lua",
+    "postinit/prefabs/sisturn.lua",
     "postinit/prefabs/skeleton.lua",
     "postinit/prefabs/skilltree_wendy.lua",
     "postinit/prefabs/smallghost.lua",
