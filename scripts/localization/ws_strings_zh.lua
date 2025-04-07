@@ -9,6 +9,9 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SMALLGHOST_2_DESC", "温�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_CONTAINER_DESC", "温蒂想起了每一个与阿比盖尔一起去花田的野餐美梦，温蒂可以制作收纳灵体草药、哀悼荣耀和花瓣的野餐篮了。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_REVIVE_DESC", "阿比盖尔很喜欢必忘我花，它舒缓的作用能帮助阿比盖尔忘掉那次恐怖经历，获得更强大的精神力量维持更高血量上限。")
 
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_1_DESC", "寒冷的死亡气息能让花瓣在姐妹骨灰罐中保存得更久，每一片帮助温蒂哀悼阿比盖尔的花瓣最终都会变为哀悼的荣耀。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "温蒂会制作随身供品罐了，能够让阿比盖尔体验到更多不同的永恒领域力量。")
+
 STRINGS.ACTIONS.UPGRADE.CONDOLENCE_BOUQUET = "哀悼献花"
 STRINGS.ACTIONS.GRAVE_RELOCATION = {
     GENERIC = "改葬",

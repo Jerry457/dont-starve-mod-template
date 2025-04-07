@@ -19,6 +19,20 @@ local function OnItemLose(inst, data)
     end
 end
 
+local function ConfigureSkillTreeUpgrades(inst, builder)
+    local skilltreeupdater = (builder and builder.components.skilltreeupdater) or nil
+
+    local petal_preserve = (skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_1")) or nil
+    local sanityaura_size = nil
+
+    local dirty = (inst._petal_preserve ~= petal_preserve) or (inst._sanityaura_size ~= sanityaura_size)
+
+    inst._petal_preserve = petal_preserve
+    inst._sanityaura_size = sanityaura_size
+
+    return dirty
+end
+
 AddPrefabPostInit("sisturn", function(inst)
     if not TheWorld.ismastersim then
         return
@@ -26,4 +40,7 @@ AddPrefabPostInit("sisturn", function(inst)
 
     inst:ListenForEvent("itemget", OnItemGet)
     inst:ListenForEvent("itemlose", OnItemLose)
+
+    local on_built = inst:GetEventCallbacks("onbuilt", inst, "scripts/prefabs/sisturn.lua")
+    GlassicAPI.UpvalueUtil.SetUpvalue(on_built, "ConfigureSkillTreeUpgrades", ConfigureSkillTreeUpgrades)
 end)
