@@ -16,14 +16,14 @@ local function OnWritingEnded(inst, data)
     local gravestone = SpawnPrefab("gravestone")
     gravestone.Transform:SetPosition(ix, iy, iz)
     gravestone.random_stone_choice = tostring(math.random(4))
-    gravestone.AnimState:PlayAnimation("grave"..gravestone.random_stone_choice.."_place")
-    gravestone.AnimState:PushAnimation("grave"..gravestone.random_stone_choice)
+    gravestone.AnimState:PlayAnimation("grave" .. gravestone.random_stone_choice .. "_place")
+    gravestone.AnimState:PushAnimation("grave" .. gravestone.random_stone_choice)
     gravestone.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
     if mound then
-        local mound_record = mound:GetSaveRecord()
-        mound:Remove()
-        gravestone.mound:SetPersistData(mound_record.data)
+        gravestone.mound:Remove()
+        gravestone.mound = mound
+        -- gravestone:AddChild(mound)
     end
 
     if inst.components.writeable:IsWritten() then
