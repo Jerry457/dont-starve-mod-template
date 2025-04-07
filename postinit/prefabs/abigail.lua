@@ -1,6 +1,24 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
+local function SetbonusHaelath(inst, value)
+    inst.bonus_max_health = value
+
+    local health = inst.components.health
+    if health then
+        if health:IsDead() then
+            health.maxhealth = inst.base_max_health + inst.bonus_max_health
+        else
+            local health_percent = health:GetPercent()
+            health:SetMaxHealth(inst.base_max_health + inst.bonus_max_health)
+            health:SetPercent(health_percent, true)
+        end
+
+        if inst._playerlink ~= nil and inst._playerlink.components.pethealthbar ~= nil then
+            inst._playerlink.components.pethealthbar:SetMaxHealth(health.maxhealth)
+        end
+    end
+end
 
 local function OnDebuffAdded(inst, name, debuff)
     if inst._playerlink ~= nil and inst._playerlink.components.pethealthbar ~= nil then
@@ -51,4 +69,6 @@ AddPrefabPostInit("abigail", function(inst)
         _ondebuffremoved(self, name, ent, ...)
         OnDebuffRemoved(inst, name, ent, ...)
     end
+
+    inst.SetbonusHaelath = SetbonusHaelath
 end)
