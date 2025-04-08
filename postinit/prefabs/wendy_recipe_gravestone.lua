@@ -21,8 +21,9 @@ local function OnWritingEnded(inst, data)
     gravestone.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
     if mound then
-        gravestone.mound:Remove()
-        gravestone.mound = mound
+        local mound_record = mound:GetSaveRecord()
+        mound:Remove()
+        gravestone.mound:SetPersistData(mound_record.data)
         -- gravestone:AddChild(mound)
     end
 

@@ -112,3 +112,12 @@ local USEITEM = COMPONENT_ACTIONS.USEITEM
 local POINT = COMPONENT_ACTIONS.POINT
 local EQUIPPED = COMPONENT_ACTIONS.EQUIPPED
 local INVENTORY = COMPONENT_ACTIONS.INVENTORY
+
+
+local _SCENE_attunable = SCENE.attunable
+SCENE.attunable = function(inst, ...)
+    if inst.prefab == "sisturn" then
+        return
+    end
+    return _SCENE_attunable(inst, ...)
+end
