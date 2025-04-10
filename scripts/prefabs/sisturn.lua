@@ -334,7 +334,7 @@ local function fn()
     end
 
     inst:AddComponent("container")
-    inst.components.container.onopefn = onopen
+    inst.components.container.onopenfn = onopen
     inst.components.container:WidgetSetup("sisturn")
 
     inst:AddComponent("attunable")

@@ -48,12 +48,11 @@ local function getidleanim(inst)
     if not inst.components.timer:TimerExists("flicker_cooldown")
         and inst:HasTag("player_damagescale")
         and inst.components.combat.target == nil
-        and not inst.is_defensive
-        and math.random() < 0.2 then
+        and inst.is_defensive
+    then
+        inst.components.timer:StartTimer("flicker_cooldown", math.random() * 20  + 10 )
 
-        inst.components.timer:StartTimer("flicker_cooldown", math.random()*20  + 10 )
-
-        return "abigail_ghost_flicker"
+        return "idle_abigail_normal_flicker"
     end
 
     return (inst._is_transparent and "abigail_escape_loop")
