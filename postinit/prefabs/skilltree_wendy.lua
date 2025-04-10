@@ -49,6 +49,10 @@ local function MakeSisturnLock(extra_data, group_name)
     return lock
 end
 
+local function debug_enable()
+    return true
+end
+
 package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
     local skills_data = BuildSkillsData(SkillTreeFns, ...)
 
@@ -74,6 +78,12 @@ package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
 
     skills_data.SKILLS["wendy_lunar_1"] = nil
     skills_data.SKILLS["wendy_lunar_2"].locks = {"wendy_lunar_lock_1", "wendy_lunar_lock_2", "wendy_lunar_lock_3"}
+
+    skills_data.SKILLS["wendy_lunar_lock_1"].lock_open = debug_enable
+    skills_data.SKILLS["wendy_lunar_lock_2"].lock_open = debug_enable
+
+    skills_data.SKILLS["wendy_shadow_lock_1"].lock_open = debug_enable
+    skills_data.SKILLS["wendy_shadow_lock_2"].lock_open = debug_enable
 
     return skills_data
 end
