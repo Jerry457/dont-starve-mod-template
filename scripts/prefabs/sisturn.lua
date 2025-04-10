@@ -232,12 +232,21 @@ local function add_decor(inst, data)
         inst.SoundEmitter:PlaySound("meta5/wendy/sisturn_petals_add_remove")
         local item = inst.components.container.slots[data.slot]
         if item then
+            local skin_build = inst:GetSkinBuild()
             if item.prefab == "petals_evil" then
-                inst.AnimState:OverrideSymbol("flowers_0"..data.slot, "sisturn", "flowers_evil")
+                if skin_build ~= nil then
+                    inst.AnimState:OverrideItemSkinSymbol("flowers_0" .. data.slot, skin_build, "flowers_evil", inst.GUID, "flowers_evil")
+                else
+                    inst.AnimState:OverrideSymbol("flowers_0" .. data.slot, "sisturn", "flowers_evil")
+                end
             elseif item.prefab == "moon_tree_blossom" then
-                inst.AnimState:OverrideSymbol("flowers_0"..data.slot, "sisturn", "flowers_lunar")
+                if skin_build ~= nil then
+                    inst.AnimState:OverrideItemSkinSymbol("flowers_0" .. data.slot, skin_build, "flowers_lunar", inst.GUID, "flowers_lunar")
+                else
+                    inst.AnimState:OverrideSymbol("flowers_0" .. data.slot, "sisturn", "flowers_lunar")
+                end
             else
-                inst.AnimState:ClearOverrideSymbol("flowers_0"..data.slot)
+                inst.AnimState:ClearOverrideSymbol("flowers_0" .. data.slot)
             end
         end
     end
