@@ -12,7 +12,7 @@ local function OnSisturnStateChanged(inst, data)
 
     local is_skilled = inst.components.skilltreeupdater and inst.components.skilltreeupdater:IsActivated("wendy_sisturn_3") or nil
     if is_active and is_skilled then
-        ghost:PushEvent("flicker")
+        -- ghost:PushEvent("flicker")
         ghost:AddTag("player_damagescale")
     else
         ghost:RemoveTag("player_damagescale")

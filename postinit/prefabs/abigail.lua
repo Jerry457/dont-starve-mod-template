@@ -37,6 +37,11 @@ local function OnDebuffRemoved(inst, name, debuff)
 end
 
 AddPrefabPostInit("abigail", function(inst)
+    inst.AnimState:ClearOverrideBuild("ghost_abigail_gestalt")
+
+    -- inst.AnimState:AddOverrideBuild("ghost_abigail_gestalt")
+    -- inst.AnimState:AddOverrideBuild("ghost_abigail_human")
+
     if not TheWorld.ismastersim then
         return
     end

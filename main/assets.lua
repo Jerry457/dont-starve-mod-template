@@ -7,6 +7,13 @@ Assets = {
 
     Asset("ANIM", "anim/player_pray.zip" ),
     Asset("ANIM", "anim/player_prayonly.zip" ),
+
+    Asset("ANIM", "anim/abigail_ghost_flicker.zip"),
+    Asset("ANIM", "anim/ghost_abigail_gestalt_build.zip"),
+    Asset("ANIM", "anim/ghost_abigail_shadow_build.zip"),
+
+    Asset("ANIM", "anim/ghost_abigail_gestalt_human.zip"),
+    Asset("ANIM", "anim/ghost_abigail_shadow_human.zip"),
 }
 
 PreloadAssets = {

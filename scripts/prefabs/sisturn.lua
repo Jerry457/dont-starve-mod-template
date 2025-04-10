@@ -252,7 +252,7 @@ local function add_decor(inst, data)
     end
 end
 
-local function onclose(inst, doer)
+local function onopen(inst, doer)
     if doer.userid == inst._builder_id and inst._wendy_sisturn_3 then
         inst.components.attunable:LinkToPlayer(doer)
     end
@@ -334,7 +334,7 @@ local function fn()
     end
 
     inst:AddComponent("container")
-    inst.components.container.onclosefn = onclose
+    inst.components.container.onopefn = onopen
     inst.components.container:WidgetSetup("sisturn")
 
     inst:AddComponent("attunable")

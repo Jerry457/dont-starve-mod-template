@@ -4,11 +4,11 @@ local AddStategraphPostInit = AddStategraphPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local events = {
-    EventHandler("flicker", function(inst)
-        if not (inst.components.health:IsDead() or inst.sg:HasStateTag("dissipate")) and not inst.sg:HasStateTag("nointerrupt") and not inst.sg:HasStateTag("swoop") and not inst.sg:HasStateTag("busy") then
-            inst.sg:GoToState("idle_abigail_flicker")
-        end
-    end),
+    -- EventHandler("flicker", function(inst)
+    --     if not (inst.components.health:IsDead() or inst.sg:HasStateTag("dissipate")) and not inst.sg:HasStateTag("nointerrupt") and not inst.sg:HasStateTag("swoop") and not inst.sg:HasStateTag("busy") then
+    --         inst.sg:GoToState("idle_abigail_flicker")
+    --     end
+    -- end),
 }
 
 local states = {
@@ -17,7 +17,7 @@ local states = {
         tags = { "idle", "canrotate", "busy" },
 
         onenter = function(inst)
-            inst.AnimState:PlayAnimation("idle_abigail_flicker")
+            inst.AnimState:PlayAnimation("idle_abigail_normal_flicker")
         end,
 
         events =
@@ -44,5 +44,24 @@ for _, event in ipairs(events) do
     AddStategraphEvent("abigail", event)
 end
 
+local function getidleanim(inst)
+    if not inst.components.timer:TimerExists("flicker_cooldown")
+        and inst:HasTag("player_damagescale")
+        and inst.components.combat.target == nil
+        and not inst.is_defensive
+        and math.random() < 0.2 then
+
+        inst.components.timer:StartTimer("flicker_cooldown", math.random()*20  + 10 )
+
+        return "abigail_ghost_flicker"
+    end
+
+    return (inst._is_transparent and "abigail_escape_loop")
+        or (inst.components.aura.applying and "attack_loop")
+        or (inst.is_defensive and math.random() < 0.1 and "idle_custom")
+        or "idle"
+end
+
 AddStategraphPostInit("abigail", function(sg)
+    GlassicAPI.UpvalueUtil.SetUpvalue(sg.states["idle"].onenter, "getidleanim", getidleanim)
 end)
