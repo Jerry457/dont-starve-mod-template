@@ -26,17 +26,62 @@ local function OnFlowerPerished(item)
     item.components.perishable.onperishreplacement = "ghostflower"
 end
 
+local function IsFullOfFlowers(inst)
+    return inst.components.container ~= nil and inst.components.container:IsFull()
+end
+
+local function GetSisturnFeel(inst)
+    local evil = inst.components.container:FindItems(function(item)
+        if item.prefab == "petals_evil" then
+            return true
+        end
+    end)
+
+    local blossom = inst.components.container:FindItems(function(item)
+        if item.prefab == "moon_tree_blossom" then
+            return true
+        end
+    end)
+
+    local petals = inst.components.container:FindItems(function(item)
+        if item.prefab == "petals" then
+            return true
+        end
+    end)
+
+    if #evil > 3 then
+        return "EVIL", "evil_petals_fx"
+    elseif #blossom > 3 then
+        return "BLOSSOM"
+    elseif #petals > 3 then
+        return "PETALS", "petals_fx"
+    else
+        return "NORMAL"
+    end
+end
+
+local function OnSisturnStateChanged(inst)
+    for player in pairs(inst.components.attunable.attuned_players) do
+        player:PushEvent("onsisturnstatechanged", {is_active = IsFullOfFlowers(inst), state = GetSisturnFeel(inst)})
+    end
+end
+
 -- Skill tree reactions
 local function ConfigureSkillTreeUpgrades(inst, builder)
     local skilltreeupdater = (builder and builder.components.skilltreeupdater) or nil
+    if not skilltreeupdater then
+        return false
+    end
 
-    local petal_preserve = (skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_1")) or nil
-    local wendy_sisturn_3 = (skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_3")) or nil
+    local petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
+    local wendy_sisturn_3 = skilltreeupdater:IsActivated("wendy_sisturn_3")
+    local wendy_camp_3 = skilltreeupdater:IsActivated("wendy_lunar_3") or skilltreeupdater:IsActivated("wendy_shadow_3")
 
-    local dirty = (inst._petal_preserve ~= petal_preserve) or (inst._wendy_sisturn_3 ~= wendy_sisturn_3)
+    local dirty = (inst._petal_preserve ~= petal_preserve) or (inst._wendy_sisturn_3 ~= wendy_sisturn_3) or (inst._wendy_camp_3 ~= wendy_camp_3)
 
     inst._wendy_sisturn_3 = wendy_sisturn_3
     inst._petal_preserve = petal_preserve
+    inst._wendy_camp_3 = wendy_camp_3
 
     return dirty
 end
@@ -54,11 +99,11 @@ local function ApplySkillModifiers(inst)
             end
         end
     end
+    if inst._wendy_camp_3 then
+        OnSisturnStateChanged(inst)
+    end
 end
 
-local function IsFullOfFlowers(inst)
-    return inst.components.container ~= nil and inst.components.container:IsFull()
-end
 
 local function onhammered(inst)
     inst.components.lootdropper:DropLoot()
@@ -97,38 +142,8 @@ local function on_built(inst, data)
     end
 end
 
-local function getsisturnfeel(inst)
-    local evil = inst.components.container:FindItems(function(item)
-        if item.prefab == "petals_evil" then
-            return true
-        end
-    end)
-
-    local blossom = inst.components.container:FindItems(function(item)
-        if item.prefab == "moon_tree_blossom" then
-            return true
-        end
-    end)
-
-    local petals = inst.components.container:FindItems(function(item)
-        if item.prefab == "petals" then
-            return true
-        end
-    end)
-
-    if #evil > 3 then
-        return "EVIL", "evil_petals_fx"
-    elseif #blossom > 3 then
-        return "BLOSSOM"
-    elseif #petals > 3 then
-        return "PETALS", "petals_fx"
-    else
-        return "NORMAL"
-    end
-end
-
 local function update_sanityaura(inst)
-    if IsFullOfFlowers(inst) and getsisturnfeel(inst) ~= "EVIL" then
+    if IsFullOfFlowers(inst) and GetSisturnFeel(inst) ~= "EVIL" then
         if not inst.components.sanityaura then
             inst:AddComponent("sanityaura")
         end
@@ -155,8 +170,8 @@ local function update_idle_anim(inst)
 end
 
 local function update_abigail_status(inst)
-   local is_full = IsFullOfFlowers(inst)
-   local state, petal_fx_symbol = getsisturnfeel(inst)
+    local is_full = IsFullOfFlowers(inst)
+    local state, petal_fx_symbol = GetSisturnFeel(inst)
     if is_full and state ~= "NORMAL" then
         if not inst.petal_fx then
             inst.petal_fx = SpawnPrefab("sisturn_moon_petal_fx")
@@ -179,17 +194,12 @@ local function update_abigail_status(inst)
         if inst.petal_fx then
             inst.petal_fx.done = true
         end
-   end
+    end
 end
 
-local function onsisturnstatechanged(inst, player)
-    player:PushEvent("onsisturnstatechanged", {is_active = IsFullOfFlowers(inst), state = getsisturnfeel(inst)})
-end
 
 local function remove_decor(inst, data)
-    for player in pairs(inst.components.attunable.attuned_players) do
-        onsisturnstatechanged(inst, player)
-    end
+    OnSisturnStateChanged(inst)
 
     local item = data and data.prev_item
     if item and item.components.perishable and item.perished_listend then
@@ -207,9 +217,7 @@ local function remove_decor(inst, data)
 end
 
 local function add_decor(inst, data)
-    for player in pairs(inst.components.attunable.attuned_players) do
-        onsisturnstatechanged(inst, player)
-    end
+    OnSisturnStateChanged(inst)
 
     if inst._petal_preserve then
         local item = data and data.item
@@ -242,9 +250,9 @@ local function add_decor(inst, data)
     local doer = (is_full and inst.components.container ~= nil and inst.components.container.currentuser) or nil
     if doer ~= nil and doer.components.talker ~= nil and doer:HasTag("ghostlyfriend") then
 
-        if getsisturnfeel(inst) == "EVIL" then
+        if GetSisturnFeel(inst) == "EVIL" then
             doer.components.talker:Say(GetString(doer, "ANNOUNCE_SISTURN_FULL_EVIL"), nil, nil, true)
-        elseif getsisturnfeel(inst) == "BLOSSOM" then
+        elseif GetSisturnFeel(inst) == "BLOSSOM" then
             doer.components.talker:Say(GetString(doer, "ANNOUNCE_SISTURN_FULL_BLOSSOM"), nil, nil, true)
         else
             doer.components.talker:Say(GetString(doer, "ANNOUNCE_SISTURN_FULL"), nil, nil, true)
@@ -252,14 +260,15 @@ local function add_decor(inst, data)
     end
 end
 
-local function onopen(inst, doer)
-    if doer.userid == inst._builder_id and inst._wendy_sisturn_3 then
+local function onopen(inst, data)
+    local doer = data and data.doer or nil
+    if doer and doer.userid == inst._builder_id and inst._wendy_sisturn_3 then
         inst.components.attunable:LinkToPlayer(doer)
     end
 end
 
 local function onlink(inst, player, isloading)
-    onsisturnstatechanged(inst, player)
+    OnSisturnStateChanged(inst)
 end
 
 local function onunlink(inst, player, isloading)
@@ -270,8 +279,8 @@ local function getstatus(inst)
     local container = inst.components.container
     local num_decor = (container ~= nil and container:NumItems()) or 0
     local num_slots = (container ~= nil and container.numslots) or 1
-    return num_decor >= num_slots and  getsisturnfeel(inst) == "EVIL" and "LOTS_OF_FLOWERS_EVIL"
-            or num_decor >= num_slots and  getsisturnfeel(inst) == "BLOSSOM" and "LOTS_OF_FLOWERS_BLOSSOM"
+    return num_decor >= num_slots and  GetSisturnFeel(inst) == "EVIL" and "LOTS_OF_FLOWERS_EVIL"
+            or num_decor >= num_slots and  GetSisturnFeel(inst) == "BLOSSOM" and "LOTS_OF_FLOWERS_BLOSSOM"
             or num_decor >= num_slots and "LOTS_OF_FLOWERS"
             or num_decor > 0 and "SOME_FLOWERS"
             or nil
@@ -286,6 +295,7 @@ local function OnSave(inst, data)
     data.builder_id = inst._builder_id
     data.petal_preserve = inst._petal_preserve
     data.wendy_sisturn_3 = inst._wendy_sisturn_3
+    data.wendy_camp_3 = inst._wendy_camp_3
 end
 
 local function OnLoad(inst, data)
@@ -297,6 +307,7 @@ local function OnLoad(inst, data)
             inst._preserve_rate = data.preserve_rate
             inst._petal_preserve = data.petal_preserve
             inst._wendy_sisturn_3 = data.wendy_sisturn_3
+            inst._wendy_camp_3 = data.wendy_camp_3
 
             ApplySkillModifiers(inst)
         end
@@ -365,7 +376,7 @@ local function fn()
     inst:ListenForEvent("itemlose", remove_decor)
     inst:ListenForEvent("onbuilt", on_built)
 
-    inst.getsisturnfeel = getsisturnfeel
+    inst.getsisturnfeel = GetSisturnFeel
 
     inst:ListenForEvent("wendy_sisturnskillchanged", function(_, user)
         if user.userid == inst._builder_id and not inst:HasTag("burnt")

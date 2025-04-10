@@ -121,3 +121,8 @@ SCENE.attunable = function(inst, ...)
     end
     return _SCENE_attunable(inst, ...)
 end
+
+local _SCENE_ghostgestalter = SCENE.ghostgestalter
+SCENE.ghostgestalter = function(inst, ...)
+    return HookSkillTreeUpdaterIsActivated("wendy_lunar_3", "", _SCENE_ghostgestalter, ...)
+end
