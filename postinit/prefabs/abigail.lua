@@ -218,8 +218,6 @@ AddPrefabPostInit("abigail_murder_buff", function(inst)
         target.AnimState:ClearOverrideBuild("ghost_abigail_shadow_human")
         target.AnimState:AddOverrideBuild("ghost_abigail_human")
 
-        target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, TUNING.ABIGAIL_VEX_DAMAGE_MOD)
-
         inst.decaytimer = inst:DoTaskInTime(0, function() end)
         _ondetachedfn(inst, target, ...)
     end
