@@ -66,8 +66,8 @@ STRINGS.CHARACTERS.WENDY.ANNOUNCE_ABIGAIL_STRONG_MOON = {
 ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_REVIVE", "必忘忧")
 ModifyTranslatedStrings("STRINGS.RECIPE_DESC.GHOSTLYELIXIR_REVIVE", "让阿比盖尔忘记恐怖经历做回更活泼的自己")
 
-ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_SHADOW", "盈满之月")
+ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_SHADOW", "蚀亏之影")
 -- ModifyTranslatedStrings("STRINGS.RECIPE_DESC.GHOSTLYELIXIR_SHADOW", "让阿比盖尔忘记恐怖经历做回更活泼的自己")
 
-ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_LUNAR", "蚀亏之影")
+ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_LUNAR", "盈满之月")
 -- ModifyTranslatedStrings("STRINGS.RECIPE_DESC.GHOSTLYELIXIR_LUNAR", "让阿比盖尔忘记恐怖经历做回更活泼的自己")
