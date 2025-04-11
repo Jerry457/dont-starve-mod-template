@@ -58,7 +58,7 @@ local function OnDebuffRemoved(inst, name, debuff)
         if name == "ghostlyelixir_revive_buff" then
             inst._playerlink.components.pethealthbar:SetSymbol3(0)
         end
-	end
+    end
 end
 
 local function SetToGestalt(inst)
@@ -112,6 +112,34 @@ local function SetToNormal(inst)
     end
 end
 
+local function UpdateDamage(inst)
+    local buff = inst:GetDebuff("elixir_buff")
+    local murderbuff = inst:GetDebuff("abigail_murder_buff")
+    local phase = (buff ~= nil and buff.prefab == "ghostlyelixir_attack_buff") and "night" or TheWorld.state.phase
+    local modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
+    if inst:HasTag("shadow_abigail") then
+        modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
+    end
+    inst.components.combat.defaultdamage = modified_damage --/ (murderbuff and TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD or TUNING.ABIGAIL_VEX_DAMAGE_MOD) -- so abigail does her intended damage defined in tunings.lua --
+
+    inst.attack_level = (phase == "day" and 1)
+                        or (phase == "dusk" and 2)
+                        or 3
+
+
+    -- if murderbuff then
+    --     inst.components.planardamage:AddBonus(inst, TUNING.ABIGAIL_SHADOW_PLANAR_DAMAGE, "shadow_murder_planar")
+    -- else
+    --     inst.components.planardamage:AddBonus(inst, 0, "shadow_murder_planar")
+    -- end
+
+    -- If the animation fx was already playing we update its animation
+    local level_str = tostring(inst.attack_level)
+    if inst.attack_fx and not inst.attack_fx.AnimState:IsCurrentAnimation("attack" .. level_str .. "_loop") then
+        inst.attack_fx.AnimState:PlayAnimation("attack" .. level_str .. "_loop", true)
+    end
+end
+
 AddPrefabPostInit("abigail", function(inst)
     if not TheWorld.ismastersim then
         return
@@ -154,19 +182,60 @@ AddPrefabPostInit("abigail", function(inst)
     inst.SetToNormal = SetToNormal
 
     local _UpdateDamage = inst.UpdateDamage
-    local function UpdateDamage(inst, ...)
-        _UpdateDamage(inst, ...)
-
-        if inst:HasTag("shadow_abigail") then
-            local buff = inst:GetDebuff("elixir_buff")
-            local phase = (buff ~= nil and buff.prefab == "ghostlyelixir_attack_buff") and "night" or TheWorld.state.phase
-
-            local modified_damage = (TUNING.SHADOW_ABIGAIL_DAMAGE[phase] or TUNING.SHADOW_ABIGAIL_DAMAGE.day)
-            inst.components.combat.defaultdamage = modified_damage
-        end
-    end
     inst.UpdateDamage = UpdateDamage
     inst:StopWatchingWorldState("phase", _UpdateDamage)
     inst:WatchWorldState("phase", UpdateDamage)
-	UpdateDamage(inst, TheWorld.state.phase)
+    UpdateDamage(inst, TheWorld.state.phase)
+
+    local _CustomCombatDamage = inst.components.combat.customdamagemultfn
+end)
+
+
+AddPrefabPostInit("abigail_murder_buff", function(inst)
+    if not TheWorld.ismastersim then
+        return
+    end
+
+    inst.murder_buff_OnExtended = function() end
+    inst.components.debuff:SetExtendedFn(inst.murder_buff_OnExtended)
+
+    local _onattachedfn = inst.components.debuff.onattachedfn
+    GlassicAPI.UpvalueUtil.SetUpvalue(_onattachedfn, "murder_buff_OnExtended", inst.murder_buff_OnExtended)
+    GlassicAPI.UpvalueUtil.SetUpvalue(_onattachedfn, "UpdateDamage", inst.murder_buff_OnExtended)
+
+    inst.components.debuff.onattachedfn = function(inst, target, ...)
+        target:AddTag("shadow_abigail")
+        target.AnimState:ClearOverrideBuild("ghost_abigail_human")
+        target.AnimState:AddOverrideBuild("ghost_abigail_shadow_human")
+
+        _onattachedfn(inst, target, ...)
+        target.components.planardefense:RemoveBonus(inst, "wendymurderbuff")
+        local OnDeath = inst:GetEventCallbacks("death", target, "scripts/prefabs/abigail.lua")
+        inst:RemoveEventCallback("death", OnDeath, target)
+    end
+
+    local _ondetachedfn = inst.components.debuff.ondetachedfn
+    inst.components.debuff.ondetachedfn = function(inst, target, ...)
+        target:RemoveTag("shadow_abigail")
+        target.AnimState:ClearOverrideBuild("ghost_abigail_shadow_human")
+        target.AnimState:AddOverrideBuild("ghost_abigail_human")
+
+        target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, TUNING.ABIGAIL_VEX_DAMAGE_MOD)
+
+        inst.decaytimer = inst:DoTaskInTime(0, function() end)
+        _ondetachedfn(inst, target, ...)
+    end
+end)
+
+AddPrefabPostInit("abigail_vex_shadow_debuff", function(inst)
+    if not TheWorld.ismastersim then
+        return
+    end
+
+    local _onattachedfn = inst.components.debuff.onattachedfn
+    inst.components.debuff.onattachedfn = function(inst, target, ...)
+        _onattachedfn(inst, target, ...)
+        target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, 1.35)
+    end
+
 end)

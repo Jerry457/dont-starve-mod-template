@@ -7,7 +7,6 @@ local files = {
     "postinit/components/skilltreedata.lua",
     "postinit/components/skilltreeupdater.lua",
     "postinit/prefabs/abigail.lua",
-    "postinit/prefabs/abigail_murder_buff.lua",
     "postinit/prefabs/elixir_container.lua",
     "postinit/prefabs/flower_evil.lua",
     "postinit/prefabs/ghost.lua",

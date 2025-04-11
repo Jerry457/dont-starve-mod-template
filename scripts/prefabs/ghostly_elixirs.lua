@@ -598,14 +598,15 @@ local function buff_OnTimerDone(inst, data)
 end
 
 local function buff_OnExtended(inst, target)
-    local duration = (target:HasTag("player") and inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
+    if inst.components.timer then
+        local duration = (target:HasTag("player") and inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
 
-    if inst.duration_extended_by_skill then
-        duration = duration * inst.duration_extended_by_skill
+        if inst.duration_extended_by_skill then
+            duration = duration * inst.duration_extended_by_skill
+        end
+        inst.components.timer:StopTimer("decay")
+        inst.components.timer:StartTimer("decay", duration)
     end
-
-    inst.components.timer:StopTimer("decay")
-    inst.components.timer:StartTimer("decay", duration)
 
     if inst.task ~= nil then
         inst.task:Cancel()
