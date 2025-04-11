@@ -104,6 +104,13 @@ local function ApplySkillModifiers(inst)
     end
 end
 
+local function OnSkillTreeUpgrades(inst, user)
+    if user.userid == inst._builder_id and not inst:HasTag("burnt")
+        and ConfigureSkillTreeUpgrades(inst, user)
+    then
+        ApplySkillModifiers(inst)
+    end
+end
 
 local function onhammered(inst)
     inst.components.lootdropper:DropLoot()
@@ -277,7 +284,7 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
-    OnSisturnStateChanged(inst)
+    inst:DoTaskInTime(0, OnSisturnStateChanged)
 end
 
 local function onunlink(inst, player, isloading)
@@ -388,10 +395,13 @@ local function fn()
     inst.getsisturnfeel = GetSisturnFeel
 
     inst:ListenForEvent("wendy_sisturnskillchanged", function(_, user)
-        if user.userid == inst._builder_id and not inst:HasTag("burnt")
-                and ConfigureSkillTreeUpgrades(inst, user) then
-            ApplySkillModifiers(inst)
-        end
+        OnSkillTreeUpgrades(inst, user)
+    end, TheWorld)
+    inst:ListenForEvent("wendy_shadowskillchanged", function(_, user)
+        OnSkillTreeUpgrades(inst, user)
+    end, TheWorld)
+    inst:ListenForEvent("wendy_lunarskillchanged", function(_, user)
+        OnSkillTreeUpgrades(inst, user)
     end, TheWorld)
 
     inst.OnSave = OnSave

@@ -26,26 +26,34 @@ local function CheckMoonState(inst, nosay)
     local is_gestalt = ghost:HasTag("gestalt")
     local is_shadow = ghost:HasTag("shadow_abigail")
 
+    local elixir_buff = ghost:GetDebuff("elixir_buff")
+
     local moon_state = moon_states.reverse
     if is_gestalt then
-        if is_waxing_moon then
-            moon_state = moon_states.normal
-        elseif TheWorld.state.isfullmoon then
+        if elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff" or TheWorld.state.isfullmoon then
             moon_state = moon_states.strong
+        elseif is_waxing_moon then
+            moon_state = moon_states.normal
         end
     elseif is_shadow then
-        if is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
-            moon_state = moon_states.normal
-        elseif TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
+        if (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff") or TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
             moon_state = moon_states.strong
+        elseif is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
+            moon_state = moon_states.normal
         end
     end
 
     if last_moon_state == moon_state then
         return
     end
+    last_moon_state = moon_state
 
     local function say(stringtype)
+        if elixir_buff then
+            if elixir_buff.prefab == "ghostlyelixir_lunar_buff" or elixir_buff.prefab == "ghostlyelixir_shadow_buff" then
+                return
+            end
+        end
         if not nosay and summoned and inst.components.talker then
             if is_gestalt then
                 inst.components.talker:Say(GetString(inst, stringtype, is_cave and "GESTALT_CAVE" or "GESTALT"))
@@ -138,8 +146,12 @@ AddPrefabPostInit("wendy", function(inst)
     local update_sisturn_state = inst:GetEventCallbacks("onsisturnstatechanged", TheWorld, "scripts/prefabs/wendy.lua")
     inst:RemoveEventCallback("onsisturnstatechanged", update_sisturn_state, TheWorld)
 
+    local OnSkillTreeInitialized = inst:GetEventCallbacks("ms_skilltreeinitialized", inst, "scripts/prefabs/wendy.lua")
+    GlassicAPI.UpvalueUtil.SetUpvalue(OnSkillTreeInitialized, "SKILL_CHANGE_EVENTS", { "wendy_sisturn", "wendy_shadow", "wendy_lunar" })
+
     inst:ListenForEvent("onsisturnstatechanged", OnSisturnStateChanged)
 
+    inst.CheckMoonState = CheckMoonState
     -- inst:WatchWorldState("moonphase", CheckMoonState)
     -- inst:WatchWorldState("cavemoonphase", CheckMoonState)
     inst:WatchWorldState("isnight", OnMoonStateChange)

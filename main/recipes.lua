@@ -29,3 +29,13 @@ AddRecipePostInit("wendy_gravestone", function(self)
     self.builder_skill = "wendy_smallghost_2"
     AllBuilderTaggedRecipes["wendy_gravestone"] = self.builder_tag or self.builder_skill
 end)
+
+AddRecipePostInit("ghostlyelixir_shadow", function(self)
+    self.builder_skill = "wendy_shadow_2"
+    AllBuilderTaggedRecipes["ghostlyelixir_lunar"] = self.builder_tag or self.builder_skill
+end)
+
+AddRecipePostInit("ghostlyelixir_lunar", function(self)
+    self.builder_skill = "wendy_lunar_2"
+    AllBuilderTaggedRecipes["ghostlyelixir_lunar"] = self.builder_tag or self.builder_skill
+end)

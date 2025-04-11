@@ -323,23 +323,115 @@ local potion_tunings =
         FLOATER = {"small", 0.2, 0.7},
         fx = "ghostlyelixir_shadow_fx",
         dripfx = "ghostlyelixir_shadow_dripfx",
+        ONAPPLY = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow")
+            end
+            target:DoTaskInTime(0, function()
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
+                end
+            end)
+        end,
+        ONDETACH = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("shadow_aligned", inst, "ghostlyelixir_shadow")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow")
+            end
+            target:DoTaskInTime(0, function()
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
+                end
+            end)
+        end,
+        ONAPPLY_PLAYER = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow")
+            end
+        end,
+        ONDETACH_PLAYER = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("shadow_aligned", inst, "ghostlyelixir_shadow")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow")
+            end
+        end,
         skill_modifier_long_duration = true,
         -- buff_type = "super_elixir_buff",
+
     },
     ghostlyelixir_lunar =
     {
-        DURATION = TUNING.SKILLS.WENDY.LUNARELIXIR_DURATION,
+        DURATION = TUNING.SKILLS.WENDY.SHADOWELIXIR_DURATION,
         FLOATER = {"small", 0.3, 0.8},
         fx = "ghostlyelixir_lunar_fx",
         dripfx = "ghostlyelixir_lunar_dripfx",
         ONAPPLY = function(inst, target)
-            target.components.planardamage:RemoveBonus(inst, "ghostlyelixir_lunarbonus")
-            local bonus_amount = (target:HasTag("gestalt") and TUNING.SKILLS.WENDY.LUNARELIXIR_DAMAGEBONUS_GESTALT)
-                or TUNING.SKILLS.WENDY.LUNARELIXIR_DAMAGEBONUS
-            target.components.planardamage:AddBonus(inst, bonus_amount, "ghostlyelixir_lunarbonus")
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar")
+            end
+            target:DoTaskInTime(0, function()
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
+                end
+            end)
         end,
         ONDETACH = function(inst, target)
-            target.components.planardamage:RemoveBonus(inst, "ghostlyelixir_lunarbonus")
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("lunar_aligned", inst, "ghostlyelixir_lunar")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar")
+            end
+            target:DoTaskInTime(0, function()
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
+                end
+            end)
+        end,
+        ONAPPLY_PLAYER = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar")
+            end
+        end,
+        ONDETACH_PLAYER = function(inst, target)
+            local damagetyperesist = target.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("lunar_aligned", inst, "ghostlyelixir_lunar")
+            end
+            local damagetypebonus = target.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar")
+            end
         end,
         skill_modifier_long_duration = true,
         -- buff_type = "super_elixir_buff"

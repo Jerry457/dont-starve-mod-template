@@ -62,10 +62,6 @@ local function OnDebuffRemoved(inst, name, debuff)
 end
 
 local function SetToGestalt(inst)
-    if inst:HasTag("gestalt") then
-        return
-    end
-
     inst:AddTag("gestalt")
     -- inst:AddTag("crazy")
 
@@ -85,10 +81,6 @@ local function SetToGestalt(inst)
 end
 
 local function SetToShadow(inst)
-    if inst:HasTag("shadow_abigail") then
-        return
-    end
-
     local x, y, z = inst.Transform:GetWorldPosition()
     SpawnPrefab("abigail_attack_shadow_fx").Transform:SetPosition(x, y, z)
     local fx = SpawnPrefab("abigail_shadow_buff_fx")
