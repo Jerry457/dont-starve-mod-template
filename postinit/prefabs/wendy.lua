@@ -40,7 +40,6 @@ local function CheckMoonState(inst, nosay)
             moon_state = moon_states.strong
         end
     end
-    print("moon_state", moon_state)
 
     if last_moon_state == moon_state then
         return
