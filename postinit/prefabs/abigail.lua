@@ -235,6 +235,7 @@ AddPrefabPostInit("abigail_vex_shadow_debuff", function(inst)
     local _onattachedfn = inst.components.debuff.onattachedfn
     inst.components.debuff.onattachedfn = function(inst, target, ...)
         _onattachedfn(inst, target, ...)
+        target.components.combat.externaldamagetakenmultipliers:RemoveModifier(inst)
         target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, 1.35)
     end
 
