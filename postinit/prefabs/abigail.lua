@@ -152,4 +152,21 @@ AddPrefabPostInit("abigail", function(inst)
     inst.SetToGestalt = SetToGestalt
     inst.SetToShadow = SetToShadow
     inst.SetToNormal = SetToNormal
+
+    local _UpdateDamage = inst.UpdateDamage
+    local function UpdateDamage(inst, ...)
+        _UpdateDamage(inst, ...)
+
+        if inst:HasTag("shadow_abigail") then
+            local buff = inst:GetDebuff("elixir_buff")
+            local phase = (buff ~= nil and buff.prefab == "ghostlyelixir_attack_buff") and "night" or TheWorld.state.phase
+
+            local modified_damage = (TUNING.SHADOW_ABIGAIL_DAMAGE[phase] or TUNING.SHADOW_ABIGAIL_DAMAGE.day)
+            inst.components.combat.defaultdamage = modified_damage
+        end
+    end
+    inst.UpdateDamage = UpdateDamage
+    inst:StopWatchingWorldState("phase", _UpdateDamage)
+    inst:WatchWorldState("phase", UpdateDamage)
+	UpdateDamage(inst, TheWorld.state.phase)
 end)
