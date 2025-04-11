@@ -200,7 +200,7 @@ AddPrefabPostInit("abigail", function(inst)
     inst:WatchWorldState("phase", UpdateDamage)
     UpdateDamage(inst, TheWorld.state.phase)
 
-    inst.componentscustomdamagemultfn = CustomCombatDamage
+    inst.components.combat.customdamagemultfn = CustomCombatDamage
 end)
 
 
