@@ -76,8 +76,94 @@ package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
     skills_data.SKILLS["wendy_shadow_1"] = nil
     skills_data.SKILLS["wendy_shadow_2"].locks = {"wendy_shadow_lock_1", "wendy_shadow_lock_2", "wendy_shadow_lock_3"}
 
+    skills_data.SKILLS["wendy_shadow_2"].onactivate = function(inst, fromload)
+        inst:AddTag("player_shadow_aligned")
+
+        local addresists = function(pref)
+            local damagetyperesist = pref.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("shadow_aligned", pref, TUNING.SKILLS.WENDY.ALLEGIANCE_SHADOW_RESIST, "allegiance_shadow")
+            end
+            local damagetypebonus = pref.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("lunar_aligned", pref, TUNING.SKILLS.WENDY.ALLEGIANCE_VS_LUNAR_BONUS, "allegiance_shadow")
+            end
+        end
+
+        addresists(inst)
+        if inst.components.ghostlybond and inst.components.ghostlybond.ghost then
+            inst.components.ghostlybond.ghost:AddTag("shadow_aligned")
+            addresists(inst.components.ghostlybond.ghost)
+            inst.components.ghostlybond.ghost.components.planardefense:SetBaseDefense(TUNING.SKILLS.WENDY.GHOST_PLANARDEFENSE)
+        end
+    end
+
+    skills_data.SKILLS["wendy_shadow_2"].ondeactivate = function(inst, fromload)
+        inst:RemoveTag("player_shadow_aligned")
+
+        local removeresist = function(pref)
+            local damagetyperesist = pref.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("shadow_aligned", pref, "allegiance_shadow")
+            end
+            local damagetypebonus = pref.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("lunar_aligned", pref, "allegiance_shadow")
+            end
+        end
+        removeresist(inst)
+        if inst.components.ghostlybond and inst.components.ghostlybond.ghost then
+            inst.components.ghostlybond.ghost:RemoveTag("shadow_aligned")
+            removeresist(inst.components.ghostlybond.ghost)
+            inst.components.ghostlybond.ghost.components.planardefense:SetBaseDefense(0)
+        end
+    end
+
     skills_data.SKILLS["wendy_lunar_1"] = nil
     skills_data.SKILLS["wendy_lunar_2"].locks = {"wendy_lunar_lock_1", "wendy_lunar_lock_2", "wendy_lunar_lock_3"}
+
+    skills_data.SKILLS["wendy_lunar_2"].onactivate = function(inst, fromload)
+        inst:AddTag("player_lunar_aligned")
+
+        local addresists = function(pref)
+            local damagetyperesist = pref.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:AddResist("lunar_aligned", pref, TUNING.SKILLS.WENDY.ALLEGIANCE_LUNAR_RESIST, "allegiance_lunar")
+            end
+            local damagetypebonus = pref.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:AddBonus("shadow_aligned", pref, TUNING.SKILLS.WENDY.ALLEGIANCE_VS_SHADOW_BONUS, "allegiance_lunar")
+            end
+        end
+
+        addresists(inst)
+        if inst.components.ghostlybond and inst.components.ghostlybond.ghost then
+            inst.components.ghostlybond.ghost:AddTag("lunar_aligned")
+            addresists(inst.components.ghostlybond.ghost)
+            inst.components.ghostlybond.ghost.components.planardefense:SetBaseDefense(TUNING.SKILLS.WENDY.GHOST_PLANARDEFENSE)
+        end
+    end
+
+    skills_data.SKILLS["wendy_lunar_2"].ondeactivate = function(inst, fromload)
+        inst:RemoveTag("player_lunar_aligned")
+
+        local removeresist = function(pref)
+            local damagetyperesist = pref.components.damagetyperesist
+            if damagetyperesist then
+                damagetyperesist:RemoveResist("lunar_aligned", pref, "allegiance_lunar")
+            end
+            local damagetypebonus = pref.components.damagetypebonus
+            if damagetypebonus then
+                damagetypebonus:RemoveBonus("shadow_aligned", pref, "allegiance_lunar")
+            end
+        end
+        removeresist(inst)
+        if inst.components.ghostlybond and inst.components.ghostlybond.ghost then
+            inst.components.ghostlybond.ghost:RemoveTag("lunar_aligned")
+            removeresist(inst.components.ghostlybond.ghost)
+            inst.components.ghostlybond.ghost.components.planardefense:SetBaseDefense(0)
+        end
+    end
 
     skills_data.SKILLS["wendy_lunar_lock_1"].lock_open = debug_enable
     skills_data.SKILLS["wendy_lunar_lock_2"].lock_open = debug_enable
