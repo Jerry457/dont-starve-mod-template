@@ -86,17 +86,26 @@ local function ConfigureSkillTreeUpgrades(inst, builder)
     return dirty
 end
 
+local function StartListenItem(inst, item)
+    if item and not item.perished_listend then
+        item.perished_listend = true
+        inst:ListenForEvent("perished", OnFlowerPerished, item)
+    end
+end
+
+local function StopListenItem(inst, item)
+    if item and item.perished_listend then
+        item.perished_listend = false
+        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
+    end
+end
+
 local function ApplySkillModifiers(inst)
     inst.components.preserver:SetPerishRateMultiplier(inst._petal_preserve and TUNING.WENDY_SISTURN_PETAL_PRESRVE or 1)
     if inst._petal_preserve then
         for i = 1, inst.components.container.numslots do
             local item = inst.components.container.slots[i]
-            if item then
-                if not item.perished_listend then
-                    item.perished_listend = true
-                    inst:ListenForEvent("perished", OnFlowerPerished, item)
-                end
-            end
+            StartListenItem(inst, item)
         end
     end
     if inst._wendy_camp_3 then
@@ -208,11 +217,8 @@ end
 local function remove_decor(inst, data)
     OnSisturnStateChanged(inst)
 
-    local item = data and data.prev_item
-    if item and item.components.perishable and item.perished_listend then
-        item.perished_listend = false
-        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
-    end
+    local item = data and data.prev_item or nil
+    StopListenItem(inst, item)
 
     if data ~= nil and data.slot ~= nil and FLOWER_LAYERS[data.slot] then
         inst.AnimState:Hide(FLOWER_LAYERS[data.slot])
@@ -227,11 +233,8 @@ local function add_decor(inst, data)
     OnSisturnStateChanged(inst)
 
     if inst._petal_preserve then
-        local item = data and data.item
-        if item and item:HasTag("petal") and item.components.perishable and inst._petal_preserve then
-            item.perished_listend = true
-            inst:ListenForEvent("perished", OnFlowerPerished, item)
-        end
+        local item = data and data.item or nil
+        StartListenItem(inst, item)
     end
 
     if data ~= nil and data.slot ~= nil and FLOWER_LAYERS[data.slot] and not inst:HasTag("burnt") then

@@ -94,15 +94,15 @@ local potion_tunings =
         end,
         TICK_FN = function(inst, target)
             local mult = 1
-            if (target.components.follower and
-                target.components.follower.leader and
-                target.components.follower.leader.components.skilltreeupdater and
-                target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
-                (TheWorld.components.sisturnregistry and
-                TheWorld.components.sisturnregistry:IsBlossom()) and
-                not target:HasTag("INLIMBO") then
-                    mult = 0.5
-            end
+            -- if (target.components.follower and
+            --     target.components.follower.leader and
+            --     target.components.follower.leader.components.skilltreeupdater and
+            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
+            --     (TheWorld.components.sisturnregistry and
+            --     TheWorld.components.sisturnregistry:IsBlossom()) and
+            --     not target:HasTag("INLIMBO") then
+            --         mult = 0.5
+            -- end
             target.components.health:DoDelta(TUNING.GHOSTLYELIXIR_SLOWREGEN_HEALING*mult, true, inst.prefab)
         end,
         DURATION = TUNING.GHOSTLYELIXIR_SLOWREGEN_DURATION,
@@ -129,15 +129,15 @@ local potion_tunings =
         end,
         TICK_FN = function(inst, target)
             local mult = 1
-            if (target.components.follower and
-                target.components.follower.leader and
-                target.components.follower.leader.components.skilltreeupdater and
-                target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
-                (TheWorld.components.sisturnregistry and
-                TheWorld.components.sisturnregistry:IsBlossom()) and
-                not target:HasTag("INLIMBO") then
-                    mult = 0.5
-            end
+            -- if (target.components.follower and
+            --     target.components.follower.leader and
+            --     target.components.follower.leader.components.skilltreeupdater and
+            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
+            --     (TheWorld.components.sisturnregistry and
+            --     TheWorld.components.sisturnregistry:IsBlossom()) and
+            --     not target:HasTag("INLIMBO") then
+            --         mult = 0.5
+            -- end
             target.components.health:DoDelta(TUNING.GHOSTLYELIXIR_FASTREGEN_HEALING*mult, true, inst.prefab)
         end,
         DURATION = TUNING.GHOSTLYELIXIR_FASTREGEN_DURATION,
