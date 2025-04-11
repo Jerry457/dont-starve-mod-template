@@ -186,8 +186,6 @@ AddPrefabPostInit("abigail", function(inst)
     inst:StopWatchingWorldState("phase", _UpdateDamage)
     inst:WatchWorldState("phase", UpdateDamage)
     UpdateDamage(inst, TheWorld.state.phase)
-
-    local _CustomCombatDamage = inst.components.combat.customdamagemultfn
 end)
 
 
@@ -201,7 +199,7 @@ AddPrefabPostInit("abigail_murder_buff", function(inst)
 
     local _onattachedfn = inst.components.debuff.onattachedfn
     GlassicAPI.UpvalueUtil.SetUpvalue(_onattachedfn, "murder_buff_OnExtended", inst.murder_buff_OnExtended)
-    GlassicAPI.UpvalueUtil.SetUpvalue(_onattachedfn, "UpdateDamage", inst.murder_buff_OnExtended)
+    GlassicAPI.UpvalueUtil.SetUpvalue(_onattachedfn, "UpdateDamage", UpdateDamage)
 
     inst.components.debuff.onattachedfn = function(inst, target, ...)
         target:AddTag("shadow_abigail")
