@@ -118,7 +118,7 @@ local function UpdateDamage(inst)
     local phase = (buff ~= nil and buff.prefab == "ghostlyelixir_attack_buff") and "night" or TheWorld.state.phase
     local modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
     if inst:HasTag("shadow_abigail") then
-        modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
+        modified_damage = (TUNING.SHADOW_ABIGAIL_DAMAGE[phase] or TUNING.SHADOW_ABIGAIL_DAMAGE.day)
     end
     inst.components.combat.defaultdamage = modified_damage --/ (murderbuff and TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD or TUNING.ABIGAIL_VEX_DAMAGE_MOD) -- so abigail does her intended damage defined in tunings.lua --
 
