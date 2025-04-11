@@ -82,9 +82,6 @@ local function SetToGestalt(inst)
 
     inst.components.combat:SetAttackPeriod(3)
     inst.components.combat.attackrange = 6
-
-    -- 原版月亮药剂的效果
-    -- inst.components.planardamage:AddBonus(inst, TUNING.SKILLS.WENDY.LUNARELIXIR_DAMAGEBONUS, "ghostlyelixir_lunarbonus")
 end
 
 local function SetToShadow(inst)
@@ -118,9 +115,6 @@ local function SetToNormal(inst)
 
         inst.components.combat:SetAttackPeriod(4)
         inst.components.combat.attackrange = 3
-
-        -- 原版月亮药剂的效果
-        -- inst.components.planardamage:RemoveBonus(inst, "ghostlyelixir_lunarbonus")
     elseif inst:HasTag("shadow_abigail") then
         inst:RemoveDebuff("abigail_murder_buff")
     end
