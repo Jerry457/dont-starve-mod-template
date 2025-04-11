@@ -1,6 +1,31 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
+local function ApplyDebuff(inst, data)
+    local target = data ~= nil and data.target
+    if target ~= nil then
+        local buff = "abigail_vex_debuff"
+
+        if inst:HasTag("abigail_vex_shadow") then  -- 原来暗影药剂效果
+            buff = "abigail_vex_shadow_debuff"
+        end
+
+        local olddebuff = target:GetDebuff("abigail_vex_debuff")
+        if olddebuff and olddebuff.prefab ~= buff then
+            target:RemoveDebuff("abigail_vex_debuff")
+        end
+
+        target:AddDebuff("abigail_vex_debuff", buff, nil, nil, nil, inst)
+
+        local debuff = target:GetDebuff("abigail_vex_debuff")
+
+        local skin_build = inst:GetSkinBuild()
+        if skin_build ~= nil and debuff ~= nil then
+            debuff.AnimState:OverrideItemSkinSymbol("flower", skin_build, "flower", inst.GUID, "abigail_attack_fx")
+        end
+    end
+end
+
 local function SetbonusHaelath(inst, value)
     inst.bonus_max_health = value
 
@@ -37,6 +62,10 @@ local function OnDebuffRemoved(inst, name, debuff)
 end
 
 local function SetToGestalt(inst)
+    if inst:HasTag("gestalt") then
+        return
+    end
+
     inst:AddTag("gestalt")
     -- inst:AddTag("crazy")
 
@@ -59,6 +88,10 @@ local function SetToGestalt(inst)
 end
 
 local function SetToShadow(inst)
+    if inst:HasTag("shadow_abigail") then
+        return
+    end
+
     local x, y, z = inst.Transform:GetWorldPosition()
     SpawnPrefab("abigail_attack_shadow_fx").Transform:SetPosition(x, y, z)
     local fx = SpawnPrefab("abigail_shadow_buff_fx")
@@ -105,6 +138,7 @@ AddPrefabPostInit("abigail", function(inst)
     inst:RemoveEventCallback("pre_health_setval", OnHealthChanged)
 
     local _LinkToPlayer = inst.LinkToPlayer
+    GlassicAPI.UpvalueUtil.SetUpvalue(_LinkToPlayer, "ApplyDebuff", ApplyDebuff)
     function inst:LinkToPlayer(player, ...)
         if player.components.pethealthbar ~= nil then
             local revive_buff = inst:GetDebuff("ghostlyelixir_revive_buff")

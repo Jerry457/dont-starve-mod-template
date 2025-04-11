@@ -1,6 +1,93 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
+local moon_states = {
+    reverse = "REVERSE",
+    normal = "NORMAL",
+    strong = "STRONG"
+}
+
+local last_moon_state
+local function CheckMoonState(inst, nosay)
+    if not inst.components.ghostlybond then
+        return
+    end
+    local ghost = inst.components.ghostlybond.ghost
+    local summoned = inst.components.ghostlybond.summoned
+
+    if not ghost then
+        return
+    end
+
+    local is_cave = TheWorld:HasTag("cave")
+    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not TheWorld.state.isnewmoon
+    local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not TheWorld.state.isfullmoon
+
+    local is_gestalt = ghost:HasTag("gestalt")
+    local is_shadow = ghost:HasTag("shadow_abigail")
+
+    local moon_state = moon_states.reverse
+    if is_gestalt then
+        if is_waxing_moon then
+            moon_state = moon_states.normal
+        elseif TheWorld.state.isfullmoon then
+            moon_state = moon_states.strong
+        end
+    elseif is_shadow then
+        if is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
+            moon_state = moon_states.normal
+        elseif TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
+            moon_state = moon_states.strong
+        end
+    end
+    print("moon_state", moon_state)
+
+    if last_moon_state == moon_state then
+        return
+    end
+
+    local function say(stringtype)
+        if not nosay and summoned and inst.components.talker then
+            if is_gestalt then
+                inst.components.talker:Say(GetString(inst, stringtype, is_cave and "GESTALT_CAVE" or "GESTALT"))
+            end
+            if is_shadow then
+                inst.components.talker:Say(GetString(inst, stringtype, is_cave and "SHADOW_CAVE" or "SHADOW"))
+            end
+        end
+    end
+
+    if moon_state == moon_states.reverse then
+        ghost.components.planardamage:RemoveBonus(ghost, "ghostlyelixir_lunarbonus")
+        ghost:RemoveTag("abigail_vex_shadow")
+
+        say("ANNOUNCE_ABIGAIL_REVERSE_MOON")
+    else -- if moon_state == moon_states.normal or moon_state == moon_states.strong then
+        if is_gestalt then
+            ghost.components.planardamage:AddBonus(ghost, TUNING.SKILLS.WENDY.LUNARELIXIR_DAMAGEBONUS_GESTALT, "ghostlyelixir_lunarbonus")
+        end
+        if is_shadow then
+            ghost:AddTag("abigail_vex_shadow")
+        end
+
+        if moon_state == moon_states.strong then
+            say("ANNOUNCE_ABIGAIL_STRONG_MOON")
+
+            if is_gestalt then
+            end
+            if is_shadow then
+
+            end
+        else
+            say("ANNOUNCE_ABIGAIL_NORMAL_MOON")
+        end
+    end
+end
+
+local function OnMoonStateChange(inst)
+    inst:DoTaskInTime(0, CheckMoonState)
+end
+
 local function OnSisturnStateChanged(inst, data)
     if not data then
         return
@@ -31,6 +118,7 @@ local function OnSisturnStateChanged(inst, data)
             ghost:SetToShadow()
         end
     end
+    CheckMoonState(inst, true)
 
     ghost:updatehealingbuffs()
     inst.components.ghostlybond:SetBondTimeMultiplier("sisturn", is_active and TUNING.ABIGAIL_BOND_LEVELUP_TIME_MULT or nil)
@@ -50,4 +138,9 @@ AddPrefabPostInit("wendy", function(inst)
     inst:RemoveEventCallback("onsisturnstatechanged", update_sisturn_state, TheWorld)
 
     inst:ListenForEvent("onsisturnstatechanged", OnSisturnStateChanged)
+
+    -- inst:WatchWorldState("moonphase", CheckMoonState)
+    -- inst:WatchWorldState("cavemoonphase", CheckMoonState)
+    inst:WatchWorldState("isnight", OnMoonStateChange)
+    inst:WatchWorldState("nightmarephase", OnMoonStateChange)
 end)
