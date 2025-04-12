@@ -22,12 +22,46 @@ local FLOWER_LAYERS =
     "flower2",
 }
 
+local function IsFullOfFlowers(inst)
+    return inst.components.container ~= nil and inst.components.container:IsFull()
+end
+
 local function OnFlowerPerished(item)
     item.components.perishable.onperishreplacement = "ghostflower"
 end
 
-local function IsFullOfFlowers(inst)
-    return inst.components.container ~= nil and inst.components.container:IsFull()
+local function OnPerishChange(inst)
+    local percent = 1
+    for i = 1, inst.components.container.numslots do
+        local item = inst.components.container.slots[i]
+        if item and item.components.perishable then
+            percent = math.min(percent, item.components.perishable:GetPercent())
+        end
+    end
+
+    for player in pairs(inst.components.attunable.attuned_players) do
+        if player then
+            player:PushEvent("sisturnperishchange", {percent = percent})
+        end
+    end
+end
+
+local function StartListenItem(inst, item)
+    if item and not item.perished_listend then
+        item.perished_listend = true
+        inst:ListenForEvent("perished", OnFlowerPerished, item)
+        inst:ListenForEvent("perishchange", inst.OnPerishChange, item)
+        OnPerishChange(inst)
+    end
+end
+
+local function StopListenItem(inst, item)
+    if item and item.perished_listend then
+        item.perished_listend = false
+        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
+        inst:RemoveEventCallback("perishchange", inst.OnPerishChange, item)
+        OnPerishChange(inst)
+    end
 end
 
 local function GetSisturnFeel(inst)
@@ -84,20 +118,6 @@ local function ConfigureSkillTreeUpgrades(inst, builder)
     inst._wendy_camp_3 = wendy_camp_3
 
     return dirty
-end
-
-local function StartListenItem(inst, item)
-    if item and not item.perished_listend then
-        item.perished_listend = true
-        inst:ListenForEvent("perished", OnFlowerPerished, item)
-    end
-end
-
-local function StopListenItem(inst, item)
-    if item and item.perished_listend then
-        item.perished_listend = false
-        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
-    end
 end
 
 local function ApplySkillModifiers(inst)
@@ -396,6 +416,9 @@ local function fn()
     inst:ListenForEvent("onbuilt", on_built)
 
     inst.getsisturnfeel = GetSisturnFeel
+    inst.OnPerishChange = function(item)
+        OnPerishChange(inst, item)
+    end
 
     inst:ListenForEvent("wendy_sisturnskillchanged", function(_, user)
         OnSkillTreeUpgrades(inst, user)

@@ -13,6 +13,8 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_1_DESC", "寒冷�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "温蒂会制作随身供品罐了，能够让阿比盖尔体验到更多不同的永恒领域力量。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "现在骨灰罐内可以放入月树花和深色花瓣了，同一种花瓣协同的力量能让阿比盖尔获得像冒险家一样较强的抵抗，当温蒂学习更强大的不同亲和时，月树花或深色花瓣的魔力将会更彻底的释放。")
 
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
+
 STRINGS.ACTIONS.UPGRADE.CONDOLENCE_BOUQUET = "哀悼献花"
 STRINGS.ACTIONS.GRAVE_RELOCATION = {
     GENERIC = "改葬",

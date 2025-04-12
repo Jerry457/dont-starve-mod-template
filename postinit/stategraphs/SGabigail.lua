@@ -68,6 +68,37 @@ local function getidleanim(inst)
         or "idle"
 end
 
+
 AddStategraphPostInit("abigail", function(sg)
     GlassicAPI.UpvalueUtil.SetUpvalue(sg.states["idle"].onenter, "getidleanim", getidleanim)
+
+    local _abigail_attack_start_onenter = sg.states["abigail_attack_start"].onenter
+    sg.states["abigail_attack_start"].onenter = function(inst, ...)
+        _abigail_attack_start_onenter(inst, ...)
+        inst.fade_toggle:set(true)
+        inst.components.health:SetInvincible(true)
+    end
+
+    local _abigail_attack_end_onexit = sg.states["abigail_attack_end"].onexit
+    sg.states["abigail_attack_end"].onexit = function(inst, ...)
+        _abigail_attack_end_onexit(inst, ...)
+        inst.fade_toggle:set(false)
+        inst.components.health:SetInvincible(false)
+    end
+
+    local _gestalt_attack_onenter = sg.states["gestalt_attack"].onenter
+    sg.states["gestalt_attack"].onenter = function(inst, ...)
+        _gestalt_attack_onenter(inst, ...)
+        inst.fade_toggle:set(true)
+        inst.components.health:SetInvincible(true)
+    end
+
+    local _gestalt_pst_attack_onexit = sg.states["gestalt_pst_attack"].onexit
+    sg.states["gestalt_pst_attack"].onexit = function(inst, ...)
+        if _gestalt_pst_attack_onexit then
+            _gestalt_pst_attack_onexit(inst, ...)
+        end
+        inst.fade_toggle:set(false)
+        inst.components.health:SetInvincible(false)
+    end
 end)
