@@ -30,7 +30,7 @@ local function CheckMoonState(inst, nosay)
 
     local moon_state = moon_states.reverse
     if is_gestalt then
-        if elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff" or TheWorld.state.isfullmoon then
+        if (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff") or TheWorld.state.isfullmoon then
             moon_state = moon_states.strong
         elseif is_waxing_moon then
             moon_state = moon_states.normal
@@ -64,14 +64,14 @@ local function CheckMoonState(inst, nosay)
         end
     end
 
+    TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 10
     if moon_state == moon_states.reverse then
-        TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 10
+
         ghost.components.planardamage:RemoveBonus(ghost, "ghostlyelixir_lunarbonus")
         ghost:RemoveTag("abigail_vex_shadow")
 
         say("ANNOUNCE_ABIGAIL_REVERSE_MOON")
     else -- if moon_state == moon_states.normal or moon_state == moon_states.strong then
-        TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 10
         if is_gestalt then
             ghost.components.planardamage:AddBonus(ghost, TUNING.SKILLS.WENDY.LUNARELIXIR_DAMAGEBONUS_GESTALT, "ghostlyelixir_lunarbonus")
         end
@@ -94,7 +94,9 @@ local function CheckMoonState(inst, nosay)
 end
 
 local function OnMoonStateChange(inst)
-    inst:DoTaskInTime(0, CheckMoonState)
+    if TheWorld.state.isnight or TheWorld:HasTag("cave") then
+        inst:DoTaskInTime(0, CheckMoonState)
+    end
 end
 
 local function OnSisturnStateChanged(inst, data)
@@ -154,6 +156,9 @@ AddPrefabPostInit("wendy", function(inst)
     inst.CheckMoonState = CheckMoonState
     -- inst:WatchWorldState("moonphase", CheckMoonState)
     -- inst:WatchWorldState("cavemoonphase", CheckMoonState)
-    inst:WatchWorldState("isnight", OnMoonStateChange)
-    inst:WatchWorldState("nightmarephase", OnMoonStateChange)
+    if TheWorld:HasTag("cave") then
+        inst:WatchWorldState("nightmarephase", OnMoonStateChange)
+    else
+        inst:WatchWorldState("isnight", OnMoonStateChange)
+    end
 end)

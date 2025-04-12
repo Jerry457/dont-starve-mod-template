@@ -146,7 +146,7 @@ local function CustomCombatDamage(inst, target)
         if vex_debuff.prefab == "abigail_vex_debuff" then
             return 1 / TUNING.ABIGAIL_VEX_DAMAGE_MOD
         end
-        if vex_debuff.prefab == "abigail_vex_shadow_debuff" then
+        if target:HasTag("shadow_abigail") then
             return 1 / TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD
         end
     end
@@ -238,7 +238,7 @@ AddPrefabPostInit("abigail_murder_buff", function(inst)
     end
 end)
 
-AddPrefabPostInit("abigail_vex_shadow_debuff", function(inst)
+local function vex_debuff(inst)
     if not TheWorld.ismastersim then
         return
     end
@@ -246,8 +246,12 @@ AddPrefabPostInit("abigail_vex_shadow_debuff", function(inst)
     local _onattachedfn = inst.components.debuff.onattachedfn
     inst.components.debuff.onattachedfn = function(inst, target, ...)
         _onattachedfn(inst, target, ...)
-        target.components.combat.externaldamagetakenmultipliers:RemoveModifier(inst)
-        target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD)
+        if target:HasTag("shadow_abigail") then
+            target.components.combat.externaldamagetakenmultipliers:RemoveModifier(inst)
+            target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD)
+        end
     end
 
-end)
+end
+AddPrefabPostInit("abigail_vex_debuff", vex_debuff)
+AddPrefabPostInit("abigail_vex_shadow_debuff", vex_debuff)
