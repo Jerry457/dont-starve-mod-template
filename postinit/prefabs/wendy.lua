@@ -30,15 +30,15 @@ local function CheckMoonState(inst, nosay)
 
     local moon_state = moon_states.reverse
     if is_gestalt then
-        if (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff") or TheWorld.state.isfullmoon then
+        if TheWorld.state.isfullmoon then
             moon_state = moon_states.strong
-        elseif is_waxing_moon then
+        elseif is_waxing_moon or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff") then
             moon_state = moon_states.normal
         end
     elseif is_shadow then
-        if (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff") or TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
+        if TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
             moon_state = moon_states.strong
-        elseif is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
+        elseif (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff") or is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
             moon_state = moon_states.normal
         end
     end
@@ -49,11 +49,11 @@ local function CheckMoonState(inst, nosay)
     last_moon_state = moon_state
 
     local function say(stringtype)
-        if elixir_buff then
-            if elixir_buff.prefab == "ghostlyelixir_lunar_buff" or elixir_buff.prefab == "ghostlyelixir_shadow_buff" then
-                return
-            end
-        end
+        -- if elixir_buff then
+        --     if elixir_buff.prefab == "ghostlyelixir_lunar_buff" or elixir_buff.prefab == "ghostlyelixir_shadow_buff" then
+        --         return
+        --     end
+        -- end
         if not nosay and summoned and inst.components.talker then
             if is_gestalt then
                 inst.components.talker:Say(GetString(inst, stringtype, is_cave and "GESTALT_CAVE" or "GESTALT"))
