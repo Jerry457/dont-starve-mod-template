@@ -29,22 +29,17 @@ AddCharacterRecipe(
     }
 )
 
-AddRecipePostInit("graveurn", function(self)
-    self.builder_skill = ""
-    AllBuilderTaggedRecipes["graveurn"] = self.builder_tag or self.builder_skill
-end)
+local edit_recipes = {
+    ghostflowerhat = "",
+    graveurn = "",
+    wendy_gravestone = "wendy_smallghost_2",
+    ghostlyelixir_shadow = "wendy_shadow_2",
+    ghostlyelixir_lunar = "wendy_lunar_2",
+}
 
-AddRecipePostInit("wendy_gravestone", function(self)
-    self.builder_skill = "wendy_smallghost_2"
-    AllBuilderTaggedRecipes["wendy_gravestone"] = self.builder_tag or self.builder_skill
-end)
-
-AddRecipePostInit("ghostlyelixir_shadow", function(self)
-    self.builder_skill = "wendy_shadow_2"
-    AllBuilderTaggedRecipes["ghostlyelixir_lunar"] = self.builder_tag or self.builder_skill
-end)
-
-AddRecipePostInit("ghostlyelixir_lunar", function(self)
-    self.builder_skill = "wendy_lunar_2"
-    AllBuilderTaggedRecipes["ghostlyelixir_lunar"] = self.builder_tag or self.builder_skill
-end)
+for recipe_name, skill_name in pairs(edit_recipes) do
+    AddRecipePostInit(recipe_name, function(self)
+        self.builder_skill = skill_name
+        AllBuilderTaggedRecipes[recipe_name] = self.builder_tag or self.builder_skill
+    end)
+end

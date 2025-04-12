@@ -11,6 +11,7 @@ if not rawget(_G, "HotReloading") then
         GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
         PRESENT = Action({priority = 1}),
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
+        USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -33,6 +34,12 @@ ACTIONS.GRAVE_RELOCATION.fn = function(act)
     if invobject and invobject.components.grave_relocation_item then
         invobject.components.grave_relocation_item:Relocation(doer, target, invobject)
         return true
+    end
+end
+
+ACTIONS.USE_GHOSTLYELIXIR.fn = function(act)
+    if act.invobject and act.invobject.components.ghostlyelixir then
+        return act.invobject.components.ghostlyelixir:Apply(act.doer, act.doer)
     end
 end
 
@@ -125,6 +132,14 @@ AddComponentAction("USEITEM", "mourningflower", function(inst, doer, target, act
         table.insert(actions, ACTIONS.REGAIN_GLORY)
     end
 end)
+
+AddComponentAction("USEITEM", "ghostlyelixir", function(inst, doer, target, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_hat") and target and target:HasTag("mourningflower") and right then
+        table.insert(actions, ACTIONS.USE_GHOSTLYELIXIR)
+    end
+end)
+
 
 local COMPONENT_ACTIONS = GlassicAPI.UpvalueUtil.GetUpvalue(EntityScript.CollectActions, "COMPONENT_ACTIONS")
 local SCENE = COMPONENT_ACTIONS.SCENE

@@ -12,6 +12,7 @@ local actionhandlers = {
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
     ActionHandler(ACTIONS.PRESENT, "give"),
     ActionHandler(ACTIONS.REGAIN_GLORY, "give"),
+    ActionHandler(ACTIONS.USE_GHOSTLYELIXIR, "applyelixir_mourningflower"),
 }
 
 local states = {
@@ -29,7 +30,6 @@ for _, state in ipairs(states) do
 end
 
 local function SGwilson(sg)
-    print("UPGRADE ACTION HANDLER")
     local _upgrade_actionhandler_deststate = sg.actionhandlers[ACTIONS.UPGRADE].deststate
     sg.actionhandlers[ACTIONS.UPGRADE].deststate = function(inst, act, ...)
         if act.invobject:HasTag(UPGRADETYPES.GRAVESTONE .. "_upgrader") then
