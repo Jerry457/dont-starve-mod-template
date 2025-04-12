@@ -41,6 +41,8 @@ STRINGS.CHARACTERS.WENDY.ACTIONFAIL.REGAIN_GLORY = {
     HAS_CHESTER = "它正在别处舞动荣耀",
     HAS_FRUITFLY = "它正在别处舞动荣耀",
     HUTCH_FISHBOWL = "它正在别处舞动荣耀",
+    ABIGAIL_FLOWER = "要是...",
+    GLOMMERFLOWERS = "无法补偿的月亮魔力",
 }
 
 STRINGS.ACTIONS.DEPLOY.RELOCATION = "改葬"
