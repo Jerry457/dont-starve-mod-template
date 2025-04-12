@@ -11,6 +11,7 @@ local actionhandlers = {
     ActionHandler(ACTIONS.SPIRITUALISM, "dolongaction"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
     ActionHandler(ACTIONS.PRESENT, "give"),
+    ActionHandler(ACTIONS.REGAIN_GLORY, "give"),
 }
 
 local states = {

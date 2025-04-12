@@ -13,6 +13,8 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_1_DESC", "寒冷�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "温蒂会制作随身供品罐了，能够让阿比盖尔体验到更多不同的永恒领域力量。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "现在骨灰罐内可以放入月树花和深色花瓣了，同一种花瓣协同的力量能让阿比盖尔获得像冒险家一样较强的抵抗，当温蒂学习更强大的不同亲和时，月树花或深色花瓣的魔力将会更彻底的释放。")
 
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DESC", "从哀悼中开出的花，让花儿重新出发，也帮助切斯特、哈奇和友好果蝇重新出发。")
+
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
 
 STRINGS.ACTIONS.UPGRADE.CONDOLENCE_BOUQUET = "哀悼献花"
@@ -34,6 +36,13 @@ STRINGS.CHARACTERS.WENDY.ACTIONFAIL.PRESENT = {
     ENOUGH = "灵魂们不需要更多的慰藉了",
 }
 
+STRINGS.ACTIONS.REGAIN_GLORY = "重获荣耀"
+STRINGS.CHARACTERS.WENDY.ACTIONFAIL.REGAIN_GLORY = {
+    HAS_CHESTER = "它正在别处舞动荣耀",
+    HAS_FRUITFLY = "它正在别处舞动荣耀",
+    HUTCH_FISHBOWL = "它正在别处舞动荣耀",
+}
+
 STRINGS.ACTIONS.DEPLOY.RELOCATION = "改葬"
 STRINGS.ACTIONS.DEPLOY.REINTERMENT = "移灵"
 
@@ -43,6 +52,12 @@ STRINGS.NAMES.POSSESSED_GHOSTFLOWER = "被附身的哀悼荣耀"
 
 STRINGS.NAMES.MOON_TREE_BLOSSOM_LANTERN = "月树花灯"
 STRINGS.RECIPE_DESC.MOON_TREE_BLOSSOM_LANTERN = "逝者已逝，生者如斯"
+
+STRINGS.CHARACTERS.WENDY.ANNOUNCE_REGAIN_GLORY = {
+    FRUITFLY = "帮它们重温荣耀",
+    CHESTER = "帮它们重温荣耀",
+    HUTCH_FISHBOWL = "帮它们重温荣耀",
+}
 
 STRINGS.CHARACTERS.WENDY.ANNOUNCE_ABIGAIL_REVERSE_MOON = {
     GESTALT = "月亮正在亏缺",

@@ -6,7 +6,28 @@ local function FinalOffset3(inst)
     inst.AnimState:SetFinalOffset(3)
 end
 
+local function mourningflower_spirit_fx(inst)
+    inst.AnimState:OverrideSymbol("spirit_out3", "mourningflower_spirit_fx", "spirit_out3")
+    inst.AnimState:OverrideSymbol("spirit_out4", "mourningflower_spirit_fx", "spirit_out4")
+end
+
 local fxs = {
+    {
+        name = "mourningflower_spirit1_fx",
+        bank = "ghostflower",
+        build = "ghostflower",
+        anim = "fx1",
+        sound = "dontstarve/characters/wendy/small_ghost/wisp",
+        fn = mourningflower_spirit_fx,
+    },
+    {
+        name = "mourningflower_spirit2_fx",
+        bank = "ghostflower",
+        build = "ghostflower",
+        anim = "fx1",
+        sound = "dontstarve/characters/wendy/small_ghost/wisp",
+        fn = mourningflower_spirit_fx,
+    },
     {
         name = "ghostlyelixir_revive_fx",
         bank = "abigail_vial_fx",

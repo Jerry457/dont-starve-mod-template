@@ -20,6 +20,15 @@ AddCharacterRecipe(
     }
 )
 
+AddCharacterRecipe(
+    "mourningflower",
+    { Ingredient("ghostflower", 2) },
+    TECH.NONE,
+    {
+        builder_skill = "wendy_ghostflower_butterfly",
+    }
+)
+
 AddRecipePostInit("graveurn", function(self)
     self.builder_skill = ""
     AllBuilderTaggedRecipes["graveurn"] = self.builder_tag or self.builder_skill

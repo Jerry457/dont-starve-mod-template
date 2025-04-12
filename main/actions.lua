@@ -10,6 +10,7 @@ if not rawget(_G, "HotReloading") then
         SPIRITUALISM = Action({priority = 1, rmb = true}),
         GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
         PRESENT = Action({priority = 1}),
+        REGAIN_GLORY = Action({priority = 1, rmb = true}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -58,6 +59,18 @@ ACTIONS.PRESENT.fn = function(act)
     end
 end
 
+ACTIONS.REGAIN_GLORY.fn = function(act)
+    if act.target and act.target.components.regainglory then
+        local success, message = act.target.components.regainglory:Regrow(act.doer)
+        if success then
+            act.invobject.components.stackable:Get():Remove()
+        end
+        return success, message
+    else
+        return false, "INVALID"
+    end
+end
+
 local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
 ACTIONS.DEPLOY.strfn = function(act, ...)
     if act.invobject then
@@ -103,6 +116,13 @@ AddComponentAction("USEITEM", "graveguard_ghost_item", function(inst, doer, targ
         if target:HasTag("graveghost") then
             table.insert(actions, ACTIONS.PRESENT)
         end
+    end
+end)
+
+AddComponentAction("USEITEM", "mourningflower", function(inst, doer, target, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and target:HasTag("regainglory") then
+        table.insert(actions, ACTIONS.REGAIN_GLORY)
     end
 end)
 
