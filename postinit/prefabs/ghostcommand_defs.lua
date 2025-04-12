@@ -39,4 +39,4 @@ end
 -- end
 
 local SKILLTREE_COMMAND_DEFS = GlassicAPI.UpvalueUtil.GetUpvalue(_GetGhostCommandsFor, "SKILLTREE_COMMAND_DEFS")
-local DoGhostSpell = GlassicAPI.UpvalueUtil.SetUpvalue(SKILLTREE_COMMAND_DEFS["wendy_ghostcommand_1"].onselect, "GhostEscapeSpell.DoGhostSpell", DoGhostSpell)
+-- local DoGhostSpell = GlassicAPI.UpvalueUtil.SetUpvalue(SKILLTREE_COMMAND_DEFS["wendy_ghostcommand_1"].onselect, "GhostEscapeSpell.DoGhostSpell", DoGhostSpell)
