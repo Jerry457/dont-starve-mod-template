@@ -17,6 +17,9 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DES
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
 
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
+
+
 STRINGS.ACTIONS.UPGRADE.CONDOLENCE_BOUQUET = "哀悼献花"
 STRINGS.ACTIONS.GRAVE_RELOCATION = {
     GENERIC = "改葬",

@@ -209,13 +209,14 @@ local potion_tunings =
         --PLAYER CONTENT
         DURATION_PLAYER = TUNING.GHOSTLYELIXIR_PLAYER_SPEED_DURATION,
         ONAPPLY_PLAYER = function(inst, target)
-            target.components.talker:Say(GetString(target, "ANNOUNCE_ELIXIR_PLAYER_SPEED"))
-            target:AddTag("vigorbuff")
+            target:AddTag("ghostlyelixir_speed")
+            target.components.locomotor:SetExternalSpeedMultiplier(inst, "ghostlyelixir_speed", 1.1)
             target.components.locomotor:EnableGroundSpeedMultiplier(false)
-            target.components.locomotor:EnableGroundSpeedMultiplier(true)
         end,
         ONDETACH_PLAYER = function(inst, target)
-            target:RemoveTag("vigorbuff")
+            target:RemoveTag("ghostlyelixir_speed")
+            target.components.locomotor:RemoveExternalSpeedMultiplier(inst, "ghostlyelixir_speed")
+            target.components.locomotor:EnableGroundSpeedMultiplier(true)
         end,
         fx_player = "ghostlyelixir_player_speed_fx",
         dripfx_player = "ghostlyelixir_player_speed_dripfx",
