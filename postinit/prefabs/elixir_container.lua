@@ -16,6 +16,10 @@ end
 AddPrefabPostInit("elixir_container", function(inst)
     inst:AddTag("fridge")
 
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
     inst.components.container.restrictedtag = nil
 
     inst:ListenForEvent("onopen", OnOpen)
