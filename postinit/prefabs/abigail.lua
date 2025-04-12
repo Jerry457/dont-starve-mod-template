@@ -244,9 +244,9 @@ local function vex_debuff(inst)
     end
 
     local _onattachedfn = inst.components.debuff.onattachedfn
-    inst.components.debuff.onattachedfn = function(inst, target, ...)
-        _onattachedfn(inst, target, ...)
-        if target:HasTag("shadow_abigail") then
+    inst.components.debuff.onattachedfn = function(inst, target, followsymbol, followoffset, data, buffer, ...)
+        _onattachedfn(inst, target, followsymbol, followoffset, data, buffer, ...)
+        if buffer and buffer:HasTag("shadow_abigail") then
             target.components.combat.externaldamagetakenmultipliers:RemoveModifier(inst)
             target.components.combat.externaldamagetakenmultipliers:SetModifier(inst, TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD)
         end
