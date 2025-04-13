@@ -112,23 +112,25 @@ local function OnSisturnStateChange(inst, data)
 
     ghost:SetToNormal()
 
-    if inst.components.skilltreeupdater and is_active then
-        local wendy_sisturn_3 = inst.components.skilltreeupdater:IsActivated("wendy_sisturn_3")
-        if wendy_sisturn_3 then
+    local skilltreeupdater = inst.components.skilltreeupdater
+        local wendy_sisturn_3 = skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_3") or nil
+        if wendy_sisturn_3 and is_active then
             -- ghost:PushEvent("flicker")
             ghost:AddTag("player_damagescale")
         else
             ghost:RemoveTag("player_damagescale")
         end
 
-        local wendy_lunar_3 = inst.components.skilltreeupdater:IsActivated("wendy_lunar_3")
-        local wendy_shadow_3 = inst.components.skilltreeupdater:IsActivated("wendy_shadow_3")
+    local wendy_lunar_3 = skilltreeupdater and inst.components.skilltreeupdater:IsActivated("wendy_lunar_3") or nil
+    local wendy_shadow_3 = skilltreeupdater and inst.components.skilltreeupdater:IsActivated("wendy_shadow_3") or nil
+    if is_active then
         if wendy_lunar_3 and state == "BLOSSOM" then
             ghost:SetToGestalt()
         elseif wendy_shadow_3 and state == "EVIL" then
             ghost:SetToShadow()
         end
     end
+
     CheckMoonState(inst, true)
 
     ghost:updatehealingbuffs()
@@ -141,6 +143,8 @@ AddPrefabPostInit("wendy", function(inst)
     end
 
     inst:AddComponent("spiritualism")
+
+    inst:AddComponent("begin_again")
 
     local checkforshadowsacrifice = inst:GetEventCallbacks("murdered", inst, "scripts/prefabs/wendy.lua")
     inst:RemoveEventCallback("murdered", checkforshadowsacrifice)
