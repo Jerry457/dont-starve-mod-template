@@ -547,8 +547,12 @@ end
 
 local function buff_OnTick(inst, target)
     if target.components.health ~= nil and not target.components.health:IsDead() then
-        if target:HasTag("player") then
-            inst.potion_tunings.TICK_FN_PLAYER(inst, target)
+        if target:HasTag("player") or inst.player_to_ghost then
+            if inst.player_to_ghost and inst.potion_tunings.TICK_FN_PLAYER_TO_GHOST then
+                inst.potion_tunings.TICK_FN_PLAYER_TO_GHOST(inst, target)
+            else
+                inst.potion_tunings.TICK_FN_PLAYER(inst, target)
+            end
         else
             inst.potion_tunings.TICK_FN(inst, target)
         end
@@ -569,8 +573,10 @@ local function buff_OnAttached(inst, target)
     inst.entity:SetParent(target.entity)
     inst.Transform:SetPosition(0, 0, 0) --in case of loading
 
-    if target:HasTag("player") then
-        if inst.potion_tunings.ONAPPLY_PLAYER ~= nil then
+    if target:HasTag("player") or inst.player_to_ghost then
+        if inst.player_to_ghost and inst.potion_tunings.ONAPPLY_PLAYER_TO_GHOST then
+            inst.potion_tunings.ONAPPLY_PLAYER_GHOST(inst, target)
+        elseif inst.potion_tunings.ONAPPLY_PLAYER ~= nil then
             inst.potion_tunings.ONAPPLY_PLAYER(inst, target)
         end
     else
@@ -603,8 +609,10 @@ end
 
 local function buff_OnExtended(inst, target)
     if inst.components.timer then
-        local duration = (target:HasTag("player") and inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
-
+        local duration = inst.potion_tunings.DURATION
+        if target:HasTag("player") or inst.player_to_ghost then
+            duration = inst.potion_tunings.DURATION_PLAYER
+        end
         if inst.duration_extended_by_skill then
             duration = duration * inst.duration_extended_by_skill
         end
@@ -635,8 +643,10 @@ local function buff_OnDetached(inst, target)
         inst.driptask = nil
     end
 
-    if target:HasTag("player") then
-        if inst.potion_tunings.ONDETACH_PLAYER ~= nil then
+    if target:HasTag("player") or inst.player_to_ghost then
+        if inst.player_to_ghost and inst.potion_tunings.ONDETACH_PLAYER_TO_GHOST then
+            inst.potion_tunings.ONDETACH_PLAYER_TO_GHOST(inst, target)
+        elseif inst.potion_tunings.ONDETACH_PLAYER ~= nil then
             inst.potion_tunings.ONDETACH_PLAYER(inst, target)
         end
     else
@@ -664,6 +674,14 @@ local function buff_skill_modifier_fn(inst,doer,target)
     if target:HasTag("ghost") then
         target:updatehealingbuffs()
     end
+end
+
+local function OnLoad(inst, data)
+    inst.player_to_ghost = data.player_to_ghost
+end
+
+local function OnSave(inst, data)
+    data.player_to_ghost = inst.player_to_ghost
 end
 
 local function buff_fn(tunings, dodelta_fn)
@@ -699,6 +717,9 @@ local function buff_fn(tunings, dodelta_fn)
         timer:StartTimer("decay", tunings.DURATION)
         inst:ListenForEvent("timerdone", buff_OnTimerDone)
     end
+
+    inst.Onload = OnLoad
+    inst.OnSave = OnSave
 
     return inst
 end

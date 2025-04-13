@@ -71,11 +71,7 @@ ACTIONS.REGAIN_GLORY.fn = function(act)
     if act.target and act.target.components.regainglory then
         local success, message = act.target.components.regainglory:Regrow(act.doer)
         if success then
-            if act.invobject.components.stackable then
-                act.invobject.components.stackable:Get():Remove()
-            else
-                act.invobject:Remove()
-            end
+            WS_UTIL.RemoveOneItem(act.invobject)
         end
         return success, message
     else
@@ -85,13 +81,9 @@ end
 
 ACTIONS.BEGIN_AGAIN.fn = function(act)
     if act.doer.components.begin_again then
-        local success, message = act.doer.components.begin_again:Apply()
+        local success, message = act.doer.components.begin_again:ApplyElixirBuff()
         if success then
-            if act.invobject.components.stackable then
-                act.invobject.components.stackable:Get():Remove()
-            else
-                act.invobject:Remove()
-            end
+            WS_UTIL.RemoveOneItem(act.invobject)
         end
         return success, message
     end

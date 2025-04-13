@@ -1,3 +1,5 @@
+require("utils/ws_util")
+
 modimport("main/assets")
 modimport("main/fx")
 modimport("main/constants")

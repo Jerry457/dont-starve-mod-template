@@ -11,11 +11,7 @@ function Grave_Relocation_Item:Relocation(doer, grave, ghostflower)
     local grave_data = grave:GetSaveRecord()
     grave:Remove()
 
-    if ghostflower.components.stackable then
-        ghostflower.components.stackable:Get():Remove()
-    else
-        ghostflower:Remove()
-    end
+    WS_UTIL.RemoveOneItem(ghostflower)
 
     local possessed_ghostflower = SpawnPrefab("possessed_ghostflower_" .. grave.prefab)
     possessed_ghostflower.grave_data = grave_data

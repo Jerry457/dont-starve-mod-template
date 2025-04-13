@@ -29,11 +29,7 @@ local function AcceptTest(inst, item)
 
     accepted_items[item.prefab] = accepted_items[item.prefab] + 1
 
-    if item.components.stackable then
-        item.components.stackable:Get():Remove()
-    else
-        item:Remove()
-    end
+    WS_UTIL.RemoveOneItem(item)
 
     for i = 1, accept_items[item.prefab] do
         inst.components.lootdropper:SpawnLootPrefab("ghostflower")

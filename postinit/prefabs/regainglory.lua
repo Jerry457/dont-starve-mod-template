@@ -18,6 +18,7 @@ local function OnRegrow(prefab, modifier)
                 local x, y, z = inst.Transform:GetWorldPosition()
                 ent.Transform:SetPosition(x, y, z)
             end
+            WS_UTIL.RemoveOneItem(inst)
         end
 
         if modifier and doer.components.talker then
