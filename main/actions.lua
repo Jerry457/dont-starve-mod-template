@@ -12,6 +12,7 @@ if not rawget(_G, "HotReloading") then
         PRESENT = Action({priority = 1}),
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
         USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
+        BEGIN_AGAIN = Action({priority = 1, rmb = true}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -82,6 +83,20 @@ ACTIONS.REGAIN_GLORY.fn = function(act)
     end
 end
 
+ACTIONS.BEGIN_AGAIN.fn = function(act)
+    if act.doer.components.begin_again then
+        local success, message = act.doer.components.begin_again:Apply()
+        if success then
+            if act.invobject.components.stackable then
+                act.invobject.components.stackable:Get():Remove()
+            else
+                act.invobject:Remove()
+            end
+        end
+        return success, message
+    end
+end
+
 local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
 ACTIONS.DEPLOY.strfn = function(act, ...)
     if act.invobject then
@@ -144,6 +159,12 @@ AddComponentAction("USEITEM", "ghostlyelixir", function(inst, doer, target, acti
     end
 end)
 
+AddComponentAction("INVENTORY", "mourningflower", function(inst, doer, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_grave") then
+        table.insert(actions, ACTIONS.BEGIN_AGAIN)
+    end
+end)
 
 local COMPONENT_ACTIONS = GlassicAPI.UpvalueUtil.GetUpvalue(EntityScript.CollectActions, "COMPONENT_ACTIONS")
 local SCENE = COMPONENT_ACTIONS.SCENE

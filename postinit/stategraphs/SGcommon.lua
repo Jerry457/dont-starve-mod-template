@@ -12,6 +12,7 @@ local actionhandlers = {
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
     ActionHandler(ACTIONS.PRESENT, "give"),
     ActionHandler(ACTIONS.REGAIN_GLORY, "give"),
+    ActionHandler(ACTIONS.BEGIN_AGAIN, "give"),
     ActionHandler(ACTIONS.USE_GHOSTLYELIXIR, "applyelixir_mourningflower"),
 }
 

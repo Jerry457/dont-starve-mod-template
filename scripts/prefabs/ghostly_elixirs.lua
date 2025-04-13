@@ -450,6 +450,9 @@ local function DoApplyElixir(inst, giver, target)
     end)
 
     if buff then
+        if target == giver and giver.components.begin_again then
+            giver.components.begin_again:RecordElixirBuff(buff_type)
+        end
         local new_buff = target:GetDebuff(buff_type)
         new_buff:buff_skill_modifier_fn(giver, target)
         return buff
