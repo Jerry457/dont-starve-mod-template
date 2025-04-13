@@ -56,6 +56,7 @@ local function MakeButterfly(name, deploy_prefab)
         inst.AnimState:SetBank(name)
         inst.AnimState:PlayAnimation("build")
         inst.AnimState:PushAnimation("idle_loop", true)
+        inst.AnimState:SetFrame(math.random(inst.AnimState:GetCurrentAnimationNumFrames()) - 1)
         inst.AnimState:SetRayTestOnBB(true)
 
         inst.DynamicShadow:SetSize(.8, .5)
