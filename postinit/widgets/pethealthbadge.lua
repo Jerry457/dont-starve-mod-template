@@ -23,7 +23,8 @@ AddClassPostConstruct("widgets/pethealthbadge", function(self)
     self.bufficon4:GetAnimState():PlayAnimation("buff_none")
     self.bufficon4:GetAnimState():AnimateWhilePaused(false)
     self.bufficon4:SetClickable(false)
-    self.bufficon4:SetScale(-1, -1, 1)
+    -- self.bufficon4:SetRotation(-90)
+    self.bufficon4:SetScale(-1, 1, 1)
     self.buffsymbol4 = 0
 end)
 

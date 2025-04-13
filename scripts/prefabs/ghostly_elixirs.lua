@@ -114,7 +114,6 @@ local potion_tunings =
         -- PLAYER CONTENT
         DURATION_PLAYER = TUNING.GHOSTLYELIXIR_PLAYER_SLOWREGEN_DURATION,
         TICK_FN_PLAYER = function(inst, target)
-
             target.components.health:DoDelta(TUNING.GHOSTLYELIXIR_PLAYER_SLOWREGEN_HEALING, true, inst.prefab)
         end,
         fx_player = "ghostlyelixir_player_slowregen_fx",
@@ -177,8 +176,12 @@ local potion_tunings =
         skill_modifier_long_duration = true,
 
         -- PLAYER CONTENT
+        ONAPPLY_PLAYER_TO_GHOST = function(inst, target)
+        end,
+        ONDETACH_PLAYER_TO_GHOST = function(inst, target)
+        end,
         ONAPPLY_PLAYER = function(inst, target)
-            if not target:HasDebuff("ghostvision_buff") then
+            if not target:HasDebuff("ghostvision_buff")  then
                 target.components.talker:Say(GetString(target, "ANNOUNCE_ELIXIR_GHOSTVISION"))
             end
             target:AddDebuff("ghostvision_buff","ghostvision_buff")
@@ -301,7 +304,9 @@ local potion_tunings =
         --PLAYER CONTENT
         DURATION_PLAYER = TUNING.GHOSTLYELIXIR_PLAYER_REVIVE_DURATION,
         ONAPPLY_PLAYER = function(inst, target)
-            target.components.talker:Say(GetString(target, "ANNOUNCE_ELIXIR_BOOSTED"))
+            if target.components.talker then
+                target.components.talker:Say(GetString(target, "ANNOUNCE_ELIXIR_BOOSTED"))
+            end
 
             if target.components.sanity then
                 target.components.sanity:DoDelta(TUNING.SANITY_TINY)
@@ -451,7 +456,7 @@ local function DoApplyElixir(inst, giver, target)
 
     if buff then
         if target == giver and giver.components.begin_again then
-            giver.components.begin_again:RecordElixirBuff(buff_type)
+            giver.components.begin_again:RecordElixirBuff(inst.buff_prefab)
         end
         local new_buff = target:GetDebuff(buff_type)
         new_buff:buff_skill_modifier_fn(giver, target)
@@ -569,13 +574,15 @@ local function buff_DripFx(inst, target)
     end
 end
 
-local function buff_OnAttached(inst, target)
+local function buff_OnAttached(inst, target, followsymbol, followoffset, data, buffer)
+    inst.player_to_ghost = data and data.player_to_ghost or false
+
     inst.entity:SetParent(target.entity)
     inst.Transform:SetPosition(0, 0, 0) --in case of loading
 
     if target:HasTag("player") or inst.player_to_ghost then
         if inst.player_to_ghost and inst.potion_tunings.ONAPPLY_PLAYER_TO_GHOST then
-            inst.potion_tunings.ONAPPLY_PLAYER_GHOST(inst, target)
+            inst.potion_tunings.ONAPPLY_PLAYER_TO_GHOST(inst, target)
         elseif inst.potion_tunings.ONAPPLY_PLAYER ~= nil then
             inst.potion_tunings.ONAPPLY_PLAYER(inst, target)
         end

@@ -49,6 +49,8 @@ local function OnDebuffAdded(inst, name, debuff)
     if inst._playerlink ~= nil and inst._playerlink.components.pethealthbar ~= nil then
         if name == "ghostlyelixir_revive_buff" then
             inst._playerlink.components.pethealthbar:SetSymbol3(debuff.prefab)
+        elseif name == "player_to_ghost_elixir_buff" then
+            inst._playerlink.components.pethealthbar:SetSymbol4(debuff.prefab)
         end
     end
 end
@@ -57,6 +59,8 @@ local function OnDebuffRemoved(inst, name, debuff)
     if inst._playerlink ~= nil and inst._playerlink.components.pethealthbar ~= nil then
         if name == "ghostlyelixir_revive_buff" then
             inst._playerlink.components.pethealthbar:SetSymbol3(0)
+        elseif name == "player_to_ghost_elixir_buff" then
+            inst._playerlink.components.pethealthbar:SetSymbol4(0)
         end
     end
 end
@@ -171,6 +175,10 @@ AddPrefabPostInit("abigail", function(inst)
             local revive_buff = inst:GetDebuff("ghostlyelixir_revive_buff")
             if revive_buff then
                 player.components.pethealthbar:SetSymbol3(revive_buff.prefab)
+            end
+            local player_to_ghost_elixir_buff = inst:GetDebuff("player_to_ghost_elixir_buff")
+            if player_to_ghost_elixir_buff then
+                player.components.pethealthbar:SetSymbol4(player_to_ghost_elixir_buff.prefab)
             end
         end
         _LinkToPlayer(self, player, ...)

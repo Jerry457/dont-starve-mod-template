@@ -14,9 +14,9 @@ local FLOWER_TAGS = { "petal", "tree" }
 
 local function NearestFlowerPos(inst)
     FindEntity(inst, SEE_FLOWER_DIST, function(inst)
-        if inst.components.perishable and inst.components.perishable:IsPerishing() then
-            return false
-        end
+        -- if inst.components.perishable and inst.components.perishable:IsPerishing() then
+        --     return false
+        -- end
         return inst.prefab == "moon_tree_blossom" or inst.prefab == "moon_tree"
     end, nil, nil, FLOWER_TAGS)
 
