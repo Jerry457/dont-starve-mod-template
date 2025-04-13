@@ -94,9 +94,9 @@ local function GetSisturnFeel(inst)
     end
 end
 
-local function OnSisturnStateChanged(inst)
+local function OnSisturnStateChange(inst)
     for player in pairs(inst.components.attunable.attuned_players) do
-        player:PushEvent("onsisturnstatechanged", {is_active = IsFullOfFlowers(inst), state = GetSisturnFeel(inst)})
+        player:PushEvent("onsisturnstatechange", {is_active = IsFullOfFlowers(inst), state = GetSisturnFeel(inst)})
     end
 end
 
@@ -129,7 +129,7 @@ local function ApplySkillModifiers(inst)
         end
     end
     if inst._wendy_camp_3 then
-        OnSisturnStateChanged(inst)
+        OnSisturnStateChange(inst)
     end
 end
 
@@ -235,7 +235,7 @@ end
 
 
 local function remove_decor(inst, data)
-    OnSisturnStateChanged(inst)
+    OnSisturnStateChange(inst)
 
     local item = data and data.prev_item or nil
     StopListenItem(inst, item)
@@ -250,7 +250,7 @@ local function remove_decor(inst, data)
 end
 
 local function add_decor(inst, data)
-    OnSisturnStateChanged(inst)
+    OnSisturnStateChange(inst)
 
     if inst._petal_preserve then
         local item = data and data.item or nil
@@ -307,11 +307,11 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
-    inst:DoTaskInTime(0, OnSisturnStateChanged)
+    inst:DoTaskInTime(0, OnSisturnStateChange)
 end
 
 local function onunlink(inst, player, isloading)
-    player:PushEvent("onsisturnstatechanged", {is_active = false})
+    player:PushEvent("onsisturnstatechange", {is_active = false})
 end
 
 local function getstatus(inst)

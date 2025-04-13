@@ -99,7 +99,7 @@ local function OnMoonStateChange(inst)
     end
 end
 
-local function OnSisturnStateChanged(inst, data)
+local function OnSisturnStateChange(inst, data)
     if not data then
         return
     end
@@ -112,9 +112,9 @@ local function OnSisturnStateChanged(inst, data)
 
     ghost:SetToNormal()
 
-    if inst.components.skilltreeupdater then
+    if inst.components.skilltreeupdater and is_active then
         local wendy_sisturn_3 = inst.components.skilltreeupdater:IsActivated("wendy_sisturn_3")
-        if wendy_sisturn_3 and is_active then
+        if wendy_sisturn_3 then
             -- ghost:PushEvent("flicker")
             ghost:AddTag("player_damagescale")
         else
@@ -151,7 +151,7 @@ AddPrefabPostInit("wendy", function(inst)
     local OnSkillTreeInitialized = inst:GetEventCallbacks("ms_skilltreeinitialized", inst, "scripts/prefabs/wendy.lua")
     GlassicAPI.UpvalueUtil.SetUpvalue(OnSkillTreeInitialized, "SKILL_CHANGE_EVENTS", { "wendy_sisturn", "wendy_shadow", "wendy_lunar" })
 
-    inst:ListenForEvent("onsisturnstatechanged", OnSisturnStateChanged)
+    inst:ListenForEvent("onsisturnstatechange", OnSisturnStateChange)
 
     inst.CheckMoonState = CheckMoonState
     -- inst:WatchWorldState("moonphase", CheckMoonState)
