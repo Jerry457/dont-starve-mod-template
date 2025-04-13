@@ -236,6 +236,10 @@ AddPrefabPostInit("abigail_murder_buff", function(inst)
         inst.decaytimer = inst:DoTaskInTime(0, function() end)
         _ondetachedfn(inst, target, ...)
     end
+
+    inst.GetSaveRecord = function(inst)
+        return nil
+    end
 end)
 
 local function vex_debuff(inst)
