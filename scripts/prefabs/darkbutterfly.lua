@@ -96,7 +96,7 @@ local function MakeButterfly(name, deploy_prefab)
     return Prefab(name, fn, assets)
 end
 
-return MakeButterfly("evilbutterfly", "flower_petals_evil"),
+return MakeButterfly("evilbutterfly", "flower_evil"),
     MakeButterfly("darkbutterfly", "flower_rose"),
-    MakePlacer("evilbutterfly_placer", "flower_petals_evil", "flower_petals_evil", "anim"),
+    MakePlacer("evilbutterfly_placer", "flowers_evil", "flowers_evil", "f" .. math.random(8)),
     MakePlacer("darkbutterfly_placer", "flowers", "flowers", "rose")

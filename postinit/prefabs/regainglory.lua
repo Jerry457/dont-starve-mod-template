@@ -46,7 +46,7 @@ for regrow_prefab, data in pairs(regrow_prefabs) do
     end)
 end
 
-AddPrefabPostInit("flower_petals_evil", function(inst)
+AddPrefabPostInit("petals_evil", function(inst)
     if not TheWorld.ismastersim then
         return
     end
