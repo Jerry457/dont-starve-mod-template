@@ -18,12 +18,6 @@ local function OnRegrow(prefab, modifier)
                 local x, y, z = inst.Transform:GetWorldPosition()
                 ent.Transform:SetPosition(x, y, z)
             end
-
-            if inst.components.stackable then
-                inst.components.stackable:Get():Remove()
-            else
-                inst:Remove()
-            end
         end
 
         if modifier and doer.components.talker then
@@ -64,9 +58,9 @@ AddPrefabPostInit("moon_tree_blossom", function(inst)
     inst:AddComponent("regainglory")
     inst.components.regainglory:SetOnRegrowFn(function(inst, doer)
         if TheWorld.state.isfullmoon then
-            return OnRegrow("fullmoonbutterfly", "FULLMOONBUTTERFLY")
+            return OnRegrow("fullmoonbutterfly", "FULLMOONBUTTERFLY")(inst, doer)
         end
-        return OnRegrow("moonbutterfly", "MOON_TREE_BLOSSOM")
+        return OnRegrow("moonbutterfly", "MOON_TREE_BLOSSOM")(inst, doer)
     end)
 end)
 
