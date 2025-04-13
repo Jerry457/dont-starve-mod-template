@@ -70,7 +70,11 @@ ACTIONS.REGAIN_GLORY.fn = function(act)
     if act.target and act.target.components.regainglory then
         local success, message = act.target.components.regainglory:Regrow(act.doer)
         if success then
-            act.invobject.components.stackable:Get():Remove()
+            if act.invobject.components.stackable then
+                act.invobject.components.stackable:Get():Remove()
+            else
+                act.invobject:Remove()
+            end
         end
         return success, message
     else
