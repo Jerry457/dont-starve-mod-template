@@ -18,7 +18,7 @@ local function NearestFlowerPos(inst)
             return false
         end
         return inst.prefab == "moon_tree_blossom" or inst.prefab == "moon_tree"
-    end, FLOWER_TAGS)
+    end, nil, nil, FLOWER_TAGS)
 
     local flower = GetClosestInstWithTag(FLOWER_TAGS, inst, SEE_FLOWER_DIST)
     if flower and
