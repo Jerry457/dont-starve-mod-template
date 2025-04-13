@@ -3,7 +3,7 @@ local assets =
     Asset("ANIM", "anim/fullmoonbutterfly.zip"),
 }
 
-SetSharedLootTable("moonbutterfly",
+SetSharedLootTable("fullmoonbutterfly",
 {
     {"fullmoonbutterflywings", 1.0},
     {"moonglass", 1.0},
@@ -158,7 +158,7 @@ local function fn()
     inst:AddComponent("inspectable")
 
     inst:AddComponent("lootdropper")
-    inst.components.lootdropper:SetChanceLootTable('moonbutterfly')
+    inst.components.lootdropper:SetChanceLootTable("fullmoonbutterfly")
 
     inst:AddComponent("workable")
     inst.components.workable:SetWorkAction(ACTIONS.NET)
