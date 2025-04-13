@@ -37,12 +37,11 @@ end
 local regrow_prefabs = {
     petals = {
         "butterfly",
+        "BUTTERFLY",
     },
     petals_evil = {
         "dark_butterfly",
-    },
-    moon_tree_blossom = {
-        "moonbutterfly",
+        "DARK_BUTTERFLY",
     },
 }
 
@@ -56,6 +55,21 @@ for regrow_prefab, data in pairs(regrow_prefabs) do
         inst.components.regainglory:SetOnRegrowFn(OnRegrow(unpack(data)))
     end)
 end
+
+AddPrefabPostInit("moon_tree_blossom", function(inst)
+    if not TheWorld.ismastersim then
+        return
+    end
+
+    inst:AddComponent("regainglory")
+    inst.components.regainglory:SetOnRegrowFn(function(inst, doer)
+        if TheWorld.state.isfullmoon then
+            return OnRegrow("fullmoonbutterfly", "FULLMOONBUTTERFLY")
+        end
+        return OnRegrow("moonbutterfly", "MOON_TREE_BLOSSOM")
+    end)
+end)
+
 
 AddPrefabPostInit("abigail_flower", function(inst)
     if not TheWorld.ismastersim then

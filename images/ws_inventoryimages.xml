@@ -1,8 +1,11 @@
 <Atlas>
-    <Texture filename="ws_inventoryimages.tex"/>
+    <Texture filename="ws_inventoryimages.tex" />
     <Elements>
-        <Element name="dark_butterfly.tex" u1="0" u2="0.25" v1="0.5" v2="1"/>
-        <Element name="moon_tree_blossom_lantern.tex" u1="0.25" u2="0.5" v1="0.5" v2="1"/>
-        <Element name="mourningflower.tex" u1="0.5" u2="0.75" v1="0.5" v2="1"/>
+        <Element name="fullmoonbutterfly.tex" u1="0.001953125" v1="0.50390625" u2="0.248046875" v2="0.99609375" />
+        <Element name="dark_butterfly.tex" u1="0.251953125" v1="0.50390625" u2="0.498046875" v2="0.99609375" />
+        <Element name="evil_butterfly.tex" u1="0.501953125" v1="0.50390625" u2="0.748046875" v2="0.99609375" />
+        <Element name="fullmoonbutterflywings.tex" u1="0.751953125" v1="0.50390625" u2="0.998046875" v2="0.99609375" />
+        <Element name="moon_tree_blossom_lantern.tex" u1="0.001953125" v1="0.00390625" u2="0.248046875" v2="0.49609375" />
+        <Element name="mourningflower.tex" u1="0.251953125" v1="0.00390625" u2="0.498046875" v2="0.49609375" />
     </Elements>
 </Atlas>

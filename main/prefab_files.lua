@@ -1,5 +1,7 @@
 PrefabFiles = {
     "dark_butterfly",
+    "fullmoonbutterfly",
+    "fullmoonbutterflywings",
     "ghostly_elixirs",
     "grave_bouquet",
     "moon_tree_blossom_lantern",
