@@ -3,9 +3,14 @@ GLOBAL.setfenv(1, GLOBAL)
 local GHOSTCOMMAND_DEFS = require("prefabs/ghostcommand_defs")
 local BASECOMMANDS = GHOSTCOMMAND_DEFS.GetBaseCommands()
 
+local skill_map = {
+    wendy_ghostcommand_2 = "wendy_ghostcommand_1",
+    wendy_ghostcommand_3 = "wendy_ghostcommand_2",
+}
+
 local _GetGhostCommandsFor = GHOSTCOMMAND_DEFS.GetGhostCommandsFor
 function GHOSTCOMMAND_DEFS.GetGhostCommandsFor(...)
-    return HookSkillTreeUpdaterIsActivated("wendy_ghostcommand_2", "wendy_ghostcommand_1", _GetGhostCommandsFor, ...)
+    return HookSkillTreeUpdaterIsActivated(skill_map, nil, _GetGhostCommandsFor, ...)
 end
 
 -- local function DoGhostSpell(doer, event, state, ...)

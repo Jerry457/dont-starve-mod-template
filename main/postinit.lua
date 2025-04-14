@@ -4,6 +4,7 @@ local files = {
     "postinit/map.lua",
     "postinit/components/decoratedgrave_ghostmanager.lua",
     "postinit/components/equippable.lua",
+    "postinit/components/hauntable.lua",
     "postinit/components/inventoryitem_replica.lua",
     "postinit/components/locomotor.lua",
     "postinit/components/pethealthbar.lua",

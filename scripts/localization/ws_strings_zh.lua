@@ -16,6 +16,7 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "现在�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DESC", "从哀悼中开出的花，让花儿重新出发，也帮助切斯特、哈奇和友好果蝇重新出发。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_2_DESC", "阿比盖尔可以利用她作为幽灵的力量来惊吓和作祟，并且作为永恒领域之外的逝者，她的作祟似乎有更强大的力量，不过在其他形态下这个力量会消失。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
 
@@ -98,6 +99,12 @@ STRINGS.CHARACTERS.WENDY.ANNOUNCE_ABIGAIL_STRONG_MOON = {
     GESTALT_CAVE  = "",
     SHADOW = "暗影蚀尽月亮",
     SHADOW_CAVE = "暗影在剧烈暴动",
+}
+
+STRINGS.CHARACTERS.WENDY.ANNOUNCE_ABIGAIL_HAUNT_TRANSFORM = {
+    WEED_PLANT = "阿比盖尔喜欢花园",
+    WEED_FORGETMELOTS_BOLTING = "没有人应该被遗忘",
+    FLOWER_EVIL = "阿比盖尔总是喜欢漂亮的花",
 }
 
 ModifyTranslatedStrings("STRINGS.NAMES.GHOSTLYELIXIR_REVIVE", "必忘忧")
