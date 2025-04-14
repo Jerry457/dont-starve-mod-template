@@ -148,12 +148,11 @@ end
 local function CustomCombatDamage(inst, target)
     local vex_debuff = target:GetDebuff("abigail_vex_debuff")
     if vex_debuff then
-        if target:HasTag("shadow_abigail") then
+        if inst:HasTag("shadow_abigail") then
             return 1 / TUNING.ABIGAIL_SHADOW_VEX_DAMAGE_MOD
         elseif vex_debuff.prefab == "abigail_vex_debuff" then
             return 1 / TUNING.ABIGAIL_VEX_DAMAGE_MOD
         end
-
     end
     return 1
 end
