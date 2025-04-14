@@ -17,6 +17,7 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DES
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_2_DESC", "阿比盖尔可以利用她作为幽灵的力量来惊吓和作祟，并且作为永恒领域之外的逝者，她的作祟似乎有更强大的力量，不过在其他形态下这个力量会消失。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_3_DESC", "或许拥有真正强大的魔力并不是花瓣，而是通过花瓣联结起来的姐妹情感。花瓣只是一个喻体，一个纽带，一个包含过去所有美好的纪念品。透过花瓣，温蒂看到了曾经的阿比盖尔有可能在永恒领域做到的一切。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
 
