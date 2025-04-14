@@ -30,39 +30,6 @@ local function OnFlowerPerished(item)
     item.components.perishable.onperishreplacement = "ghostflower"
 end
 
-local function OnPerishChange(inst)
-    local percent = 1
-    for i = 1, inst.components.container.numslots do
-        local item = inst.components.container.slots[i]
-        if item and item.components.perishable then
-            percent = math.min(percent, item.components.perishable:GetPercent())
-        end
-    end
-
-    for player in pairs(inst.components.attunable.attuned_players) do
-        if player then
-            player:PushEvent("sisturnperishchange", {percent = percent})
-        end
-    end
-end
-
-local function StartListenItem(inst, item)
-    if item and not item.perished_listend then
-        item.perished_listend = true
-        inst:ListenForEvent("perished", OnFlowerPerished, item)
-        inst:ListenForEvent("perishchange", inst.OnPerishChange, item)
-        OnPerishChange(inst)
-    end
-end
-
-local function StopListenItem(inst, item)
-    if item and item.perished_listend then
-        item.perished_listend = false
-        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
-        inst:RemoveEventCallback("perishchange", inst.OnPerishChange, item)
-        OnPerishChange(inst)
-    end
-end
 
 local function GetSisturnFeel(inst)
     local evil = inst.components.container:FindItems(function(item)
@@ -94,7 +61,43 @@ local function GetSisturnFeel(inst)
     end
 end
 
+local function OnPerishChange(inst)
+    local percent = 1
+    for i = 1, inst.components.container.numslots do
+        local item = inst.components.container.slots[i]
+        if item and item.components.perishable then
+            percent = math.min(percent, item.components.perishable:GetPercent())
+        else
+            percent = 0
+            break
+        end
+    end
+
+    for player in pairs(inst.components.attunable.attuned_players) do
+        player:PushEvent("sisturnperishchange", {percent = percent, state = GetSisturnFeel(inst)})
+    end
+end
+
+local function StartListenItem(inst, item)
+    if item and not item.perished_listend then
+        item.perished_listend = true
+        inst:ListenForEvent("perished", OnFlowerPerished, item)
+        inst:ListenForEvent("perishchange", inst.OnPerishChange, item)
+        OnPerishChange(inst)
+    end
+end
+
+local function StopListenItem(inst, item)
+    if item and item.perished_listend then
+        item.perished_listend = false
+        inst:RemoveEventCallback("perished", OnFlowerPerished, item)
+        inst:RemoveEventCallback("perishchange", inst.OnPerishChange, item)
+        OnPerishChange(inst)
+    end
+end
+
 local function OnSisturnStateChange(inst)
+    OnPerishChange(inst)
     for player in pairs(inst.components.attunable.attuned_players) do
         player:PushEvent("onsisturnstatechange", {is_active = IsFullOfFlowers(inst), state = GetSisturnFeel(inst)})
     end
@@ -307,11 +310,11 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
-    inst:DoTaskInTime(0, OnSisturnStateChange)
+    OnSisturnStateChange(inst)
 end
 
 local function onunlink(inst, player, isloading)
-    player:PushEvent("onsisturnstatechange", {is_active = false})
+    OnSisturnStateChange(inst)
 end
 
 local function getstatus(inst)

@@ -1,9 +1,10 @@
 modimport("main/prefab_files")
 
 Assets = {
-    Asset("IMAGE", "images/ws_inventoryimages.xml"),
-    -- Asset("ATLAS", "images/minimap.xml" ),
     Asset("ATLAS", "images/wendy_skillicons.xml" ),
+    Asset("ATLAS", "images/wendy_spellbook_bg.xml"),
+    Asset("ATLAS", "images/ws_inventoryimages.xml"),
+    -- Asset("ATLAS", "images/minimap.xml" ),
 
     Asset("ANIM", "anim/player_pray.zip" ),
     Asset("ANIM", "anim/player_prayonly.zip" ),

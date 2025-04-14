@@ -100,11 +100,8 @@ local function OnMoonStateChange(inst)
 end
 
 local function OnSisturnStateChange(inst, data)
-    if not data then
-        return
-    end
-    local is_active = data.is_active
-    local state = data.state
+    local is_active = data and data.is_active or false
+    local state = data and data.state or "NORMAL"
     local ghost = inst.components.ghostlybond and inst.components.ghostlybond.ghost or nil
     if not ghost then
         return
@@ -114,7 +111,7 @@ local function OnSisturnStateChange(inst, data)
 
     local skilltreeupdater = inst.components.skilltreeupdater
         local wendy_sisturn_3 = skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_3") or nil
-        if wendy_sisturn_3 and is_active then
+        if wendy_sisturn_3 and is_active and state ~= "NORMAL" then
             -- ghost:PushEvent("flicker")
             ghost:AddTag("player_damagescale")
         else

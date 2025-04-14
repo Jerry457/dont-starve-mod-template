@@ -11,5 +11,5 @@ local SPELLBOOK_BG =
 }
 
 AddPrefabPostInit("abigail_flower", function(inst)
-    inst.components.spellbook:SetBgData(SPELLBOOK_BG)
+    -- inst.components.spellbook:SetBgData(SPELLBOOK_BG)
 end)

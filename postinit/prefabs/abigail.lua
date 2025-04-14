@@ -118,8 +118,9 @@ end
 
 local function UpdateDamage(inst)
     local buff = inst:GetDebuff("elixir_buff")
+    local buff = inst:GetDebuff("elixir_buff")
     local murderbuff = inst:GetDebuff("abigail_murder_buff")
-    local phase = (buff ~= nil and buff.prefab == "ghostlyelixir_attack_buff") and "night" or TheWorld.state.phase
+    local phase = TheWorld.state.phase
     local modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
     if inst:HasTag("shadow_abigail") then
         modified_damage = (TUNING.SHADOW_ABIGAIL_DAMAGE[phase] or TUNING.SHADOW_ABIGAIL_DAMAGE.day)
