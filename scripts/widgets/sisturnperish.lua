@@ -27,9 +27,11 @@ local SisturnPerish =  Class(Widget, function(self, owner, num)
 end)
 
 function SisturnPerish:SetSisturnPerish(percent)
-    if self.fill then
+    if self.bg then
         local w, h = self.fill:GetSize()
-        self.fill:SetScissor(-w / 2, -h / 2, w, h * percent)
+        local percent_h = math.floor(h * percent)
+        self.fill:SetScissor(-w / 2, -h / 2, w, percent_h + 1)
+        self.bg:SetScissor(-w / 2, -h / 2 + percent_h, w, h - percent_h)
     end
 end
 
@@ -41,10 +43,10 @@ function SisturnPerish:SetState(state)
         if not self.bg then
             self.bg = self:AddChild(Image(wendy_spellbook_atlas, bg_tex))
             -- self.bg:SetBlendMode(BLENDMODE.Disabled)
-            self.bg:SetTint(1, 1, 1, 0.5)
+            self.bg:SetTint(1, 1, 1, 0.6)
             self.fill = self:AddChild(Image(wendy_spellbook_atlas, fill_tex))
             -- self.fill:SetBlendMode(BLENDMODE.Disabled)
-            self.fill:SetTint(1, 1, 1, 0.65)
+            self.fill:SetTint(1, 1, 1, 0.8)
         else
             self.fill:SetTexture(wendy_spellbook_atlas, fill_tex)
             self.bg:SetTexture(wendy_spellbook_atlas, bg_tex)

@@ -4,13 +4,15 @@ local Hauntable = require("components/hauntable")
 
 local weed_transform = {
     probability = 1,
-    modifier = "WEED_PLANT"
+    produce = "weed_forgetmelots",
+    modifier = "WEED_PLANT",
 }
 
 local transform_when_haunt = {
-    flower_evil = {
+    petals_evil = {
         probability = 0.25,
-        modifier = "FLOWER_EVIL"
+        modifier = "PETALS_EVIL",
+        produce = "forgetmelots"
     },
     weed_firenettle = weed_transform,
     weed_tillweed = weed_transform,
@@ -85,12 +87,19 @@ function Hauntable:DoHaunt(doer, ...)
         if data and math.random() <= data.probability then
             if self.inst.prefab == "weed_forgetmelots" then
                 if self.inst.components.growable:GetStage() == 4 then
-                    self.inst.components.growable:SetStage(1)
+                    self.inst.components.growable:SetStage(3)
+                    LinkPlayerSay(doer, "WEED_FORGETMELOTS_BOLTING")
+                elseif self.inst.components.growable:GetStage() == 1 then
+                    self.inst.components.growable:SetStage(2)
                     LinkPlayerSay(doer, "WEED_FORGETMELOTS_BOLTING")
                 end
             else
-                local weed_forgetmelots = DoChangePrefab(self.inst, "weed_forgetmelots", doer)
-                weed_forgetmelots.components.growable:SetStage(2)
+                local produce = DoChangePrefab(self.inst, data.produce, doer)
+                if self.inst.components.growable and produce.components.growable then
+                    local num_stage = self.inst.components.growable:GetStage()
+                    produce.components.growable:SetStage(num_stage)
+                end
+
                 LinkPlayerSay(doer, data.modifier)
             end
         end
