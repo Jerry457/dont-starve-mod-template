@@ -159,8 +159,10 @@ end
 
 local function OnGhostCommandHitOther(inst, data)
     local target = data and data.target or nil
-    if inst.gestalt_command_attack and target and target.components.sleeper then
-        target.components.sleeper:GoToSleep()
+    if inst.gestalt_command_attack then
+        if target and target.components.sleeper then
+            target.components.sleeper:GoToSleep()
+        end
     end
 end
 

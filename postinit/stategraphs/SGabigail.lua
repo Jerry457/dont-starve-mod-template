@@ -101,15 +101,13 @@ AddStategraphPostInit("abigail", function(sg)
         inst.components.health:SetInvincible(false)
     end
 
-    local _gestalt_loop_homing_attack_onexit = sg.states["gestalt_loop_homing_attack"].onexit
-    sg.states["gestalt_loop_homing_attack"].onexit = function(inst, ...)
-        inst.gestalt_command_attack = false
-        _gestalt_loop_homing_attack_onexit(inst, ...)
-    end
+    -- local _gestalt_loop_homing_attack_onexit = sg.states["gestalt_loop_homing_attack"].onexit
+    -- sg.states["gestalt_loop_homing_attack"].onexit = function(inst, ...)
+    --     _gestalt_loop_homing_attack_onexit(inst, ...)
+    -- end
 
-    local _gestalt_loop_attack_onexit = sg.states["gestalt_loop_attack"].onexit
-    sg.states["gestalt_loop_attack"].onexit = function(inst, ...)
-        inst.gestalt_command_attack = false
-        _gestalt_loop_attack_onexit(inst, ...)
-    end
+    -- local _gestalt_loop_attack_onexit = sg.states["gestalt_loop_attack"].onexit
+    -- sg.states["gestalt_loop_attack"].onexit = function(inst, ...)
+    --     _gestalt_loop_attack_onexit(inst, ...)
+    -- end
 end)
