@@ -22,6 +22,7 @@ skillTreeIconsAtlasLookup["wendy_makegravemounds.tex"] = "images/wendy_skillicon
 skillTreeIconsAtlasLookup["wendy_ghostflower_butterfly.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_ghostflower_hat.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_ghostflower_grave.tex"] = "images/wendy_skillicons.xml"
+skillTreeIconsAtlasLookup["wendy_ghostcommand_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_ghostcommand_3.tex"] = "images/wendy_skillicons.xml"
 
 package.loaded["prefabs/skilltree_wendy"] = nil
