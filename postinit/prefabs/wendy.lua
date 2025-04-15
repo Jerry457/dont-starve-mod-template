@@ -27,18 +27,27 @@ local function CheckMoonState(inst, nosay)
     local is_shadow = ghost:HasTag("shadow_abigail")
 
     local elixir_buff = ghost:GetDebuff("elixir_buff")
+    local player_to_ghost_elixir_buff = ghost:GetDebuff("player_to_ghost_elixir_buff")
 
     local moon_state = moon_states.reverse
     if is_gestalt then
         if TheWorld.state.isfullmoon then
             moon_state = moon_states.strong
-        elseif is_waxing_moon or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff") then
+        elseif is_waxing_moon
+            or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff")
+            or (player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_lunar_buff")
+        then
             moon_state = moon_states.normal
         end
     elseif is_shadow then
         if TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
             moon_state = moon_states.strong
-        elseif (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff") or is_waning_moon or TheWorld.state.isnightmarewarn or TheWorld.state.isnightmaredawn then
+        elseif is_waning_moon
+            or TheWorld.state.isnightmarewarn
+            or TheWorld.state.isnightmaredawn
+            or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff")
+            or (player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_shadow_buff")
+        then
             moon_state = moon_states.normal
         end
     end

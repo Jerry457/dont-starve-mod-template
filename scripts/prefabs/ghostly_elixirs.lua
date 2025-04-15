@@ -4,9 +4,9 @@ local NO_TAGS_NO_PLAYERS =    { "INLIMBO", "notarget", "noattack", "wall", "play
 local COMBAT_TARGET_TAGS = { "_combat" }
 
 local onattacked_shield = function(inst, data)
-     if data.redirected then
-         return
-     end
+    if data.redirected then
+        return
+    end
 
     local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
     if hat and hat.components.rechargeable and hat.components.rechargeable:IsCharged() then
@@ -177,8 +177,14 @@ local potion_tunings =
 
         -- PLAYER CONTENT
         ONAPPLY_PLAYER_TO_GHOST = function(inst, target)
+            if target.UpdateDamage then
+                target:UpdateDamage()
+            end
         end,
         ONDETACH_PLAYER_TO_GHOST = function(inst, target)
+            if target:IsValid() and target.UpdateDamage then
+                target:UpdateDamage()
+            end
         end,
         ONAPPLY_PLAYER = function(inst, target)
             if not target:HasDebuff("ghostvision_buff")  then
@@ -673,7 +679,7 @@ local function buff_skill_modifier_fn(inst,doer,target)
             inst.duration_extended_by_skill = TUNING.SKILLS.WENDY.POTION_DURATION_MOD
         end
 
-        local duration = (target:HasTag("player") and inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
+        local duration = (target:HasTag("player") or inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
         inst.components.timer:StopTimer("decay")
         inst.components.timer:StartTimer("decay", duration * duration_mult )
     end
