@@ -68,7 +68,6 @@ local function getidleanim(inst)
         or "idle"
 end
 
-
 AddStategraphPostInit("abigail", function(sg)
     GlassicAPI.UpvalueUtil.SetUpvalue(sg.states["idle"].onenter, "getidleanim", getidleanim)
 
@@ -100,5 +99,17 @@ AddStategraphPostInit("abigail", function(sg)
         end
         inst.fade_toggle:set(false)
         inst.components.health:SetInvincible(false)
+    end
+
+    local _gestalt_loop_homing_attack_onexit = sg.states["gestalt_loop_homing_attack"].onexit
+    sg.states["gestalt_loop_homing_attack"].onexit = function(inst, ...)
+        inst.gestalt_command_attack = false
+        _gestalt_loop_homing_attack_onexit(inst, ...)
+    end
+
+    local _gestalt_loop_attack_onexit = sg.states["gestalt_loop_attack"].onexit
+    sg.states["gestalt_loop_attack"].onexit = function(inst, ...)
+        inst.gestalt_command_attack = false
+        _gestalt_loop_attack_onexit(inst, ...)
     end
 end)

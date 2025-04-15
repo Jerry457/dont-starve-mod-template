@@ -157,6 +157,13 @@ local function CustomCombatDamage(inst, target)
     return 1
 end
 
+local function OnGhostCommandHitOther(inst, data)
+    local target = data and data.target or nil
+    if inst.gestalt_command_attack and target and target.components.sleeper then
+        target.components.sleeper:GoToSleep()
+    end
+end
+
 AddPrefabPostInit("abigail", function(inst)
     if not TheWorld.ismastersim then
         return
@@ -209,6 +216,14 @@ AddPrefabPostInit("abigail", function(inst)
     UpdateDamage(inst, TheWorld.state.phase)
 
     inst.components.combat.customdamagemultfn = CustomCombatDamage
+
+    local _DoGhostAttackAt = inst:GetEventCallbacks("do_ghost_attackat", inst, "scripts/prefabs/abigail.lua")
+    local function DoGhostAttackAt(inst, ...)
+        inst.gestalt_command_attack = inst:HasTag("gestalt")
+        return _DoGhostAttackAt(inst, ...)
+    end
+    inst:ListenForEvent("do_ghost_attackat", DoGhostAttackAt)
+    inst:ListenForEvent("onhitother", OnGhostCommandHitOther)
 end)
 
 
