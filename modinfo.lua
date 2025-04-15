@@ -26,7 +26,7 @@ reign_of_giants_compatible = false --不兼容巨人DLC
 -- Character mods need this set to true
 all_clients_require_mod = true --所有人mod
 
-priority = -1
+priority = 9999
 
 icon_atlas = "modicon.xml" --mod图标
 icon = "modicon.tex"

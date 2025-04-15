@@ -1,24 +1,17 @@
 <Atlas>
     <Texture filename="wendy_skillicons.tex" />
     <Elements>
-        <Element name="wendy_lunar_2.tex" u1="0.501953125" v1="0.751953125" u2="0.748046875" v2="0.998046875" />
-        <Element name="wendy_shadow_2.tex" u1="0.751953125" v1="0.751953125" u2="0.998046875" v2="0.998046875" />
-        <Element name="wendy_smallghost_2.tex" u1="0.251953125" v1="0.255859375" u2="0.494140625" v2="0.498046875" />
-        <Element name="wendy_smallghost_3.tex" u1="0.501953125" v1="0.255859375" u2="0.744140625" v2="0.498046875" />
-
-        <Element name="mystical_observation.tex" u1="0.751953125" v1="0.505859375" u2="0.994140625" v2="0.748046875" />
-        <Element name="wendy_poetry.tex" u1="0.001953125" v1="0.255859375" u2="0.244140625" v2="0.498046875" />
         <Element name="abigail_gardening_notes.tex" u1="0.001953125" v1="0.751953125" u2="0.248046875" v2="0.998046875" />
-        <Element name="mourningflower_1.tex" u1="0.001953125" v1="0.505859375" u2="0.244140625" v2="0.748046875" />
-        <Element name="mourningflower_2.tex" u1="0.251953125" v1="0.505859375" u2="0.494140625" v2="0.748046875" />
-        <Element name="mourningflower_3.tex" u1="0.501953125" v1="0.505859375" u2="0.744140625" v2="0.748046875" />
-
-        <Element name="wendy_avenging_ghost.tex" u1="0.751953125" v1="0.505859375" u2="0.994140625" v2="0.748046875" />
-        <Element name="wendy_gravestone_1.tex" u1="0.001953125" v1="0.255859375" u2="0.244140625" v2="0.498046875" />
-        <Element name="wendy_makegravemounds.tex" u1="0.001953125" v1="0.751953125" u2="0.248046875" v2="0.998046875" />
-        <Element name="wendy_ghostflower_butterfly.tex" u1="0.001953125" v1="0.505859375" u2="0.244140625" v2="0.748046875" />
-        <Element name="wendy_ghostflower_hat.tex" u1="0.251953125" v1="0.505859375" u2="0.494140625" v2="0.748046875" />
-        <Element name="wendy_ghostflower_grave.tex" u1="0.501953125" v1="0.505859375" u2="0.744140625" v2="0.748046875" />
-        <Element name="wendy_ghostcommand_3.tex" u1="0.251953125" v1="0.751953125" u2="0.498046875" v2="0.998046875" />
+        <Element name="wendy_ghostcommand_2.tex" u1="0.251953125" v1="0.751953125" u2="0.498046875" v2="0.998046875" />
+        <Element name="wendy_ghostcommand_3.tex" u1="0.501953125" v1="0.751953125" u2="0.748046875" v2="0.998046875" />
+        <Element name="wendy_lunar_2.tex" u1="0.751953125" v1="0.751953125" u2="0.998046875" v2="0.998046875" />
+        <Element name="wendy_shadow_2.tex" u1="0.001953125" v1="0.501953125" u2="0.248046875" v2="0.748046875" />
+        <Element name="mourningflower_1.tex" u1="0.251953125" v1="0.505859375" u2="0.494140625" v2="0.748046875" />
+        <Element name="mourningflower_2.tex" u1="0.501953125" v1="0.505859375" u2="0.744140625" v2="0.748046875" />
+        <Element name="mourningflower_3.tex" u1="0.751953125" v1="0.505859375" u2="0.994140625" v2="0.748046875" />
+        <Element name="mystical_observation.tex" u1="0.001953125" v1="0.255859375" u2="0.244140625" v2="0.498046875" />
+        <Element name="wendy_poetry.tex" u1="0.251953125" v1="0.255859375" u2="0.494140625" v2="0.498046875" />
+        <Element name="wendy_smallghost_2.tex" u1="0.501953125" v1="0.255859375" u2="0.744140625" v2="0.498046875" />
+        <Element name="wendy_smallghost_3.tex" u1="0.751953125" v1="0.255859375" u2="0.994140625" v2="0.498046875" />
     </Elements>
 </Atlas>
