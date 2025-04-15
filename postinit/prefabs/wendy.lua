@@ -64,12 +64,11 @@ local function CheckMoonState(inst, nosay)
         end
     end
 
+    ghost:RemoveTag("abigail_vex_shadow")
     ghost:RemoveTag("strong_gestalt")
     TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 10
     if moon_state == moon_states.reverse then
-
         ghost.components.planardamage:RemoveBonus(ghost, "ghostlyelixir_lunarbonus")
-        ghost:RemoveTag("abigail_vex_shadow")
 
         say("ANNOUNCE_ABIGAIL_REVERSE_MOON")
     else -- if moon_state == moon_states.normal or moon_state == moon_states.strong then

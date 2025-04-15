@@ -33,7 +33,7 @@ local states = {
                 end
             end),
         },
-    }
+    },
 }
 
 for _, state in ipairs(states) do
@@ -72,8 +72,11 @@ AddStategraphPostInit("abigail", function(sg)
     GlassicAPI.UpvalueUtil.SetUpvalue(sg.states["idle"].onenter, "getidleanim", getidleanim)
 
     local _abigail_attack_start_onenter = sg.states["abigail_attack_start"].onenter
-    sg.states["abigail_attack_start"].onenter = function(inst, ...)
-        _abigail_attack_start_onenter(inst, ...)
+    sg.states["abigail_attack_start"].onenter = function(inst, pos)
+        if pos and inst.shadow_command_attack then
+            inst.Transform:SetPosition(pos:Get())
+        end
+        _abigail_attack_start_onenter(inst, pos)
         inst.fade_toggle:set(true)
         inst.components.health:SetInvincible(true)
     end

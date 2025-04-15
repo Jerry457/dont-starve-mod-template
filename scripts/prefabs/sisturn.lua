@@ -112,13 +112,18 @@ local function ConfigureSkillTreeUpgrades(inst, builder)
 
     local petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
     local wendy_sisturn_3 = skilltreeupdater:IsActivated("wendy_sisturn_3")
-    local wendy_camp_3 = skilltreeupdater:IsActivated("wendy_lunar_3") or skilltreeupdater:IsActivated("wendy_shadow_3")
+    local lunar_3 = skilltreeupdater:IsActivated("wendy_lunar_3")
+    local shadow_3 = skilltreeupdater:IsActivated("wendy_shadow_3")
 
-    local dirty = (inst._petal_preserve ~= petal_preserve) or (inst._wendy_sisturn_3 ~= wendy_sisturn_3) or (inst._wendy_camp_3 ~= wendy_camp_3)
+    local dirty = (inst._petal_preserve ~= petal_preserve)
+        or (inst._wendy_sisturn_3 ~= wendy_sisturn_3)
+        or (inst._lunar_3 ~= lunar_3)
+        or (inst._shadow_3 ~= shadow_3)
 
     inst._wendy_sisturn_3 = wendy_sisturn_3
     inst._petal_preserve = petal_preserve
-    inst._wendy_camp_3 = wendy_camp_3
+    inst._lunar_3 = lunar_3
+    inst._shadow_3 = shadow_3
 
     return dirty
 end
@@ -131,7 +136,7 @@ local function ApplySkillModifiers(inst)
             StartListenItem(inst, item)
         end
     end
-    if inst._wendy_camp_3 then
+    if inst._lunar_3 or inst._shadow_3 then
         OnSisturnStateChange(inst)
     end
 end
@@ -337,7 +342,8 @@ local function OnSave(inst, data)
     data.builder_id = inst._builder_id
     data.petal_preserve = inst._petal_preserve
     data.wendy_sisturn_3 = inst._wendy_sisturn_3
-    data.wendy_camp_3 = inst._wendy_camp_3
+    data.lunar_3 = inst._lunar_3
+    data.shadow_3 = inst._shadow_3
 end
 
 local function OnLoad(inst, data)
@@ -349,7 +355,8 @@ local function OnLoad(inst, data)
             inst._preserve_rate = data.preserve_rate
             inst._petal_preserve = data.petal_preserve
             inst._wendy_sisturn_3 = data.wendy_sisturn_3
-            inst._wendy_camp_3 = data.wendy_camp_3
+            inst._lunar_3 = data.lunar_3
+            inst._shadow_3 = data.shadow_3
 
             ApplySkillModifiers(inst)
         end
