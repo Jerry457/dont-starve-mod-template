@@ -221,7 +221,7 @@ AddPrefabPostInit("abigail", function(inst)
 
     local _DoGhostAttackAt = inst:GetEventCallbacks("do_ghost_attackat", inst, "scripts/prefabs/abigail.lua")
     local function DoGhostAttackAt(inst, ...)
-        inst.gestalt_command_attack = inst:HasTag("gestalt")
+        inst.gestalt_command_attack = inst:HasTag("gestalt") and inst:HasTag("strong_gestalt")
         return _DoGhostAttackAt(inst, ...)
     end
     inst:ListenForEvent("do_ghost_attackat", DoGhostAttackAt)

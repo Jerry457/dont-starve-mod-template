@@ -64,6 +64,7 @@ local function CheckMoonState(inst, nosay)
         end
     end
 
+    ghost:RemoveTag("strong_gestalt")
     TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 10
     if moon_state == moon_states.reverse then
 
@@ -83,6 +84,7 @@ local function CheckMoonState(inst, nosay)
             say("ANNOUNCE_ABIGAIL_STRONG_MOON")
 
             if is_gestalt then
+                ghost:AddTag("strong_gestalt")
             end
             if is_shadow then
                 TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 15
