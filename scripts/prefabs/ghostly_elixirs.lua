@@ -728,10 +728,8 @@ local function buff_fn(tunings, dodelta_fn)
     debuff:SetExtendedFn(buff_OnExtended)
     debuff.keepondespawn = true
 
-    if tunings.DURATION ~= nil then
+    if tunings.DURATION ~= nil or tunings.DURATION_PLAYER ~= nil then
         local timer = inst:AddComponent("timer")
-        timer:StartTimer("decay", tunings.DURATION)
-        inst:ListenForEvent("timerdone", buff_OnTimerDone)
     end
 
     inst.Onload = OnLoad
