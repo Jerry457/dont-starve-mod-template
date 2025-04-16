@@ -74,7 +74,7 @@ function Hauntable:DoHaunt(doer, ...)
     local _HAUNT_CHANCE_VERYRARE = TUNING.HAUNT_CHANCE_VERYRARE
     local _HAUNT_CHANCE_SUPERRARE = TUNING.HAUNT_CHANCE_SUPERRARE
 
-    if doer and doer.prefab == "abigail" and (not doer:HasTag("shadow_abigail") or doer:HasTag("gestalt")) then
+    if doer and doer.prefab == "abigail" and (not doer:HasTag("shadow_abigail") and not doer:HasTag("gestalt")) then
         TUNING.HAUNT_CHANCE_ALWAYS = 1
         TUNING.HAUNT_CHANCE_OFTEN = 1
         TUNING.HAUNT_CHANCE_HALF = 1

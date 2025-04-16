@@ -8,7 +8,7 @@ local AddStategraphPostInit = AddStategraphPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
-    ActionHandler(ACTIONS.SPIRITUALISM, "dolongaction"),
+    ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
     ActionHandler(ACTIONS.PRESENT, "give"),
     ActionHandler(ACTIONS.REGAIN_GLORY, "give"),

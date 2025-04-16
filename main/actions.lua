@@ -7,7 +7,7 @@ local HIGH_ACTION_PRIORITY = 10
 
 if not rawget(_G, "HotReloading") then
     local ACTIONS = {
-        SPIRITUALISM = Action({priority = 1, rmb = true}),
+        SPIRITUALISM = Action({priority = 1, distance = 1.5, rmb = true}),
         GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
         PRESENT = Action({priority = 1}),
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
@@ -22,7 +22,7 @@ if not rawget(_G, "HotReloading") then
     end
 end
 
-ACTIONS.UPGRADE.distance = 1 / 3
+ACTIONS.UPGRADE.distance = 1.5
 
 ACTIONS.SPIRITUALISM.fn = function(act)
     local doer, target = act.doer, act.target
