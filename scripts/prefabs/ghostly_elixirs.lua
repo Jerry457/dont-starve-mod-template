@@ -623,7 +623,7 @@ end
 local function buff_OnExtended(inst, target)
     if inst.components.timer then
         local duration = inst.potion_tunings.DURATION
-        if target:HasTag("player") or inst.player_to_ghost then
+        if (target:HasTag("player") or inst.player_to_ghost) and inst.potion_tunings.DURATION_PLAYER ~= nil then
             duration = inst.potion_tunings.DURATION_PLAYER
         end
         if inst.duration_extended_by_skill then

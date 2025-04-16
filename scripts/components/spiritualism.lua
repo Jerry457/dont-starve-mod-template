@@ -48,6 +48,10 @@ function Spiritualism:Summon(grave)
         end)
     end
 
+    if self.inst.components.talker then
+        self.inst.components.talker:Say(GetString(self.inst, "ANNOUNCE_SUMMON"))
+    end
+
     return true
 end
 
