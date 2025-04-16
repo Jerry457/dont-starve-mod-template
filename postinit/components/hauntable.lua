@@ -89,14 +89,12 @@ function Hauntable:DoHaunt(doer, ...)
                 if self.inst.components.growable:GetStage() == 4 then
                     self.inst.components.growable:SetStage(3)
                     LinkPlayerSay(doer, "WEED_FORGETMELOTS_BOLTING")
-                elseif self.inst.components.growable:GetStage() == 1 then
-                    self.inst.components.growable:SetStage(2)
-                    LinkPlayerSay(doer, "WEED_FORGETMELOTS_BOLTING")
                 end
             else
                 local produce = DoChangePrefab(self.inst, data.produce, doer)
                 if self.inst.components.growable and produce.components.growable then
                     local num_stage = self.inst.components.growable:GetStage()
+                    produce.mature = self.inst.mature
                     produce.components.growable:SetStage(num_stage)
                 end
 
