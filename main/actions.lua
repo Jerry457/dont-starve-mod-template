@@ -22,6 +22,8 @@ if not rawget(_G, "HotReloading") then
     end
 end
 
+ACTIONS.UPGRADE.distance = 1/3
+
 ACTIONS.SPIRITUALISM.fn = function(act)
     local doer, target = act.doer, act.target
     if doer and target then
