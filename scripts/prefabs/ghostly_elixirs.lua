@@ -679,7 +679,10 @@ local function buff_skill_modifier_fn(inst,doer,target)
             inst.duration_extended_by_skill = TUNING.SKILLS.WENDY.POTION_DURATION_MOD
         end
 
-        local duration = (target:HasTag("player") or inst.potion_tunings.DURATION_PLAYER) or inst.potion_tunings.DURATION
+        local duration = inst.potion_tunings.DURATION
+        if target:HasTag("player") or inst.player_to_ghost then
+            duration = inst.potion_tunings.DURATION_PLAYER
+        end
         inst.components.timer:StopTimer("decay")
         inst.components.timer:StartTimer("decay", duration * duration_mult )
     end

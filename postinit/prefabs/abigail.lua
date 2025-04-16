@@ -6,15 +6,18 @@ local function ApplyDebuff(inst, data)
     if target ~= nil then
         local buff = "abigail_vex_debuff"
 
-        if inst:HasTag("abigail_vex_shadow") then  -- 原来暗影药剂效果
+        if inst:HasTag("abigail_vex_shadow") then
             buff = "abigail_vex_shadow_debuff"
         end
 
         local olddebuff = target:GetDebuff("abigail_vex_debuff")
-        if olddebuff and olddebuff.prefab ~= buff then
-            target:RemoveDebuff("abigail_vex_debuff")
+        if olddebuff then
+            if olddebuff.prefab == "abigail_vex_shadow_debuff" and buff == "abigail_vex_debuff" then
+                return
+            elseif olddebuff.prefab ~= buff then
+                target:RemoveDebuff("abigail_vex_debuff")
+            end
         end
-
         target:AddDebuff("abigail_vex_debuff", buff, nil, nil, nil, inst)
 
         local debuff = target:GetDebuff("abigail_vex_debuff")

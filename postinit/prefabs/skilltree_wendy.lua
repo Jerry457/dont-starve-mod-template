@@ -9,16 +9,11 @@ skillTreeIconsAtlasLookup["wendy_shadow_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_smallghost_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_smallghost_3.tex"] = "images/wendy_skillicons.xml"
 
-skillTreeIconsAtlasLookup["mystical_observation.tex"] = "images/wendy_skillicons.xml"
-skillTreeIconsAtlasLookup["wendy_poetry.tex"] = "images/wendy_skillicons.xml"
-skillTreeIconsAtlasLookup["abigail_gardening_notes.tex"] = "images/wendy_skillicons.xml"
-skillTreeIconsAtlasLookup["mourningflower_1.tex"] = "images/wendy_skillicons.xml"
-skillTreeIconsAtlasLookup["mourningflower_2.tex"] = "images/wendy_skillicons.xml"
-skillTreeIconsAtlasLookup["mourningflower_3.tex"] = "images/wendy_skillicons.xml"
 
 skillTreeIconsAtlasLookup["wendy_avenging_ghost.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_gravestone_1.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_makegravemounds.tex"] = "images/wendy_skillicons.xml"
+
 skillTreeIconsAtlasLookup["wendy_ghostflower_butterfly.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_ghostflower_hat.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_ghostflower_grave.tex"] = "images/wendy_skillicons.xml"
