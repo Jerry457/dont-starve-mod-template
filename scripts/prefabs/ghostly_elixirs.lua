@@ -629,8 +629,10 @@ local function buff_OnExtended(inst, target)
         if inst.duration_extended_by_skill then
             duration = duration * inst.duration_extended_by_skill
         end
-        inst.components.timer:StopTimer("decay")
-        inst.components.timer:StartTimer("decay", duration)
+        if duration ~= nil then
+            inst.components.timer:StopTimer("decay")
+            inst.components.timer:StartTimer("decay", duration)
+        end
     end
 
     if inst.task ~= nil then
@@ -683,8 +685,10 @@ local function buff_skill_modifier_fn(inst,doer,target)
         if target:HasTag("player") or inst.player_to_ghost then
             duration = inst.potion_tunings.DURATION_PLAYER
         end
-        inst.components.timer:StopTimer("decay")
-        inst.components.timer:StartTimer("decay", duration * duration_mult )
+        if duration ~= nil then
+            inst.components.timer:StopTimer("decay")
+            inst.components.timer:StartTimer("decay", duration * duration_mult )
+        end
     end
 
     if target:HasTag("ghost") then

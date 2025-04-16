@@ -13,6 +13,7 @@ if not rawget(_G, "HotReloading") then
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
         USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
         BEGIN_AGAIN = Action({priority = 1, rmb = true}),
+        CONFIDE = Action({priority = 1, rmb = true}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -89,6 +90,10 @@ ACTIONS.BEGIN_AGAIN.fn = function(act)
         end
         return success, message
     end
+end
+
+ACTIONS.CONFIDE.fn = function(act)
+    return true
 end
 
 local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
