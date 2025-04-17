@@ -8,9 +8,8 @@ local onattacked_shield = function(inst, data)
         return
     end
 
-    local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
-    if hat and hat.components.rechargeable and hat.components.rechargeable:IsCharged() then
-
+    -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
+    if not inst.onattacked_shield_timer then
         local fx = SpawnPrefab("elixir_player_forcefield")
         inst:AddChild(fx)
         inst.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
@@ -78,7 +77,12 @@ local onattacked_shield = function(inst, data)
             end
 
         end
-        hat.components.rechargeable:Discharge(10)
+
+        inst.onattacked_shield_timer = inst:DoTaskInTime(10, function()
+            inst.onattacked_shield_timer = nil
+        end)
+
+        -- hat.components.rechargeable:Discharge(10)
     end
 
     --debuff.components.debuff:Stop()
@@ -672,7 +676,7 @@ local function buff_OnDetached(inst, target)
     inst:Remove()
 end
 
-local function buff_skill_modifier_fn(inst,doer,target)
+local function buff_skill_modifier_fn(inst, doer, target)
     if inst.components.timer then
         local duration_mult = 1
 
@@ -687,7 +691,7 @@ local function buff_skill_modifier_fn(inst,doer,target)
         end
         if duration ~= nil then
             inst.components.timer:StopTimer("decay")
-            inst.components.timer:StartTimer("decay", duration * duration_mult )
+            inst.components.timer:StartTimer("decay", duration * duration_mult)
         end
     end
 
@@ -735,6 +739,7 @@ local function buff_fn(tunings, dodelta_fn)
     if tunings.DURATION ~= nil or tunings.DURATION_PLAYER ~= nil then
         local timer = inst:AddComponent("timer")
     end
+    inst:ListenForEvent("timerdone", buff_OnTimerDone)
 
     inst.Onload = OnLoad
     inst.OnSave = OnSave
