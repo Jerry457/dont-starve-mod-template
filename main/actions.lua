@@ -8,7 +8,7 @@ local HIGH_ACTION_PRIORITY = 10
 if not rawget(_G, "HotReloading") then
     local ACTIONS = {
         SPIRITUALISM = Action({priority = 1, distance = 1.5, rmb = true}),
-        GRAVE_RELOCATION = Action({priority = 1, rmb = true}),
+        GRAVE_RELOCATION = Action({priority = 1, distance = 16, rmb = true}),
         PRESENT = Action({priority = 1}),
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
         USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
@@ -23,14 +23,14 @@ if not rawget(_G, "HotReloading") then
     end
 end
 
-local ExtraDeployDist = ACTIONS.DEPLOY.extra_arrive_dist
-ACTIONS.DEPLOY.extra_arrive_dist = function(doer, dest, bufferedaction, ...)
-    local invobject = bufferedaction and bufferedaction.invobject or nil
-    if invobject and invobject:HasTag("possessed_ghostflower") then
-        return 16 - ACTIONS.DEPLOY.distance or 0
-    end
-    return ExtraDeployDist and ExtraDeployDist(doer, dest, bufferedaction, ...) or 0
-end
+-- local ExtraDeployDist = ACTIONS.DEPLOY.extra_arrive_dist
+-- ACTIONS.DEPLOY.extra_arrive_dist = function(doer, dest, bufferedaction, ...)
+--     local invobject = bufferedaction and bufferedaction.invobject or nil
+--     if invobject and invobject:HasTag("possessed_ghostflower") then
+--         return 16 - ACTIONS.DEPLOY.distance or 0
+--     end
+--     return ExtraDeployDist and ExtraDeployDist(doer, dest, bufferedaction, ...) or 0
+-- end
 
 ACTIONS.UPGRADE.distance = 1.5
 
