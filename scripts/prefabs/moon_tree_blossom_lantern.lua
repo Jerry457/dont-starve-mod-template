@@ -8,6 +8,10 @@ local brain = require("brains/moon_tree_blossom_lanternbrain")
 
 local HotSpringTag = { "watersource" }
 local function OnInit(inst)
+    local ix, iy, iz = inst.Transform:GetWorldPosition()
+    SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
+    inst.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
+
     inst:PushEvent("on_landed")
 
     local target = FindEntity(inst, 2000, function(ent)

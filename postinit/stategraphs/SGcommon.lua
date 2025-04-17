@@ -9,7 +9,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
     ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly"),
-    ActionHandler(ACTIONS.GRAVE_RELOCATION, "dolongaction"),
+    ActionHandler(ACTIONS.GRAVE_RELOCATION, "wendy_recall_ghostflower"),
     ActionHandler(ACTIONS.PRESENT, "give"),
     ActionHandler(ACTIONS.REGAIN_GLORY, "give"),
     ActionHandler(ACTIONS.BEGIN_AGAIN, "give"),
