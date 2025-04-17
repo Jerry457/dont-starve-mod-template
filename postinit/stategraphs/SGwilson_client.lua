@@ -58,6 +58,29 @@ local states = {
         },
     },
     State{
+        name = "wendy_recall_ghostflower",
+        tags = { "doing", "busy", "wendy_recall_ghostflower" },
+        server_states = { "wendy_recall_ghostflower" },
+
+        onenter = function(inst)
+            inst.components.locomotor:Stop()
+            inst.AnimState:AddOverrideBuild("wendy_recall_ghostflower")
+            -- inst.AnimState:PlayAnimation("wendy_recall_ghostflower_pre")
+            inst.AnimState:PlayAnimation("wendy_recall_ghostflower")
+            inst.AnimState:PushAnimation("wendy_recall_ghostflower_pst", false)
+            inst:PerformPreviewBufferedAction()
+        end,
+
+        events =
+        {
+            EventHandler("animqueueover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
         name = "applyelixir_mourningflower",
         tags = { "busy" },
         server_states = { "applyelixir_mourningflower" },

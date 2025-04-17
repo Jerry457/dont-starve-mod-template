@@ -23,6 +23,15 @@ if not rawget(_G, "HotReloading") then
     end
 end
 
+local ExtraDeployDist = ACTIONS.DEPLOY.extra_arrive_dist
+ACTIONS.DEPLOY.extra_arrive_dist = function(doer, dest, bufferedaction, ...)
+    local invobject = bufferedaction and bufferedaction.invobject or nil
+    if invobject and invobject:HasTag("possessed_ghostflower") then
+        return 16 - ACTIONS.DEPLOY.distance or 0
+    end
+    return ExtraDeployDist and ExtraDeployDist(doer, dest, bufferedaction, ...) or 0
+end
+
 ACTIONS.UPGRADE.distance = 1.5
 
 ACTIONS.SPIRITUALISM.fn = function(act)

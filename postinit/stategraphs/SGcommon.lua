@@ -31,9 +31,17 @@ for _, state in ipairs(states) do
 end
 
 local function SGwilson(sg)
+    local _deploy_actionhandler_deststate = sg.actionhandlers[ACTIONS.DEPLOY].deststate
+    sg.actionhandlers[ACTIONS.DEPLOY].deststate = function(inst, act, ...)
+        if act.invobject and act.invobject:HasTag("possessed_ghostflower") then
+            return "wendy_recall_ghostflower"
+        end
+        return _deploy_actionhandler_deststate(inst, act, ...)
+    end
+
     local _upgrade_actionhandler_deststate = sg.actionhandlers[ACTIONS.UPGRADE].deststate
     sg.actionhandlers[ACTIONS.UPGRADE].deststate = function(inst, act, ...)
-        if act.invobject:HasTag(UPGRADETYPES.GRAVESTONE .. "_upgrader") then
+        if act.invobject and act.invobject:HasTag(UPGRADETYPES.GRAVESTONE .. "_upgrader") then
             return "player_pray"
         end
         return _upgrade_actionhandler_deststate(inst, act, ...)

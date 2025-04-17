@@ -56,7 +56,40 @@ local states = {
 
         events =
         {
-            EventHandler("animover", function(inst)
+            EventHandler("animqueueover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
+        name = "wendy_recall_ghostflower",
+        tags = { "doing", "busy", "wendy_recall_ghostflower" },
+
+        onenter = function(inst)
+            inst.components.locomotor:Stop()
+            inst.AnimState:AddOverrideBuild("wendy_recall_ghostflower")
+            -- inst.AnimState:PlayAnimation("wendy_recall_ghostflower_pre")
+            inst.AnimState:PlayAnimation("wendy_recall_ghostflower")
+            inst.AnimState:PushAnimation("wendy_recall_ghostflower_pst", false)
+        end,
+
+        timeline =
+        {
+            TimeEvent(25 * FRAMES, function(inst)
+                inst:PerformBufferedAction()
+                -- if inst.components.rider:IsRiding() then
+                --     inst.sg.statemem.fx = SpawnPrefab("ghostflower_scatter_fx_mount")
+                -- else
+                    inst.sg.statemem.fx = SpawnPrefab("ghostflower_scatter_fx")
+                -- end
+                inst.sg.statemem.fx.entity:SetParent(inst.entity)
+            end),
+        },
+        events =
+        {
+            EventHandler("animqueueover", function(inst)
                 if inst.AnimState:AnimDone() then
                     inst.sg:GoToState("idle")
                 end
