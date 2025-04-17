@@ -372,21 +372,21 @@ local potion_tunings =
         ONAPPLY_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
-                damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow")
+                damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow_player")
             end
             local damagetypebonus = target.components.damagetypebonus
             if damagetypebonus then
-                damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow")
+                damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow_player")
             end
         end,
         ONDETACH_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
-                damagetyperesist:RemoveResist("shadow_aligned", inst, "ghostlyelixir_shadow")
+                damagetyperesist:RemoveResist("shadow_aligned", inst, "ghostlyelixir_shadow_player")
             end
             local damagetypebonus = target.components.damagetypebonus
             if damagetypebonus then
-                damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow")
+                damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow_player")
             end
         end,
         skill_modifier_long_duration = true,
@@ -432,21 +432,21 @@ local potion_tunings =
         ONAPPLY_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
-                damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
+                damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar_player")
             end
             local damagetypebonus = target.components.damagetypebonus
             if damagetypebonus then
-                damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar")
+                damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar_player")
             end
         end,
         ONDETACH_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
-                damagetyperesist:RemoveResist("lunar_aligned", inst, "ghostlyelixir_lunar")
+                damagetyperesist:RemoveResist("lunar_aligned", inst, "ghostlyelixir_lunar_player")
             end
             local damagetypebonus = target.components.damagetypebonus
             if damagetypebonus then
-                damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar")
+                damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar_player")
             end
         end,
         skill_modifier_long_duration = true,
