@@ -179,7 +179,6 @@ local potion_tunings =
         dripfx = "ghostlyelixir_attack_dripfx",
         skill_modifier_long_duration = true,
 
-        -- PLAYER CONTENT
         ONAPPLY_PLAYER_TO_GHOST = function(inst, target)
             if target.UpdateDamage then
                 target:UpdateDamage()

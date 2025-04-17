@@ -120,10 +120,15 @@ local function SetToNormal(inst)
 end
 
 local function UpdateDamage(inst)
-    local buff = inst:GetDebuff("elixir_buff")
-    local buff = inst:GetDebuff("elixir_buff")
+    local elixir_buff = inst:GetDebuff("elixir_buff")
+    local player_to_ghost_elixir_buff = inst:GetDebuff("player_to_ghost_elixir_buff")
     local murderbuff = inst:GetDebuff("abigail_murder_buff")
     local phase = TheWorld.state.phase
+    if (elixir_buff and elixir_buff.prefab == "ghostlyelixir_attack_buff")
+        or (player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_attack_buff")
+    then
+        phase = "night"
+    end
     local modified_damage = (TUNING.ABIGAIL_DAMAGE[phase] or TUNING.ABIGAIL_DAMAGE.day)
     if inst:HasTag("shadow_abigail") then
         modified_damage = (TUNING.SHADOW_ABIGAIL_DAMAGE[phase] or TUNING.SHADOW_ABIGAIL_DAMAGE.day)
