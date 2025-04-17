@@ -330,7 +330,7 @@ local potion_tunings =
             end
         end,
         fx_player = "ghostlyelixir_player_revive_fx",
-        dripfx_player = "ghostlyelixir_player_revive_dripfx",
+        -- dripfx_player = "ghostlyelixir_player_revive_dripfx",
     },
 
     ghostlyelixir_shadow =
@@ -465,7 +465,8 @@ local function DoApplyElixir(inst, giver, target)
     end)
 
     if buff then
-        if target == giver and giver.components.begin_again then
+        if target == giver and giver.components.begin_again and inst.buff_prefab ~= "ghostlyelixir_revive_buff" then
+            print(inst.buff_prefab)
             giver.components.begin_again:RecordElixirBuff(inst.buff_prefab)
         end
         local new_buff = target:GetDebuff(buff_type)
