@@ -10,7 +10,7 @@ local HotSpringTag = { "watersource" }
 local function OnInit(inst)
     local ix, iy, iz = inst.Transform:GetWorldPosition()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
-    inst.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
+    -- inst.SoundEmitter:PlaySoud(n"meta5/wendy/tombstone_place")
 
     inst:PushEvent("on_landed")
 

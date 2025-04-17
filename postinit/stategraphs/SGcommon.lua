@@ -8,6 +8,7 @@ local AddStategraphPostInit = AddStategraphPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
+    ActionHandler(ACTIONS.CONFIDE, "player_prayonly_loop"),
     ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "wendy_recall_ghostflower"),
     ActionHandler(ACTIONS.PRESENT, "give"),
@@ -33,9 +34,9 @@ end
 local function SGwilson(sg)
     local _deploy_actionhandler_deststate = sg.actionhandlers[ACTIONS.DEPLOY].deststate
     sg.actionhandlers[ACTIONS.DEPLOY].deststate = function(inst, act, ...)
-        if act.invobject and act.invobject:HasTag("possessed_ghostflower") then
-            return "wendy_recall_ghostflower"
-        end
+        -- if act.invobject and act.invobject:HasTag("possessed_ghostflower") then
+        --     return "wendy_recall_ghostflower"
+        -- end
         return _deploy_actionhandler_deststate(inst, act, ...)
     end
 

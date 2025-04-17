@@ -376,6 +376,7 @@ local function fn()
     MakeObstaclePhysics(inst, .5)
 
     inst:AddTag("structure")
+    inst:AddTag("sisturn")
 
     inst.AnimState:SetBank("sisturn")
     inst.AnimState:SetBuild("sisturn")
@@ -446,7 +447,7 @@ local function fn()
     return inst
 end
 
-local function fxfn()
+local function fx()
     local inst = CreateEntity()
 
     inst.entity:AddTransform()
@@ -496,4 +497,4 @@ end
 
 return Prefab("sisturn", fn, assets, prefabs),
     MakePlacer("sisturn_placer", "sisturn", "sisturn", "placer"),
-    Prefab("sisturn_moon_petal_fx", fxfn, assets, prefabs)
+    Prefab("sisturn_moon_petal_fx", fx, assets, prefabs)

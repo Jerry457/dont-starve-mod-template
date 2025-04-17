@@ -4,7 +4,6 @@ local assets =
     Asset("ANIM", "anim/wendy_recall_ghostflower.zip"),
 }
 
-
 local function MakeSummonFX(bank, build, anim, is_mounted)
     return function()
         local inst = CreateEntity()

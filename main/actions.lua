@@ -102,6 +102,22 @@ ACTIONS.BEGIN_AGAIN.fn = function(act)
 end
 
 ACTIONS.CONFIDE.fn = function(act)
+    local doer, target, invobject = act.doer, act.target, act.invobject
+    if doer then
+        if doer.components.talker then
+            doer.components.talker:Say(GetString(doer, "ANNOUNCE_CONFIDE"), false, true)
+        end
+        if invobject and invobject.components.stackable then
+            local stacksize = invobject.components.stackable:StackSize()
+            local num = math.floor(stacksize / 2)
+            if num > 0 then
+                invobject.components.stackable:Get(num * 2):Remove()
+                local mourningflower = SpawnPrefab("mourningflower")
+                mourningflower.components.stackable:SetStackSize(num)
+                doer.components.inventory:GiveItem(mourningflower)
+            end
+        end
+    end
     return true
 end
 
@@ -124,6 +140,13 @@ ACTIONS.UPGRADE.strfn = function(act, ...)
     end
     return UPGRADE_strfn(act, ...)
 end
+
+AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if right and inst:HasTag("ghostflower") and target and target:HasTag("sisturn") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
+        table.insert(actions, ACTIONS.CONFIDE)
+    end
+end)
 
 AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
@@ -155,7 +178,7 @@ end)
 
 AddComponentAction("USEITEM", "mourningflower", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
-    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and target:HasTag("regainglory") then
+    if right and target and target:HasTag("regainglory") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
         table.insert(actions, ACTIONS.REGAIN_GLORY)
     end
 end)

@@ -12,6 +12,18 @@ local TIMEOUT = 2
 
 local states = {
     State{
+        name = "player_prayonly_loop",
+        tags = { "player_prayonly_loop" },
+        server_states = { "player_prayonly_loop" },
+
+        onenter = function(inst)
+            inst:PerformBufferedAction()
+            inst.components.locomotor:Stop()
+            inst.AnimState:PlayAnimation("player_prayonly_pre")
+            inst.AnimState:PushAnimation("player_prayonly_loop", true)
+        end,
+    },
+    State{
         name = "player_prayonly",
         tags = { "doing", "busy", "player_prayonly" },
         server_states = { "player_prayonly" },

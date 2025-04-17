@@ -65,7 +65,6 @@ local function fn()
 
     inst:SetPrefabNameOverride("possessed_ghostflower")
 
-    inst:AddTag("ghostflower")
     inst:AddTag("possessed_ghostflower")
 
     MakeInventoryFloatable(inst)
