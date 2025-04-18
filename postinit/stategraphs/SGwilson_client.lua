@@ -12,6 +12,27 @@ local TIMEOUT = 2
 
 local states = {
     State{
+        name = "wendy_channel_no",
+        tags = { "doing", "busy", "wendy_channel_no" },
+        server_states = { "wendy_channel_no" },
+
+        onenter = function(inst)
+            inst:PerformPreviewBufferedAction()
+            inst.components.locomotor:Stop()
+            inst.AnimState:AddOverrideBuild("wendy_channel_no")
+            inst.AnimState:PlayAnimation("wendy_channel_no")
+        end,
+
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
         name = "player_prayonly_loop",
         tags = { "player_prayonly_loop" },
         server_states = { "player_prayonly_loop" },

@@ -12,6 +12,7 @@ Assets = {
     Asset("ANIM", "anim/abigail_ghost_flicker.zip"),
     Asset("ANIM", "anim/ghost_abigail_gestalt_human.zip"),
     Asset("ANIM", "anim/ghost_abigail_shadow_human.zip"),
+    Asset("ANIM", "anim/wendy_channel_no.zip"),
 }
 
 PreloadAssets = {

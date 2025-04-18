@@ -12,7 +12,7 @@ local actionhandlers = {
     ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "wendy_recall_ghostflower"),
     ActionHandler(ACTIONS.PRESENT, "give"),
-    ActionHandler(ACTIONS.REGAIN_GLORY, "give"),
+    ActionHandler(ACTIONS.REGAIN_GLORY, "wendy_channel_no"),
     ActionHandler(ACTIONS.BEGIN_AGAIN, "give"),
     ActionHandler(ACTIONS.USE_GHOSTLYELIXIR, "applyelixir_mourningflower"),
 }
