@@ -377,6 +377,11 @@ local potion_tunings =
             if damagetypebonus then
                 damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow_player")
             end
+            target:DoTaskInTime(0, function()
+                if target then
+                    target:CheckMoonState(true)
+                end
+            end)
         end,
         ONDETACH_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
@@ -387,6 +392,11 @@ local potion_tunings =
             if damagetypebonus then
                 damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow_player")
             end
+            target:DoTaskInTime(0, function()
+                if target then
+                    target:CheckMoonState(true)
+                end
+            end)
         end,
         skill_modifier_long_duration = true,
         -- buff_type = "super_elixir_buff",
@@ -437,6 +447,11 @@ local potion_tunings =
             if damagetypebonus then
                 damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar_player")
             end
+            target:DoTaskInTime(0, function()
+                if target then
+                    target:CheckMoonState(true)
+                end
+            end)
         end,
         ONDETACH_PLAYER = function(inst, target)
             local damagetyperesist = target.components.damagetyperesist
@@ -447,6 +462,11 @@ local potion_tunings =
             if damagetypebonus then
                 damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar_player")
             end
+            target:DoTaskInTime(0, function()
+                if target then
+                    target:CheckMoonState(true)
+                end
+            end)
         end,
         skill_modifier_long_duration = true,
         -- buff_type = "super_elixir_buff"
