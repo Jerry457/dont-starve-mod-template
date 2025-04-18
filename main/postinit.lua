@@ -38,6 +38,7 @@ local files = {
     "postinit/stategraphs/SGcommon.lua",
     "postinit/stategraphs/SGwilson.lua",
     "postinit/stategraphs/SGwilson_client.lua",
+    "postinit/widgets/badge.lua",
     "postinit/widgets/pethealthbadge.lua"
 }
 
