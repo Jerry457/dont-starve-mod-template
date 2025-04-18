@@ -378,8 +378,8 @@ local potion_tunings =
                 damagetypebonus:AddBonus("lunar_aligned", inst, 1.05, "ghostlyelixir_shadow_player")
             end
             target:DoTaskInTime(0, function()
-                if target then
-                    target:CheckMoonState(true)
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
                 end
             end)
         end,
@@ -393,8 +393,8 @@ local potion_tunings =
                 damagetypebonus:RemoveBonus("lunar_aligned", inst, "ghostlyelixir_shadow_player")
             end
             target:DoTaskInTime(0, function()
-                if target then
-                    target:CheckMoonState(true)
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
                 end
             end)
         end,
@@ -448,8 +448,8 @@ local potion_tunings =
                 damagetypebonus:AddBonus("shadow_aligned", inst, 1.05, "ghostlyelixir_lunar_player")
             end
             target:DoTaskInTime(0, function()
-                if target then
-                    target:CheckMoonState(true)
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
                 end
             end)
         end,
@@ -463,8 +463,8 @@ local potion_tunings =
                 damagetypebonus:RemoveBonus("shadow_aligned", inst, "ghostlyelixir_lunar_player")
             end
             target:DoTaskInTime(0, function()
-                if target then
-                    target:CheckMoonState(true)
+                if target._playerlink then
+                    target._playerlink:CheckMoonState(true)
                 end
             end)
         end,
