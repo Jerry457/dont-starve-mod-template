@@ -1,6 +1,20 @@
 local assets =
 {
-    Asset("ANIM", "anim/ghostflower.zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."blue" .. ".zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."green" .. ".zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."orange" .. ".zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."purple" .. ".zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."red" .. ".zip"),
+    Asset("ANIM", "anim/possessed_ghostflower_" .."yellow" .. ".zip"),
+}
+
+local colors = {
+    "blue",
+    "green",
+    "orange",
+    "purple",
+    "red",
+    "yellow",
 }
 
 local function DoFx(inst)
@@ -40,11 +54,19 @@ local function OnDeploy(inst, pt, deployer)
     inst:Remove()
 end
 
+local function SetColor(inst, color)
+    inst.color = color or colors[math.random(#colors)]
+    inst.AnimState:SetBuild("possessed_ghostflower_" .. inst.color)
+    inst.components.inventoryitem:ChangeImageName("possessed_ghostflower_" .. inst.color)
+end
+
 local function OnSave(inst, data)
+    data.color = inst.color
     data.grave_data = inst.grave_data
 end
 
 local function OnLoad(inst, data)
+    SetColor(inst, data.color)
     inst.grave_data = data.grave_data
 end
 
@@ -59,10 +81,6 @@ local function fn()
     MakeInventoryPhysics(inst)
 
     inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
-    inst.AnimState:SetBank("ghostflower")
-    inst.AnimState:SetBuild("ghostflower")
-    inst.AnimState:PlayAnimation("idle", true)
-
     inst:SetPrefabNameOverride("possessed_ghostflower")
 
     inst:AddTag("possessed_ghostflower")
@@ -75,9 +93,11 @@ local function fn()
         return inst
     end
 
+    inst.AnimState:SetBank("ghostflower")
+    inst.AnimState:PlayAnimation("idle", true)
+
     inst:AddComponent("inspectable")
     inst:AddComponent("inventoryitem")
-    inst.components.inventoryitem:ChangeImageName("ghostflower")
 
     inst:AddComponent("deployable")
     inst.components.deployable.ondeploy = OnDeploy
@@ -88,9 +108,11 @@ local function fn()
 
     inst.DelayedGrow = DelayedGrow
 
+    inst.SetColor = SetColor
     inst.OnSave = OnSave
     inst.OnLoad = OnLoad
 
+    SetColor(inst)
     ToGround(inst)
 
     return inst

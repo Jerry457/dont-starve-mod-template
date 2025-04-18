@@ -24,6 +24,7 @@ local function MakeSummonFX(bank, build, anim, is_mounted)
         inst.AnimState:SetBuild(build)
         inst.AnimState:PlayAnimation(anim)
         inst.AnimState:SetFinalOffset(1)
+        inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
 
         inst.entity:SetPristine()
 

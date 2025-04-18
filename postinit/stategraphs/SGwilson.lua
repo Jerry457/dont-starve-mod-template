@@ -82,6 +82,8 @@ local states = {
             inst.components.locomotor:Stop()
             inst.AnimState:AddOverrideBuild("wendy_recall_ghostflower")
             -- inst.AnimState:PlayAnimation("wendy_recall_ghostflower_pre")
+
+            inst.AnimState:SetSymbolBloom("ghostflower")
             inst.AnimState:PlayAnimation("wendy_recall_ghostflower")
             inst.AnimState:PushAnimation("wendy_recall_ghostflower_pst", false)
         end,
