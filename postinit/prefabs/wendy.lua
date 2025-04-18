@@ -95,6 +95,7 @@ local function CheckMoonState(inst, nosay)
                 ghost:AddTag("strong_gestalt")
             end
             if is_shadow then
+                ghost:AddTag("shadow_shadow")
                 TUNING.ABIGAIL_SHADOW_VEX_PLANAR_DAMAGE = 15
             end
         else
