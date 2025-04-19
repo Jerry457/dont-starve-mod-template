@@ -91,8 +91,8 @@ AddPrefabPostInit("glommerflower", function(inst)
         return
     end
 
-    inst:AddComponent("mourningregrow")
-    inst.components.mourningregrow:SetOnRegrowFn(function(inst, doer)
+    inst:AddComponent("regainglory")
+    inst.components.regainglory:SetOnRegrowFn(function(inst, doer)
         if not inst:HasTag("glommerflower") then
             return false, "GLOMMERFLOWERS"
         end
