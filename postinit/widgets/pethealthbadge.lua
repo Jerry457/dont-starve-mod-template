@@ -3,6 +3,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local PetHealthBadge = require("widgets/pethealthbadge")
 local UIAnim = require("widgets/uianim")
+local Widget = require("widgets/widget")
 
 AddClassPostConstruct("widgets/pethealthbadge", function(self)
     self.underNumbernew = self:AddChild(Widget("underNumbernew"))
