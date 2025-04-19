@@ -28,10 +28,12 @@ AddCharacterRecipe(
         builder_skill = "wendy_ghostflower_butterfly",
     }
 )
-
 local edit_recipes = {
     ghostflowerhat = "",
     graveurn = "",
+    wendy_butterfly = "",
+    wendy_moonbutterfly = "",
+    wendy_resurrectiongrave = "",
     wendy_gravestone = "wendy_smallghost_2",
     ghostlyelixir_shadow = "wendy_shadow_2",
     ghostlyelixir_lunar = "wendy_lunar_2",

@@ -169,7 +169,7 @@ local function OnGhostCommandHitOther(inst, data)
     local target = data and data.target or nil
     inst.shadow_command_attack = false
     if inst.gestalt_command_attack then
-        if target and target.components.sleeper then
+        if target and target.components.sleeper and inst:HasTag("gestalt") and inst:HasTag("strong_gestalt") and inst.sg and inst.sg.currentstate.name == "gestalt_loop_homing_attack" then
             target.components.sleeper:GoToSleep()
         end
         inst.gestalt_command_attack = false
@@ -231,7 +231,7 @@ AddPrefabPostInit("abigail", function(inst)
 
     local _DoGhostAttackAt = inst:GetEventCallbacks("do_ghost_attackat", inst, "scripts/prefabs/abigail.lua")
     local function DoGhostAttackAt(inst, ...)
-        inst.shadow_command_attack = inst:HasTag("shadow_abigail") and inst:HasTag("shadow_shadow")
+        inst.shadow_command_attack = inst:HasTag("shadow_abigail") and inst:HasTag("strong_shadow")
         inst.gestalt_command_attack = inst:HasTag("gestalt") and inst:HasTag("strong_gestalt")
         return _DoGhostAttackAt(inst, ...)
     end

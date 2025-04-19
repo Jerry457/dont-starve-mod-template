@@ -46,7 +46,7 @@ function SisturnPerish:SetState(state)
             self.bg:SetTint(1, 1, 1, 0.6)
             self.fill = self:AddChild(Image(wendy_spellbook_atlas, fill_tex))
             -- self.fill:SetBlendMode(BLENDMODE.Disabled)
-            self.fill:SetTint(1, 1, 1, 0.8)
+            self.fill:SetTint(1, 1, 1, 0.6)
         else
             self.fill:SetTexture(wendy_spellbook_atlas, fill_tex)
             self.bg:SetTexture(wendy_spellbook_atlas, bg_tex)
