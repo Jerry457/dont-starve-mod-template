@@ -78,7 +78,7 @@ local onattacked_shield = function(inst, target, data)
 
         end
 
-        inst.onattacked_shield_timer = target:DoTaskInTime(10, function()
+        inst.onattacked_shield_timer = inst:DoTaskInTime(10, function()
             inst.onattacked_shield_timer = nil
         end)
 
