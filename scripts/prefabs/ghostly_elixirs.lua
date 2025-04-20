@@ -82,6 +82,9 @@ local onattacked_shield = function(inst, data)
             inst.onattacked_shield_timer = nil
         end)
 
+        if inst.recharge then
+            inst:recharge()
+        end
         -- hat.components.rechargeable:Discharge(10)
     end
 
