@@ -3,7 +3,7 @@
 local NO_TAGS_NO_PLAYERS =    { "INLIMBO", "notarget", "noattack", "wall", "player", "companion", "playerghost" }
 local COMBAT_TARGET_TAGS = { "_combat" }
 
-local onattacked_shield = function(inst, data)
+local onattacked_shield = function(inst, target, data)
     if data.redirected then
         return
     end
@@ -11,12 +11,12 @@ local onattacked_shield = function(inst, data)
     -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
     if not inst.onattacked_shield_timer then
         local fx = SpawnPrefab("elixir_player_forcefield")
-        inst:AddChild(fx)
-        inst.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
+        target:AddChild(fx)
+        target.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
 
-        inst.components.health.externalreductionmodifiers:RemoveModifier(inst, "forcefield")
+        target.components.health.externalreductionmodifiers:RemoveModifier(target, "forcefield")
 
-        local debuff = inst:GetDebuff("elixir_buff")
+        local debuff = target:GetDebuff("elixir_buff")
         if not debuff then
             return
         end
@@ -30,7 +30,7 @@ local onattacked_shield = function(inst, data)
 
             debuff.ignore = {}
 
-            local x, y, z = inst.Transform:GetWorldPosition()
+            local x, y, z = target.Transform:GetWorldPosition()
 
             for i, v in ipairs(TheSim:FindEntities(x, y, z, hitrange, COMBAT_TARGET_TAGS, NO_TAGS_NO_PLAYERS)) do
                 if not debuff.ignore[v] and
@@ -39,13 +39,13 @@ local onattacked_shield = function(inst, data)
                     v.components.combat ~= nil then
                     local range = hitrange + v:GetPhysicsRadius(0)
                     if v:GetDistanceSqToPoint(x, y, z) < range * range then
-                        if inst.owner ~= nil and not inst.owner:IsValid() then
-                            inst.owner = nil
+                        if target.owner ~= nil and not target.owner:IsValid() then
+                            target.owner = nil
                         end
-                        if inst.owner ~= nil then
-                            if inst.owner.components.combat ~= nil and
-                                inst.owner.components.combat:CanTarget(v) and
-                                not inst.owner.components.combat:IsAlly(v)
+                        if target.owner ~= nil then
+                            if target.owner.components.combat ~= nil and
+                                target.owner.components.combat:CanTarget(v) and
+                                not target.owner.components.combat:IsAlly(v)
                             then
                                 debuff.ignore[v] = true
                                 local retaliation = SpawnPrefab("abigail_retaliation")
@@ -56,7 +56,7 @@ local onattacked_shield = function(inst, data)
                         elseif v.components.combat:CanBeAttacked() then
                             -- NOTES(JBK): inst.owner is nil here so this is for non worn things like the bramble trap.
                             local isally = false
-                            if not inst.canhitplayers then
+                            if not target.canhitplayers then
                                 --non-pvp, so don't hit any player followers (unless they are targeting a player!)
                                 local leader = v.components.follower ~= nil and v.components.follower:GetLeader() or nil
                                 isally = leader ~= nil and leader:HasTag("player") and
@@ -66,7 +66,7 @@ local onattacked_shield = function(inst, data)
                             end
                             if not isally then
                                 debuff.ignore[v] = true
-                                v.components.combat:GetAttacked(inst, damage, nil, nil, inst.spdmg)
+                                v.components.combat:GetAttacked(target, damage, nil, nil, target.spdmg)
                                 local retaliation = SpawnPrefab("abigail_retaliation")
                                 retaliation:SetRetaliationTarget(v)
                                 --v:PushEvent("thorns")
@@ -78,7 +78,7 @@ local onattacked_shield = function(inst, data)
 
         end
 
-        inst.onattacked_shield_timer = inst:DoTaskInTime(10, function()
+        inst.onattacked_shield_timer = target:DoTaskInTime(10, function()
             inst.onattacked_shield_timer = nil
         end)
 
@@ -251,7 +251,11 @@ local potion_tunings =
             if target.components.health ~= nil then
                 target.components.health.externalreductionmodifiers:SetModifier(target, TUNING.GHOSTLYELIXIR_PLAYER_SHIELD_REDUCTION, "forcefield")
             end
-            target:ListenForEvent("attacked", onattacked_shield)
+
+            inst.onattacked_shield = function(target, data)
+                onattacked_shield(inst, target, data)
+            end
+            target:ListenForEvent("attacked", inst.onattacked_shield)
             inst.recharge = function()
                 if target.components.health ~= nil then
                     target.components.health.externalreductionmodifiers:SetModifier(target, TUNING.GHOSTLYELIXIR_PLAYER_SHIELD_REDUCTION, "forcefield")
@@ -259,7 +263,7 @@ local potion_tunings =
             end
         end,
         ONDETACH_PLAYER = function(inst, target)
-            target:RemoveEventCallback("attacked", onattacked_shield)
+            target:RemoveEventCallback("attacked", inst.onattacked_shield)
             if target.components.health ~= nil then
                 target.components.health.externalreductionmodifiers:RemoveModifier(target, "forcefield")
             end
@@ -282,7 +286,10 @@ local potion_tunings =
             if target.components.health ~= nil then
                 target.components.health.externalreductionmodifiers:SetModifier(target, TUNING.GHOSTLYELIXIR_PLAYER_SHIELD_REDUCTION, "forcefield")
             end
-            target:ListenForEvent("attacked", onattacked_shield)
+            inst.onattacked_shield = function(target, data)
+                onattacked_shield(inst, target, data)
+            end
+            target:ListenForEvent("attacked", inst.onattacked_shield)
             inst.recharge = function()
                 if target.components.health ~= nil then
                     target.components.health.externalreductionmodifiers:SetModifier(target, TUNING.GHOSTLYELIXIR_PLAYER_SHIELD_REDUCTION, "forcefield")
@@ -290,7 +297,7 @@ local potion_tunings =
             end
         end,
         ONDETACH_PLAYER = function(inst, target)
-            target:RemoveEventCallback("attacked", onattacked_shield)
+            target:RemoveEventCallback("attacked", inst.onattacked_shield)
             if target.components.health ~= nil then
                 target.components.health.externalreductionmodifiers:RemoveModifier(target, "forcefield")
             end
