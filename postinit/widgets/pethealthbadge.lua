@@ -29,7 +29,7 @@ AddClassPostConstruct("widgets/pethealthbadge", function(self)
     end
 
     self.default_symbol_build3 = "status_abigail"
-    self.bufficon3 = self.underNumber:AddChild(UIAnim())
+    self.bufficon3 = self.underNumbernew:AddChild(UIAnim())
     self.bufficon3:GetAnimState():SetBank("status_abigail")
     self.bufficon3:GetAnimState():SetBuild("status_abigail")
     self.bufficon3:GetAnimState():PlayAnimation("buff_none")
@@ -40,7 +40,7 @@ AddClassPostConstruct("widgets/pethealthbadge", function(self)
     self.buffsymbol3 = 0
 
     self.default_symbol_build4 = "status_abigail"
-    self.bufficon4 = self.underNumber:AddChild(UIAnim())
+    self.bufficon4 = self.underNumbernew:AddChild(UIAnim())
     self.bufficon4:GetAnimState():SetBank("status_abigail")
     self.bufficon4:GetAnimState():SetBuild("status_abigail")
     self.bufficon4:GetAnimState():PlayAnimation("buff_none")
