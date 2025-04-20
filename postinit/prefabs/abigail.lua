@@ -174,6 +174,10 @@ local function OnGhostCommandHitOther(inst, data)
         end
         inst.gestalt_command_attack = false
     end
+
+    if not inst.components.timer:TimerExists("flicker_cooldown") then
+        inst.components.timer:StartTimer("flicker_cooldown", 5)
+    end
 end
 
 AddPrefabPostInit("abigail", function(inst)
