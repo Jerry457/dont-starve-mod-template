@@ -54,9 +54,14 @@ local states = {
             inst.AnimState:PlayAnimation("player_prayonly_pre")
             inst.AnimState:PushAnimation("player_prayonly_loop", false)
             inst.AnimState:PushAnimation("player_prayonly_pst", false)
-
-            inst:PerformPreviewBufferedAction()
         end,
+
+        timeline =
+        {
+            TimeEvent(100 * FRAMES, function(inst)
+                inst:PerformPreviewBufferedAction()
+            end),
+        },
 
         events =
         {
@@ -78,8 +83,14 @@ local states = {
             inst.AnimState:PushAnimation("player_pray_loop", false)
             inst.AnimState:PushAnimation("player_pray_pst", false)
 
-            inst:PerformPreviewBufferedAction()
         end,
+
+        timeline =
+        {
+            TimeEvent(50 * FRAMES, function(inst)
+                inst:PerformPreviewBufferedAction()
+            end),
+        },
 
         events =
         {
@@ -101,8 +112,14 @@ local states = {
             -- inst.AnimState:PlayAnimation("wendy_recall_ghostflower_pre")
             inst.AnimState:PlayAnimation("wendy_recall_ghostflower")
             inst.AnimState:PushAnimation("wendy_recall_ghostflower_pst", false)
-            inst:PerformPreviewBufferedAction()
         end,
+
+        timeline =
+        {
+            TimeEvent(25 * FRAMES, function(inst)
+                inst:PerformPreviewBufferedAction()
+            end),
+        },
 
         events =
         {
@@ -123,7 +140,6 @@ local states = {
             inst.AnimState:PlayAnimation("wendy_elixir_pre")
             inst.AnimState:PushAnimation("wendy_elixir_lag", false)
 
-            inst:PerformPreviewBufferedAction()
             inst.sg:SetTimeout(TIMEOUT)
 
             local buffaction = inst:GetBufferedAction()
@@ -132,6 +148,14 @@ local states = {
                 inst.AnimState:OverrideSymbol("ghostly_elixirs_swap", "ghostly_elixirs", "ghostly_elixirs_".. elixir_type .."_swap")
             end
         end,
+
+
+        timeline =
+        {
+            FrameEvent(19, function(inst)
+                inst:PerformPreviewBufferedAction()
+            end),
+        },
 
         onupdate = function(inst)
             if inst.sg:ServerStateMatches() then
