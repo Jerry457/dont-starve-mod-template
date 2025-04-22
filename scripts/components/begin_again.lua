@@ -1,3 +1,18 @@
+function HookDebuff(inst, hook, ...)
+    local _GetDebuff = inst.GetDebuff
+    function inst:GetDebuff(name, ...)
+        local player_to_ghost_elixir_buff = _GetDebuff(self, "player_to_ghost_elixir_buff", ...)
+        if player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_attack_buff" then
+            return player_to_ghost_elixir_buff
+        else
+            _GetDebuff(self, name, ...)
+        end
+    end
+    print("Hooked GetDebuff for")
+    hook(...)
+    inst.GetDebuff = _GetDebuff
+end
+
 local Begin_Again = Class(function(self, inst)
     self.inst = inst
     self.record_elixir_buff = nil

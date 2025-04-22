@@ -240,6 +240,19 @@ AddPrefabPostInit("abigail", function(inst)
         return _DoGhostAttackAt(inst, ...)
     end
     inst:ListenForEvent("do_ghost_attackat", DoGhostAttackAt)
+
+    local _OnAttacked = inst:GetEventCallbacks("attacked", inst, "scripts/prefabs/abigail.lua")
+    local function OnAttacked(inst, ...)
+        HookDebuff(inst, _OnAttacked, inst, ...)
+    end
+    inst:RemoveEventCallback("onhitother", _OnAttacked)
+    inst:ListenForEvent("onhitother", OnAttacked)
+
+    local _updatehealingbuffs = inst.updatehealingbuffs
+    inst.updatehealingbuffs = function(inst, ...)
+        HookDebuff(inst, _updatehealingbuffs, inst, ...)
+    end
+
     inst:ListenForEvent("onhitother", OnGhostCommandHitOther)
 end)
 
