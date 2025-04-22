@@ -9,6 +9,7 @@ function Grave_Relocation_Item:Relocation(doer, grave, ghostflower)
         grave = SpawnPrefab("mound")
     end
     local grave_data = grave:GetSaveRecord()
+    SpawnPrefab("attune_out_fx").Transform:SetPosition(grave_pos:Get())
     grave:Remove()
 
     WS_UTIL.RemoveOneItem(ghostflower)
