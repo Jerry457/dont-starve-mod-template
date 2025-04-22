@@ -10,17 +10,24 @@ local onattacked_shield = function(inst, target, data)
 
     -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
     if not inst.onattacked_shield_timer then
+        local debuff = target:GetDebuff("elixir_buff") or target:GetDebuff("player_to_ghost_elixir_buff")
+        if not debuff then
+            return
+        end
 
-        local fx = SpawnPrefab("elixir_player_forcefield")
-        target:AddChild(fx)
+        if debuff.potion_tunings.shield_prefab and target:HasTag("player") then
+            local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
+            target:AddChild(fx)
+            fx.Transform:SetPosition(0, 0, -1)
+        else
+            local fx = SpawnPrefab("elixir_player_forcefield")
+            target:AddChild(fx)
+        end
+
         target.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
 
         target.components.health.externalreductionmodifiers:RemoveModifier(target, "forcefield")
 
-        local debuff = target:GetDebuff("elixir_buff")
-        if not debuff then
-            return
-        end
 
         if debuff.potion_tunings.playerreatliate then
             local hitrange = 5
