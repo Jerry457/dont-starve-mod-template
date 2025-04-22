@@ -15,7 +15,7 @@ local onattacked_shield = function(inst, target, data)
             return
         end
 
-        if debuff.potion_tunings.shield_prefab and debuff.player_to_ghost then
+        if debuff.potion_tunings.shield_prefab or debuff.player_to_ghost then
             local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
             target:AddChild(fx)
             if target:HasTag("player") then
