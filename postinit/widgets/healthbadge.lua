@@ -45,8 +45,8 @@ function HealthBadge:SetMourningFlower(percent, light)
     end
 
     if light then
-        self.mourningflower:GetAnimState():OverrideSymbol("mourningflower_ui", "mourningflower_light", "mourningflower_ui")
+        self.mourningflower:GetAnimState():OverrideSymbol("mourningflower", "mourningflower_ui", "mourningflower_light")
     else
-        self.mourningflower:GetAnimState():ClearOverrideSymbol("mourningflower_ui")
+        self.mourningflower:GetAnimState():ClearOverrideSymbol("mourningflower")
     end
 end
