@@ -9,7 +9,6 @@ local onattacked_shield = function(inst, target, data)
     end
 
     -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
-    print(inst.onattacked_shield_timer)
     if not inst.onattacked_shield_timer then
 
         local fx = SpawnPrefab("elixir_player_forcefield")
