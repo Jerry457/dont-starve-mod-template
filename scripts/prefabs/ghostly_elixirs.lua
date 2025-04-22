@@ -15,16 +15,11 @@ local onattacked_shield = function(inst, target, data)
             return
         end
 
-        if debuff.potion_tunings.shield_prefab or debuff.player_to_ghost then
-            local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
-            target:AddChild(fx)
-            if target:HasTag("player") then
-                fx.entity:AddFollower()
-                fx.Follower:FollowSymbol(target.GUID, nil, 0, 100, 0)
-            end
-        else
-            local fx = SpawnPrefab("elixir_player_forcefield")
-            target:AddChild(fx)
+        local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
+        target:AddChild(fx)
+        if target:HasTag("player") then
+            fx.entity:AddFollower()
+            fx.Follower:FollowSymbol(target.GUID, nil, 0, 100, 0)
         end
 
         target.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
