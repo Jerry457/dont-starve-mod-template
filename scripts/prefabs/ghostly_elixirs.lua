@@ -17,8 +17,9 @@ local onattacked_shield = function(inst, target, data)
 
         if debuff.potion_tunings.shield_prefab and target:HasTag("player") then
             local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
-            target:AddChild(fx)
-            fx.Transform:SetPosition(0, 0, -1)
+            fx.entity:AddFollower()
+            fx.entity:SetParent(target.entity)
+            fx.Follower:FollowSymbol(target.GUID, nil, 0, 100, 0)
         else
             local fx = SpawnPrefab("elixir_player_forcefield")
             target:AddChild(fx)
