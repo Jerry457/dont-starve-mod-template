@@ -10,6 +10,7 @@ function Grave_Relocation_Item:Relocation(doer, grave, ghostflower)
     end
     local grave_data = grave:GetSaveRecord()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(grave_pos:Get())
+    self.inst.SoundEmitter:PlaySoud("meta5/wendy/tombstone_place")
     grave:Remove()
 
     WS_UTIL.RemoveOneItem(ghostflower)

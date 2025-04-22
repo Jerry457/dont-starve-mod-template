@@ -50,6 +50,7 @@ local function OnDeploy(inst, pt, deployer)
     local grave = SpawnSaveRecord(inst.grave_data)
     grave.Transform:SetPosition(x, y, z)
     SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
+    inst.SoundEmitter:PlaySoud("meta5/wendy/tombstone_place")
 
     -- inst.components.stackable:Get():Remove()
     inst:Remove()
