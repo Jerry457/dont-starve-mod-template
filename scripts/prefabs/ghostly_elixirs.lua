@@ -9,7 +9,9 @@ local onattacked_shield = function(inst, target, data)
     end
 
     -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
+    print(inst.onattacked_shield_timer)
     if not inst.onattacked_shield_timer then
+
         local fx = SpawnPrefab("elixir_player_forcefield")
         target:AddChild(fx)
         target.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/shield/on")
@@ -80,11 +82,11 @@ local onattacked_shield = function(inst, target, data)
 
         inst.onattacked_shield_timer = inst:DoTaskInTime(10, function()
             inst.onattacked_shield_timer = nil
-        end)
 
-        if inst.recharge then
-            inst:recharge()
-        end
+            if inst.recharge then
+                inst:recharge()
+            end
+        end)
         -- hat.components.rechargeable:Discharge(10)
     end
 
