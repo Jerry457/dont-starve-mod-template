@@ -8,7 +8,6 @@ function HookDebuff(inst, hook, ...)
             _GetDebuff(self, name, ...)
         end
     end
-    print("Hooked GetDebuff for")
     hook(...)
     inst.GetDebuff = _GetDebuff
 end

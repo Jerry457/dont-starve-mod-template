@@ -495,7 +495,6 @@ local function DoApplyElixir(inst, giver, target)
 
     if buff then
         if target == giver and giver.components.begin_again and inst.buff_prefab ~= "ghostlyelixir_revive_buff" then
-            print(inst.buff_prefab)
             giver.components.begin_again:RecordElixirBuff(inst.buff_prefab)
         end
         local new_buff = target:GetDebuff(buff_type)
@@ -621,6 +620,10 @@ local function buff_OnAttached(inst, target, followsymbol, followoffset, data, b
     inst.Transform:SetPosition(0, 0, 0) --in case of loading
 
     if target:HasTag("player") or inst.player_to_ghost then
+        if target.on_ghostly_elixir_bufff_attached then
+            target:on_ghostly_elixir_bufff_attached(true)
+        end
+
         if inst.player_to_ghost and inst.potion_tunings.ONAPPLY_PLAYER_TO_GHOST then
             inst.potion_tunings.ONAPPLY_PLAYER_TO_GHOST(inst, target)
         elseif inst.potion_tunings.ONAPPLY_PLAYER ~= nil then
@@ -693,6 +696,9 @@ local function buff_OnDetached(inst, target)
     end
 
     if target:HasTag("player") or inst.player_to_ghost then
+        if target.on_ghostly_elixir_bufff_attached then
+            target:on_ghostly_elixir_bufff_attached(false)
+        end
         if inst.player_to_ghost and inst.potion_tunings.ONDETACH_PLAYER_TO_GHOST then
             inst.potion_tunings.ONDETACH_PLAYER_TO_GHOST(inst, target)
         elseif inst.potion_tunings.ONDETACH_PLAYER ~= nil then

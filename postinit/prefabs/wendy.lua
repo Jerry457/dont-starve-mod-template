@@ -146,6 +146,25 @@ local function OnSisturnStateChange(inst, data)
     inst.components.ghostlybond:SetBondTimeMultiplier("sisturn", is_active and TUNING.ABIGAIL_BOND_LEVELUP_TIME_MULT or nil)
 end
 
+local function MourningFlowerTask(inst)
+    local debuff = inst:GetDebuff("elixir_buff")
+
+    local percent = 0
+    if debuff then
+        percent = 1
+        if debuff.components.timer and debuff.components.timer:TimerExists("decay") then
+            local end_time = debuff.components.timer.timers["decay"].end_time
+            local time_left = end_time - GetTime()
+            percent = time_left / end_time
+        end
+    end
+
+    inst:PushEvent("mourningflowerpercentchange", {
+        percent = percent,
+        light = not debuff or not debuff.onattacked_shield_timer
+    })
+end
+
 AddPrefabPostInit("wendy", function(inst)
     if not TheWorld.ismastersim then
         return
@@ -174,4 +193,8 @@ AddPrefabPostInit("wendy", function(inst)
     else
         inst:WatchWorldState("isnight", OnMoonStateChange)
     end
+
+    inst:ListenForEvent("onnewtarget")
+
+    inst.mourningflower_task = inst:DoPeriodicTask(1, MourningFlowerTask)
 end)
