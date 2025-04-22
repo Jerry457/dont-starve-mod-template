@@ -10,12 +10,7 @@ local onattacked_shield = function(inst, target, data)
 
     -- local hat = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
     if not inst.onattacked_shield_timer then
-        local debuff = target:GetDebuff("elixir_buff") or target:GetDebuff("player_to_ghost_elixir_buff")
-        if not debuff then
-            return
-        end
-
-        local fx = SpawnPrefab(debuff.potion_tunings.shield_prefab)
+        local fx = SpawnPrefab(inst.potion_tunings.shield_prefab)
         target:AddChild(fx)
         if target:HasTag("player") then
             fx.entity:AddFollower()
@@ -27,19 +22,19 @@ local onattacked_shield = function(inst, target, data)
         target.components.health.externalreductionmodifiers:RemoveModifier(target, "forcefield")
 
 
-        if debuff.potion_tunings.playerreatliate then
+        if inst.potion_tunings.playerreatliate then
             local hitrange = 5
             local damage = 20
 
                 --local retaliation = SpawnPrefab("abigail_retaliation")
                 --retaliation:SetRetaliationTarget(data.attacker)
 
-            debuff.ignore = {}
+            inst.ignore = {}
 
             local x, y, z = target.Transform:GetWorldPosition()
 
             for i, v in ipairs(TheSim:FindEntities(x, y, z, hitrange, COMBAT_TARGET_TAGS, NO_TAGS_NO_PLAYERS)) do
-                if not debuff.ignore[v] and
+                if not inst.ignore[v] and
                     v:IsValid() and
                     v.entity:IsVisible() and
                     v.components.combat ~= nil then
@@ -53,7 +48,7 @@ local onattacked_shield = function(inst, target, data)
                                 target.owner.components.combat:CanTarget(v) and
                                 not target.owner.components.combat:IsAlly(v)
                             then
-                                debuff.ignore[v] = true
+                                inst.ignore[v] = true
                                 local retaliation = SpawnPrefab("abigail_retaliation")
                                 retaliation:SetRetaliationTarget(v)
                                 --V2C: wisecracks make more sense for being pricked by picking
@@ -71,7 +66,7 @@ local onattacked_shield = function(inst, target, data)
                                         v.components.combat.target:HasTag("player"))
                             end
                             if not isally then
-                                debuff.ignore[v] = true
+                                inst.ignore[v] = true
                                 v.components.combat:GetAttacked(target, damage, nil, nil, target.spdmg)
                                 local retaliation = SpawnPrefab("abigail_retaliation")
                                 retaliation:SetRetaliationTarget(v)
