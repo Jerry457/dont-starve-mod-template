@@ -106,11 +106,11 @@ AddStategraphPostInit("abigail", function(sg)
 
     local _gestalt_loop_attack_onenter = sg.states["gestalt_loop_attack"].onenter
     sg.states["gestalt_loop_attack"].onenter = function(inst, ...)
-        HookDebuff(inst, _gestalt_loop_attack_onenter, inst, ...)
+        HookDebuff(inst, _gestalt_loop_attack_onenter, "ghostlyelixir_attack_buff", inst, ...)
     end
 
     local _gestalt_loop_homing_attack_onenter = sg.states["gestalt_loop_homing_attack"].onenter
     sg.states["gestalt_loop_homing_attack"].onenter = function(inst, ...)
-        HookDebuff(inst, _gestalt_loop_homing_attack_onenter, inst, ...)
+        HookDebuff(inst, _gestalt_loop_homing_attack_onenter, "ghostlyelixir_attack_buff", inst, ...)
     end
 end)

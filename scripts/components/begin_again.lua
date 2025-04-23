@@ -1,12 +1,15 @@
-function HookDebuff(inst, hook, ...)
+function HookDebuff(inst, hook, buff_prefab, ...)
     local _GetDebuff = inst.GetDebuff
     function inst:GetDebuff(name, ...)
-        local player_to_ghost_elixir_buff = _GetDebuff(self, "player_to_ghost_elixir_buff", ...)
-        if name == "elixir_buff" and player_to_ghost_elixir_buff then
-            return player_to_ghost_elixir_buff
-        else
-            _GetDebuff(self, name, ...)
+        if name == "elixir_buff" then
+            local player_to_ghost_elixir_buff = _GetDebuff(self, "player_to_ghost_elixir_buff", ...)
+            if player_to_ghost_elixir_buff
+                and (not buff_prefab or player_to_ghost_elixir_buff.prefab == buff_prefab)
+            then
+                return player_to_ghost_elixir_buff
+            end
         end
+        return _GetDebuff(self, name, ...)
     end
     hook(...)
     inst.GetDebuff = _GetDebuff

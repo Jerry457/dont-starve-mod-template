@@ -252,7 +252,7 @@ AddPrefabPostInit("abigail", function(inst)
 
     local _updatehealingbuffs = inst.updatehealingbuffs
     inst.updatehealingbuffs = function(inst, ...)
-        HookDebuff(inst, _updatehealingbuffs, inst, ...)
+        HookDebuff(inst, _updatehealingbuffs, nil, inst, ...)
     end
 end)
 
