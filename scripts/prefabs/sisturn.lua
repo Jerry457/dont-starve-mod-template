@@ -97,9 +97,13 @@ local function StopListenItem(inst, item)
 end
 
 local function OnSisturnStateChange(inst)
+    local state = GetSisturnFeel(inst)
+    local is_full = IsFullOfFlowers(inst)
+    local is_active = is_full and state ~= "NORMAL"
+    inst:AddOrRemoveTag("active_sisturn", is_active)
     OnPerishChange(inst)
     for player in pairs(inst.components.attunable.attuned_players) do
-        player:PushEvent("onsisturnstatechange", {is_active = IsFullOfFlowers(inst), state = GetSisturnFeel(inst)})
+        player:PushEvent("onsisturnstatechange", {is_active = is_active, state = state})
     end
 end
 

@@ -38,7 +38,7 @@ local states = {
         server_states = { "player_prayonly_loop" },
 
         onenter = function(inst)
-            inst:PerformBufferedAction()
+            inst:PerformPreviewBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("player_prayonly_pre")
             inst.AnimState:PushAnimation("player_prayonly_loop", true)

@@ -13,7 +13,7 @@ if not rawget(_G, "HotReloading") then
         REGAIN_GLORY = Action({priority = 1, rmb = true}),
         USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
         BEGIN_AGAIN = Action({priority = 1, rmb = true}),
-        CONFIDE = Action({priority = 1, rmb = true}),
+        CONFIDE = Action({priority = 1, distance = 1.5, rmb = true}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -143,7 +143,7 @@ end
 
 AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
-    if right and inst:HasTag("ghostflower") and target and target:HasTag("sisturn") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
+    if right and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
         table.insert(actions, ACTIONS.CONFIDE)
     end
 end)
