@@ -104,23 +104,13 @@ AddStategraphPostInit("abigail", function(sg)
         inst.components.health:SetInvincible(false)
     end
 
-    local _gestalt_loop_homing_attack_onenter = sg.states["gestalt_loop_attack"].onenter
+    local _gestalt_loop_attack_onenter = sg.states["gestalt_loop_attack"].onenter
     sg.states["gestalt_loop_attack"].onenter = function(inst, ...)
-        local _GetDebuff = inst.GetDebuff
-        function inst:GetDebuff(name, ...)
-            local player_to_ghost_elixir_buff = _GetDebuff(self, "player_to_ghost_elixir_buff", ...)
-            if player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_attack_buff" then
-                return player_to_ghost_elixir_buff
-            else
-                _GetDebuff(self, name, ...)
-            end
-        end
-        _gestalt_loop_homing_attack_onenter(inst, ...)
-        inst.GetDebuff = _GetDebuff
+        HookDebuff(inst, _gestalt_loop_attack_onenter, inst, ...)
     end
 
-    local _gestalt_loop_attack_onenter = sg.states["gestalt_loop_homing_attack"].onenter
+    local _gestalt_loop_homing_attack_onenter = sg.states["gestalt_loop_homing_attack"].onenter
     sg.states["gestalt_loop_homing_attack"].onenter = function(inst, ...)
-        HookDebuff(inst, _gestalt_loop_attack_onenter, inst, ...)
+        HookDebuff(inst, _gestalt_loop_homing_attack_onenter, inst, ...)
     end
 end)
