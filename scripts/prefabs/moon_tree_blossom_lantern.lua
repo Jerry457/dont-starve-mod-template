@@ -52,15 +52,13 @@ end
 
 local function OnLoad(inst, data)
     if data then
-        inst.idle_anim = data.idle_anim or "idle" .. math.random(1, 3)
         inst.scale = data.scale or 1
-        inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_full", true)
         inst.AnimState:SetScale(inst.scale, 1, 1)
+        OnPerishChange(inst)
     end
 end
 
 local function OnSave(inst, data)
-    data.idle_anim = inst.idle_anim
     data.scale = inst.scale
 end
 
