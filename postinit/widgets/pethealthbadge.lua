@@ -10,23 +10,24 @@ AddClassPostConstruct("widgets/pethealthbadge", function(self)
 
     if self.bufficon then
         self.bufficon:Kill()
-        self.bufficon = self.underNumbernew:AddChild(UIAnim())
-        self.bufficon:GetAnimState():SetBank("status_abigail")
-        self.bufficon:GetAnimState():SetBuild("status_abigail")
-        self.bufficon:GetAnimState():PlayAnimation("buff_none")
-        self.bufficon:GetAnimState():AnimateWhilePaused(false)
-        self.bufficon:SetClickable(false)
     end
+    self.bufficon = self.underNumbernew:AddChild(UIAnim())
+    self.bufficon:GetAnimState():SetBank("status_abigail")
+    self.bufficon:GetAnimState():SetBuild("status_abigail")
+    self.bufficon:GetAnimState():PlayAnimation("buff_none")
+    self.bufficon:GetAnimState():AnimateWhilePaused(false)
+    self.bufficon:SetClickable(false)
+
     if self.bufficon2 then
         self.bufficon2:Kill()
-        self.bufficon2 = self.underNumbernew:AddChild(UIAnim())
-        self.bufficon2:GetAnimState():SetBank("status_abigail")
-        self.bufficon2:GetAnimState():SetBuild("status_abigail")
-        self.bufficon2:GetAnimState():PlayAnimation("buff_none")
-        self.bufficon2:GetAnimState():AnimateWhilePaused(false)
-        self.bufficon2:SetClickable(false)
-        self.bufficon2:SetScale(-1,1,1)
     end
+    self.bufficon2 = self.underNumbernew:AddChild(UIAnim())
+    self.bufficon2:GetAnimState():SetBank("status_abigail")
+    self.bufficon2:GetAnimState():SetBuild("status_abigail")
+    self.bufficon2:GetAnimState():PlayAnimation("buff_none")
+    self.bufficon2:GetAnimState():AnimateWhilePaused(false)
+    self.bufficon2:SetClickable(false)
+    self.bufficon2:SetScale(-1,1,1)
 
     self.default_symbol_build3 = "status_abigail"
     self.bufficon3 = self.underNumbernew:AddChild(UIAnim())

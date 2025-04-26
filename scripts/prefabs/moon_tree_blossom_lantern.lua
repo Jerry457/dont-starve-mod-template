@@ -24,11 +24,11 @@ end
 local function GetIdleAnim(inst)
     local percent = inst.components.perishable:GetPercent()
     if percent < 0.3 then
-        return "idle" .. inst.anim_index .. "_less"
+        return "idle_less"
     elseif percent < 0.8 then
-        return "idle" .. inst.anim_index .. "_half"
+        return "idle_half"
     else
-        return "idle" .. inst.anim_index .. "_full"
+        return "idle_full"
     end
 end
 
@@ -42,14 +42,6 @@ local function OnPerish(inst)
 end
 
 local function OnPerishChange(inst)
-    inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
-end
-
-local function ReskinToolFilterFn(inst)
-    inst.anim_index = inst.anim_index + 1
-    if inst.anim_index > 3 then
-        inst.anim_index = 1
-    end
     inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
 end
 
@@ -94,11 +86,11 @@ local function fn()
 
     inst.AnimState:SetSymbolBloom("fire")
     inst.AnimState:SetSymbolLightOverride("fire", .5)
+    inst.AnimState:PlayAnimation("idle_full", true)
 
     inst:AddTag("moon_tree_blossom_lantern")
     inst:AddTag("structure")
     inst:AddTag("rotatableobject")
-    inst:AddTag("reskin_tool_target")
 
     inst.entity:SetPristine()
 
@@ -107,9 +99,6 @@ local function fn()
     end
 
     inst.scale = 1
-    inst.anim_index = math.random(1, 3)
-
-    inst.AnimState:PlayAnimation("idle" .. inst.anim_index .. "_full", true)
 
     inst:AddComponent("inspectable")
 
@@ -138,7 +127,6 @@ local function fn()
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_HUGE
 
-    inst.ReskinToolFilterFn = ReskinToolFilterFn
     inst.SetOrientation = SetOrientation
     inst.GetIdleAnim = GetIdleAnim
     inst.OnSave = OnSave
