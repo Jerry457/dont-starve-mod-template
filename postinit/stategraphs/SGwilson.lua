@@ -72,6 +72,11 @@ local states = {
         tags = { "doing", "busy", "player_pray" },
 
         onenter = function(inst)
+            local bufferedaction = inst:GetBufferedAction()
+            if bufferedaction and bufferedaction.pos then
+                inst:ForceFacePoint(bufferedaction.pos:GetPosition())
+            end
+
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("player_pray_pre")
             inst.AnimState:PushAnimation("player_pray_loop", false)
