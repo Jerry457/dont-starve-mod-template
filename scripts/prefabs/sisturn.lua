@@ -34,7 +34,7 @@ local function ShowGlobalMapIcon(inst, show)
     elseif not show and inst.icon then
         inst.icon:Remove()
         inst.icon = nil
-        inst.MiniMapEntity:SetCanUseCache(true)
+        inst.MiniMapEntity:SetCanUseCache(false)
         inst.MiniMapEntity:SetDrawOverFogOfWar(false)
     end
 end
