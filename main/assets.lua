@@ -4,7 +4,7 @@ Assets = {
     Asset("ATLAS", "images/wendy_skillicons.xml" ),
     Asset("ATLAS", "images/wendy_spellbook_bg.xml"),
     Asset("ATLAS", "images/ws_inventoryimages.xml"),
-    -- Asset("ATLAS", "images/minimap.xml" ),
+    Asset("ATLAS", "images/ws_minimap.xml" ),
 
     Asset("ANIM", "anim/player_pray.zip" ),
     Asset("ANIM", "anim/player_prayonly.zip" ),
@@ -23,5 +23,5 @@ ReloadPreloadAssets()
 
 modimport("main/glassic_api_loader")
 
--- AddMinimapAtlas("images/gk_minimap.xml")
+AddMinimapAtlas("images/ws_minimap.xml")
 GlassicAPI.RegisterItemAtlas("ws_inventoryimages", Assets)

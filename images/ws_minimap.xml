@@ -1,0 +1,13 @@
+<Atlas>
+    <Texture filename="ws_minimap.tex" />
+    <Elements>
+        <Element name="sisturn_blossom_link.tex" u1="0.001953125" v1="0.689453125" u2="0.310546875" v2="0.998046875" />
+        <Element name="sisturn_evil_link.tex" u1="0.314453125" v1="0.689453125" u2="0.623046875" v2="0.998046875" />
+        <Element name="sisturn_link.tex" u1="0.626953125" v1="0.689453125" u2="0.935546875" v2="0.998046875" />
+        <Element name="sisturn_petals_link.tex" u1="0.001953125" v1="0.376953125" u2="0.310546875" v2="0.685546875" />
+        <Element name="sisturn.tex" u1="0.314453125" v1="0.439453125" u2="0.560546875" v2="0.685546875" />
+        <Element name="sisturn_blossom.tex" u1="0.564453125" v1="0.439453125" u2="0.810546875" v2="0.685546875" />
+        <Element name="sisturn_evil.tex" u1="0.314453125" v1="0.189453125" u2="0.560546875" v2="0.435546875" />
+        <Element name="sisturn_petals.tex" u1="0.564453125" v1="0.189453125" u2="0.810546875" v2="0.435546875" />
+    </Elements>
+</Atlas>

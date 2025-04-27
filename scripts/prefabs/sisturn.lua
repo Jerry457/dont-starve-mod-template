@@ -22,6 +22,32 @@ local FLOWER_LAYERS =
     "flower2",
 }
 
+
+local function ShowGlobalMapIcon(inst, show)
+    if show and not inst.icon then
+        inst.icon = SpawnPrefab("globalmapicon")
+        inst.icon.entity:SetParent(inst.entity)
+        -- icon.MiniMapEntity:SetPriority(21)
+        inst.MiniMapEntity:SetCanUseCache(false)
+        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
+
+    elseif not show and inst.icon then
+        inst.icon:Remove()
+        inst.MiniMapEntity:SetCanUseCache(true)
+        inst.MiniMapEntity:SetDrawOverFogOfWar(false)
+    end
+end
+
+local function SetMiniMapIcon(inst, icon)
+    if inst.icon then
+        icon = icon .. "_link.tex"
+        inst.icon.MiniMapEntity:SetIcon(icon)
+    else
+        icon = icon .. ".tex"
+    end
+    inst.MiniMapEntity:SetIcon(icon)
+end
+
 local function IsFullOfFlowers(inst)
     return inst.components.container ~= nil and inst.components.container:IsFull()
 end
@@ -104,6 +130,16 @@ local function OnSisturnStateChange(inst)
     OnPerishChange(inst)
     for player in pairs(inst.components.attunable.attuned_players) do
         player:PushEvent("onsisturnstatechange", {is_active = is_active, state = state})
+    end
+
+    if state == "EVIL" then
+        inst:SetMiniMapIcon("sisturn_evil")
+    elseif state == "BLOSSOM" then
+        inst:SetMiniMapIcon("sisturn_blossom")
+    elseif state == "PETALS" then
+        inst:SetMiniMapIcon("sisturn_petals")
+    else
+        inst:SetMiniMapIcon("sisturn")
     end
 end
 
@@ -319,10 +355,12 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
+    ShowGlobalMapIcon(inst, true)
     OnSisturnStateChange(inst)
 end
 
 local function onunlink(inst, player, isloading)
+    ShowGlobalMapIcon(inst, false)
     OnSisturnStateChange(inst)
 end
 
@@ -366,6 +404,7 @@ local function OnLoad(inst, data)
         end
     end
 end
+
 
 local function fn()
     local inst = CreateEntity()
@@ -447,6 +486,7 @@ local function fn()
 
     inst.OnSave = OnSave
     inst.OnLoad = OnLoad
+    inst.SetMiniMapIcon = SetMiniMapIcon
 
     return inst
 end

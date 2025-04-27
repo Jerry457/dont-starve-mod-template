@@ -76,6 +76,7 @@ local function fn()
 
     inst.AnimState:SetBank("moon_tree_blossom_lantern")
     inst.AnimState:SetBuild("moon_tree_blossom_lantern")
+    -- c_select().AnimState:OverrideSymbol("fire", "moon_tree_blossom_lantern", "moon_fire")
 
     inst.Light:SetIntensity(0.819375)
     inst.Light:SetRadius(0.7125)
