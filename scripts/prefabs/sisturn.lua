@@ -28,14 +28,9 @@ local function ShowGlobalMapIcon(inst, show)
         inst.icon = SpawnPrefab("globalmapicon")
         inst.icon.entity:SetParent(inst.entity)
         inst.icon.MiniMapEntity:SetPriority(21)
-        inst.MiniMapEntity:SetCanUseCache(false)
-        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
-
     elseif not show and inst.icon then
         inst.icon:Remove()
         inst.icon = nil
-        inst.MiniMapEntity:SetCanUseCache(false)
-        inst.MiniMapEntity:SetDrawOverFogOfWar(false)
     end
 end
 
@@ -432,6 +427,8 @@ local function fn()
     end
 
     inst.MiniMapEntity:SetIcon("sisturn.png")
+    inst.MiniMapEntity:SetCanUseCache(true)
+    inst.MiniMapEntity:SetDrawOverFogOfWar(false)
 
     MakeSnowCoveredPristine(inst)
 
