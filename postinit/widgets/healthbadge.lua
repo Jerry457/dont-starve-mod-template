@@ -50,3 +50,12 @@ function HealthBadge:SetMourningFlower(percent, light)
         self.mourningflower:GetAnimState():ClearOverrideSymbol("mourningflower")
     end
 end
+
+local StatusDisplays = require("widgets/statusdisplays")
+local SetGhostMode = StatusDisplays.SetGhostMode
+local _OnSetGhostMode, i = GlassicAPI.UpvalueUtil.GetUpvalue(StatusDisplays.SetGhostMode, "OnSetGhostMode")
+local function OnSetGhostMode(inst, self, ...)
+    _OnSetGhostMode(inst, self, ...)
+    self.onheartbuffdirty = nil
+end
+debug.setupvalue(StatusDisplays.SetGhostMode, i, OnSetGhostMode)
