@@ -27,7 +27,7 @@ local function ShowGlobalMapIcon(inst, show)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
         inst.icon.entity:SetParent(inst.entity)
-        -- icon.MiniMapEntity:SetPriority(21)
+        inst.icon.MiniMapEntity:SetPriority(21)
         inst.MiniMapEntity:SetCanUseCache(false)
         inst.MiniMapEntity:SetDrawOverFogOfWar(true)
 
@@ -415,6 +415,8 @@ local function fn()
     inst.entity:AddSoundEmitter()
     inst.entity:AddMiniMapEntity()
     inst.entity:AddNetwork()
+
+    inst.MiniMapEntity:SetPriority(21)
 
     inst:SetDeploySmartRadius(1) --recipe min_spacing/2
     MakeObstaclePhysics(inst, .5)
