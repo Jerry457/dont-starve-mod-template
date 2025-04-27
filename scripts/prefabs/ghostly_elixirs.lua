@@ -105,7 +105,7 @@ local potion_tunings =
             -- if (target.components.follower and
             --     target.components.follower.leader and
             --     target.components.follower.leader.components.skilltreeupdater and
-            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
+            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_2")) and
             --     (TheWorld.components.sisturnregistry and
             --     TheWorld.components.sisturnregistry:IsBlossom()) and
             --     not target:HasTag("INLIMBO") then
@@ -139,7 +139,7 @@ local potion_tunings =
             -- if (target.components.follower and
             --     target.components.follower.leader and
             --     target.components.follower.leader.components.skilltreeupdater and
-            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_3")) and
+            --     target.components.follower.leader.components.skilltreeupdater:IsActivated("wendy_sisturn_2")) and
             --     (TheWorld.components.sisturnregistry and
             --     TheWorld.components.sisturnregistry:IsBlossom()) and
             --     not target:HasTag("INLIMBO") then

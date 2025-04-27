@@ -32,7 +32,7 @@ local function MakeSisturnLock(extra_data, group_name)
         group = "wendy_alliegience",
         tags = {"allegiance", "lock", "wendy_alliegience"},
         lock_open = function(prefabname, activatedskills, readonly)
-            return activatedskills and activatedskills["wendy_sisturn_3"] ~= nil
+            return activatedskills and activatedskills["wendy_sisturn_2"] ~= nil
         end,
     }
 

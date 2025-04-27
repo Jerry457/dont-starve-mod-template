@@ -122,8 +122,8 @@ local function OnSisturnStateChange(inst, data)
     ghost:SetToNormal()
 
     local skilltreeupdater = inst.components.skilltreeupdater
-        local wendy_sisturn_3 = skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_3") or nil
-        if wendy_sisturn_3 and is_active and state ~= "NORMAL" then
+        local wendy_sisturn_2 = skilltreeupdater and skilltreeupdater:IsActivated("wendy_sisturn_2") or nil
+        if wendy_sisturn_2 and is_active and state ~= "NORMAL" then
             -- ghost:PushEvent("flicker")
             ghost:AddTag("player_damagescale")
         else

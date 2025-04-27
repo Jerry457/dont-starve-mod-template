@@ -10,8 +10,8 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_CONTAINER_DESC", "
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_REVIVE_DESC", "阿比盖尔很喜欢必忘我花，它舒缓的作用能帮助阿比盖尔忘掉那次恐怖经历，获得更强大的精神力量维持更高血量上限。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_1_DESC", "寒冷的死亡气息能让花瓣在姐妹骨灰罐中保存得更久，每一片帮助温蒂哀悼阿比盖尔的花瓣最终都会变为哀悼的荣耀。")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "温蒂会制作随身供品罐了，能够让阿比盖尔体验到更多不同的永恒领域力量。")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "现在骨灰罐内可以放入月树花和深色花瓣了，同一种花瓣协同的力量能让阿比盖尔获得像冒险家一样较强的抵抗，当温蒂学习更强大的不同亲和时，月树花或深色花瓣的魔力将会更彻底的释放。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "现在骨灰罐内可以放入月树花和深色花瓣了，同一种花瓣协同的力量能让阿比盖尔获得像冒险家一样较强的抵抗，当温蒂学习更强大的不同亲和时，月树花或深色花瓣的魔力将会更彻底的释放。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "温蒂会制作随身供品罐了，能够让阿比盖尔体验到更多不同的永恒领域力量。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DESC", "从哀悼中开出的花，让花儿重新出发，也帮助切斯特、哈奇和友好果蝇重新出发。")
 

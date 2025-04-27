@@ -152,16 +152,16 @@ local function ConfigureSkillTreeUpgrades(inst, builder)
     end
 
     local petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
-    local wendy_sisturn_3 = skilltreeupdater:IsActivated("wendy_sisturn_3")
+    local wendy_sisturn_2 = skilltreeupdater:IsActivated("wendy_sisturn_2")
     local lunar_3 = skilltreeupdater:IsActivated("wendy_lunar_3")
     local shadow_3 = skilltreeupdater:IsActivated("wendy_shadow_3")
 
     local dirty = (inst._petal_preserve ~= petal_preserve)
-        or (inst._wendy_sisturn_3 ~= wendy_sisturn_3)
+        or (inst._wendy_sisturn_2 ~= wendy_sisturn_2)
         or (inst._lunar_3 ~= lunar_3)
         or (inst._shadow_3 ~= shadow_3)
 
-    inst._wendy_sisturn_3 = wendy_sisturn_3
+    inst._wendy_sisturn_2 = wendy_sisturn_2
     inst._petal_preserve = petal_preserve
     inst._lunar_3 = lunar_3
     inst._shadow_3 = shadow_3
@@ -350,7 +350,7 @@ end
 
 local function onopen(inst, data)
     local doer = data and data.doer or nil
-    if doer and doer.userid == inst._builder_id and inst._wendy_sisturn_3 then
+    if doer and doer.userid == inst._builder_id and inst._wendy_sisturn_2 then
         inst.components.attunable:LinkToPlayer(doer)
     end
 end
@@ -384,7 +384,7 @@ local function OnSave(inst, data)
     data.preserve_rate = inst._preserve_rate
     data.builder_id = inst._builder_id
     data.petal_preserve = inst._petal_preserve
-    data.wendy_sisturn_3 = inst._wendy_sisturn_3
+    data.wendy_sisturn_2 = inst._wendy_sisturn_2
     data.lunar_3 = inst._lunar_3
     data.shadow_3 = inst._shadow_3
 end
@@ -397,7 +397,7 @@ local function OnLoad(inst, data)
             inst._builder_id = data.builder_id
             inst._preserve_rate = data.preserve_rate
             inst._petal_preserve = data.petal_preserve
-            inst._wendy_sisturn_3 = data.wendy_sisturn_3
+            inst._wendy_sisturn_2 = data.wendy_sisturn_2
             inst._lunar_3 = data.lunar_3
             inst._shadow_3 = data.shadow_3
 
