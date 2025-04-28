@@ -26,7 +26,7 @@ local FLOWER_LAYERS =
 local function ShowGlobalMapIcon(inst, show)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
-        inst.icon.MiniMapEntity:SetPriority(23)
+        inst.icon.MiniMapEntity:SetPriority(30)
         inst.icon:TrackEntity(inst)
         inst.MiniMapEntity:SetCanUseCache(false)
         inst.MiniMapEntity:SetDrawOverFogOfWar(true)
