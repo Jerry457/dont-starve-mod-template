@@ -14,11 +14,18 @@ local states = {
         tags = { "doing", "busy", "wendy_channel_no" },
 
         onenter = function(inst)
-            inst:PerformBufferedAction()
             inst.components.locomotor:Stop()
+            inst.AnimState:SetSymbolBloom("flower_glow_green")
             inst.AnimState:AddOverrideBuild("wendy_channel_no")
             inst.AnimState:PlayAnimation("wendy_channel_no")
         end,
+
+        timeline =
+        {
+            TimeEvent(38 * FRAMES, function(inst)
+                inst:PerformBufferedAction()
+            end),
+        },
 
         events =
         {
