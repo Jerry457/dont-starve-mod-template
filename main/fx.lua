@@ -75,7 +75,7 @@ local fxs = {
         bank = "player_vial_fx",
         build = "player_vial_fx",
         anim = "buff_speed",
-        -- sound = "dontstarve/characters/wendy/abigail/buff/speed",
+        sound = "wilson_rework/ui/lunar_skill",
         fn = function(inst)
             inst.AnimState:OverrideSymbol("fx_speed_02", "abigail_vial_fx", "fx_lunar_02")
             FinalOffset3(inst)
@@ -96,7 +96,7 @@ local fxs = {
         bank = "player_vial_fx",
         build = "player_vial_fx",
         anim = "buff_speed",
-        -- sound = "dontstarve/characters/wendy/abigail/buff/speed",
+        sound = "wilson_rework/ui/shadow_skill",
         fn = function(inst)
             inst.AnimState:OverrideSymbol("fx_speed_02", "abigail_vial_fx", "fx_shadow_02")
             FinalOffset3(inst)

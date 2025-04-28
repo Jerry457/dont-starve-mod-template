@@ -228,6 +228,18 @@ local potion_tunings =
             target:AddTag("ghostlyelixir_speed")
             target.components.locomotor:SetExternalSpeedMultiplier(inst, "ghostlyelixir_speed", 1.1)
             target.components.locomotor:EnableGroundSpeedMultiplier(false)
+
+            inst.OnEquip = function(target, data)
+                local item = data and data.item or nil
+                if not item or data.no_animation then
+                    return
+                end
+
+                if item:HasTag("heavy") then
+
+                end
+            end
+            inst:ListenForEvent("equip", inst.OnEquip, target)
         end,
         ONDETACH_PLAYER = function(inst, target)
             target:RemoveTag("ghostlyelixir_speed")
@@ -381,7 +393,6 @@ local potion_tunings =
             end)
         end,
         ONAPPLY_PLAYER = function(inst, target)
-            target.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow_player")
@@ -424,7 +435,7 @@ local potion_tunings =
         fx = "ghostlyelixir_lunar_fx",
         dripfx = "ghostlyelixir_lunar_dripfx",
         ONAPPLY = function(inst, target)
-            target.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
+            target.SoundEmitter:PlaySound("wilson_rework/ui/lunar_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
@@ -455,7 +466,6 @@ local potion_tunings =
             end)
         end,
         ONAPPLY_PLAYER = function(inst, target)
-            target.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar_player")
