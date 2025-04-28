@@ -26,11 +26,15 @@ local FLOWER_LAYERS =
 local function ShowGlobalMapIcon(inst, show)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
-        inst.icon.entity:SetParent(inst.entity)
-        inst.icon.MiniMapEntity:SetPriority(22)
+        inst.icon.MiniMapEntity:SetPriority(23)
+        inst.icon:TrackEntity(inst)
+        inst.MiniMapEntity:SetCanUseCache(false)
+        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
     elseif not show and inst.icon then
         inst.icon:Remove()
         inst.icon = nil
+        inst.MiniMapEntity:SetCanUseCache(false)
+        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
     end
 end
 
@@ -424,8 +428,10 @@ local function fn()
         inst.AnimState:Hide(layer_name)
     end
 
-    inst.MiniMapEntity:SetIcon("sisturn.tex")
     inst.MiniMapEntity:SetPriority(21)
+    inst.MiniMapEntity:SetIcon("sisturn.tex")
+    inst.MiniMapEntity:SetCanUseCache(true)
+    inst.MiniMapEntity:SetDrawOverFogOfWar(false)
 
     MakeSnowCoveredPristine(inst)
 
