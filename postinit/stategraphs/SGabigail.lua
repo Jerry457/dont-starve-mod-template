@@ -76,14 +76,14 @@ AddStategraphPostInit("abigail", function(sg)
         if pos and inst.shadow_command_attack then
             inst.Transform:SetPosition(pos:Get())
         end
-        -- _abigail_attack_start_onenter(inst, pos)
+        _abigail_attack_start_onenter(inst, pos)
         -- inst.fade_toggle:set(true)
         -- inst.components.health:SetInvincible(true)
     end
 
     local _abigail_attack_end_onexit = sg.states["abigail_attack_end"].onexit
     sg.states["abigail_attack_end"].onexit = function(inst, ...)
-        -- _abigail_attack_end_onexit(inst, ...)
+        _abigail_attack_end_onexit(inst, ...)
         -- inst.fade_toggle:set(false)
         -- inst.components.health:SetInvincible(false)
     end
