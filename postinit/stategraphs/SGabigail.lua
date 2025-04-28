@@ -77,22 +77,24 @@ AddStategraphPostInit("abigail", function(sg)
             inst.Transform:SetPosition(pos:Get())
         end
         _abigail_attack_start_onenter(inst, pos)
-        -- inst.fade_toggle:set(true)
-        -- inst.components.health:SetInvincible(true)
+        inst.fade_toggle:set(true)
+        inst.components.health:SetInvincible(true)
     end
 
     local _abigail_attack_end_onexit = sg.states["abigail_attack_end"].onexit
     sg.states["abigail_attack_end"].onexit = function(inst, ...)
         _abigail_attack_end_onexit(inst, ...)
-        -- inst.fade_toggle:set(false)
-        -- inst.components.health:SetInvincible(false)
+        inst.fade_toggle:set(false)
+        inst.components.health:SetInvincible(false)
     end
 
     local _gestalt_attack_onenter = sg.states["gestalt_attack"].onenter
-    sg.states["gestalt_attack"].onenter = function(inst, ...)
-        _gestalt_attack_onenter(inst, ...)
-        inst.fade_toggle:set(true)
-        inst.components.health:SetInvincible(true)
+    sg.states["gestalt_attack"].onenter = function(inst, pos, ...)
+        _gestalt_attack_onenter(inst, pos,...)
+        if pos then
+            inst.fade_toggle:set(true)
+            inst.components.health:SetInvincible(true)
+        end
     end
 
     local _gestalt_pst_attack_onexit = sg.states["gestalt_pst_attack"].onexit
