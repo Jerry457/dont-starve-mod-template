@@ -229,24 +229,50 @@ local potion_tunings =
             target.components.locomotor:SetExternalSpeedMultiplier(inst, "ghostlyelixir_speed", 1.1)
             target.components.locomotor:EnableGroundSpeedMultiplier(false)
 
-            inst.OnEquip = function(target, data)
+            inst.OnTargetEquip = function(target, data)
                 local item = data and data.item or nil
                 if not item or data.no_animation then
                     return
                 end
 
+                if inst.haunted_heavy_item_task then
+                    inst.haunted_heavy_item_task:Cancel()
+                    inst.haunted_heavy_item_task = nil
+                end
+
                 if item:HasTag("heavy") then
-                    local x, y, z = target.Transform:GetWorldPosition()
-                    SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
-                    target.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
+                    inst.haunted_heavy_item_task = inst:DoPeriodicTask(10, function()
+                        local x, y, z = target.Transform:GetWorldPosition()
+                        SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
+                    end, 0)
+
+                    if target:IsValid() then
+                        target.AnimState:SetHaunted(true)
+                        inst.haunted = true
+                    end
                 end
             end
-            inst:ListenForEvent("equip", inst.OnEquip, target)
+            inst.OnTargetUnEquip = function(target)
+                if inst.haunted and target:IsValid() then
+                    if target:IsValid() then
+                        target.AnimState:SetHaunted(false)
+                        inst.haunted = false
+                    end
+                end
+                if inst.haunted_heavy_item_task then
+                    inst.haunted_heavy_item_task:Cancel()
+                    inst.haunted_heavy_item_task = nil
+                end
+            end
+            inst:ListenForEvent("equip", inst.OnTargetEquip, target)
+            inst:ListenForEvent("unequip", inst.OnTargetUnEquip, target)
         end,
         ONDETACH_PLAYER = function(inst, target)
             target:RemoveTag("ghostlyelixir_speed")
             target.components.locomotor:RemoveExternalSpeedMultiplier(inst, "ghostlyelixir_speed")
             target.components.locomotor:EnableGroundSpeedMultiplier(true)
+
+            inst.OnTargetUnEquip(target)
         end,
         fx_player = "ghostlyelixir_player_speed_fx",
         dripfx_player = "ghostlyelixir_player_speed_dripfx",
