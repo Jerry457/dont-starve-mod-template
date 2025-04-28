@@ -410,6 +410,8 @@ local potion_tunings =
             end)
         end,
         skill_modifier_long_duration = true,
+        fx_player = "ghostlyelixir_player_lunar_fx",
+        dripfx_player = "ghostlyelixir_player_lunar_dripfx",
         -- buff_type = "super_elixir_buff",
 
     },
@@ -480,6 +482,8 @@ local potion_tunings =
             end)
         end,
         skill_modifier_long_duration = true,
+        fx_player = "ghostlyelixir_player_shadow_fx",
+        dripfx_player = "ghostlyelixir_player_shadow_dripfx",
         -- buff_type = "super_elixir_buff"
     },
 }
