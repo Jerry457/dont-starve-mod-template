@@ -27,7 +27,7 @@ local function ShowGlobalMapIcon(inst, show)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
         inst.icon.entity:SetParent(inst.entity)
-        inst.icon.MiniMapEntity:SetPriority(21)
+        inst.icon.MiniMapEntity:SetPriority(22)
     elseif not show and inst.icon then
         inst.icon:Remove()
         inst.icon = nil
@@ -411,8 +411,6 @@ local function fn()
     inst.entity:AddMiniMapEntity()
     inst.entity:AddNetwork()
 
-    inst.MiniMapEntity:SetPriority(21)
-
     inst:SetDeploySmartRadius(1) --recipe min_spacing/2
     MakeObstaclePhysics(inst, .5)
 
@@ -426,9 +424,8 @@ local function fn()
         inst.AnimState:Hide(layer_name)
     end
 
-    inst.MiniMapEntity:SetIcon("sisturn.png")
-    inst.MiniMapEntity:SetCanUseCache(true)
-    inst.MiniMapEntity:SetDrawOverFogOfWar(false)
+    inst.MiniMapEntity:SetIcon("sisturn.tex")
+    inst.MiniMapEntity:SetPriority(21)
 
     MakeSnowCoveredPristine(inst)
 
