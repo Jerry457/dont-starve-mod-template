@@ -236,7 +236,9 @@ local potion_tunings =
                 end
 
                 if item:HasTag("heavy") then
-
+                    local x, y, z = target.Transform:GetWorldPosition()
+                    SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
+                    target.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
                 end
             end
             inst:ListenForEvent("equip", inst.OnEquip, target)
@@ -362,7 +364,6 @@ local potion_tunings =
         fx = "ghostlyelixir_shadow_fx",
         dripfx = "ghostlyelixir_shadow_dripfx",
         ONAPPLY = function(inst, target)
-            target.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow")
@@ -435,7 +436,6 @@ local potion_tunings =
         fx = "ghostlyelixir_lunar_fx",
         dripfx = "ghostlyelixir_lunar_dripfx",
         ONAPPLY = function(inst, target)
-            target.SoundEmitter:PlaySound("wilson_rework/ui/lunar_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
