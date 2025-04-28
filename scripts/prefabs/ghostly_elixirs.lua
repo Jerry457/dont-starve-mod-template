@@ -350,6 +350,7 @@ local potion_tunings =
         fx = "ghostlyelixir_shadow_fx",
         dripfx = "ghostlyelixir_shadow_dripfx",
         ONAPPLY = function(inst, target)
+            inst.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow")
@@ -380,6 +381,7 @@ local potion_tunings =
             end)
         end,
         ONAPPLY_PLAYER = function(inst, target)
+            inst.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("shadow_aligned", inst, 0.95, "ghostlyelixir_shadow_player")
@@ -422,6 +424,7 @@ local potion_tunings =
         fx = "ghostlyelixir_lunar_fx",
         dripfx = "ghostlyelixir_lunar_dripfx",
         ONAPPLY = function(inst, target)
+            inst.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar")
@@ -452,6 +455,7 @@ local potion_tunings =
             end)
         end,
         ONAPPLY_PLAYER = function(inst, target)
+            inst.SoundEmitter:PlaySound("wilson_rework/ui/shadow_skill")
             local damagetyperesist = target.components.damagetyperesist
             if damagetyperesist then
                 damagetyperesist:AddResist("lunar_aligned", inst, 0.95, "ghostlyelixir_lunar_player")
