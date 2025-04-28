@@ -13,7 +13,12 @@ local function OnWritingEnded(inst, data)
     local ix, iy, iz = inst.Transform:GetWorldPosition()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
 
-    local gravestone = SpawnPrefab("gravestone")
+    local skin_build = inst:GetSkinBuild()
+    if skin_build then
+        skin_build:gsub("dug_", "")
+    end
+
+    local gravestone = SpawnPrefab("gravestone", skin_build, inst.skin_id)
     gravestone.Transform:SetPosition(ix, iy, iz)
     gravestone.random_stone_choice = tostring(math.random(4))
     gravestone.AnimState:PlayAnimation("grave" .. gravestone.random_stone_choice .. "_place")
@@ -36,7 +41,13 @@ local function OnWritingEnded(inst, data)
     inst:DoTaskInTime(0, inst.Remove)
 end
 
+PREFAB_SKINS["wendy_recipe_gravestone"] = PREFAB_SKINS.dug_gravestone
+PREFAB_SKINS_IDS["wendy_recipe_gravestone"] = PREFAB_SKINS_IDS.dug_gravestone
+PREFAB_SKINS["wendy_gravestone"] = PREFAB_SKINS.dug_gravestone
+PREFAB_SKINS_IDS["wendy_gravestone"] = PREFAB_SKINS_IDS.dug_gravestone
 AddPrefabPostInit("wendy_recipe_gravestone", function(inst)
+	inst.entity:AddAnimState()
+
     if not TheWorld.ismastersim then
         return inst
     end
