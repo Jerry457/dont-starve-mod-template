@@ -34,8 +34,9 @@ end
 local function SetState(inst, state, onload)
     if not onload then
         inst.SoundEmitter:PlaySound("wickerbottom_rework/book_spells/fire")
-        inst.AnimState:PlayAnimation("idle_full_attune_off", false)
-        inst.AnimState:PlayAnimation("idle_full_attune_on", false)
+        local idle_anim = inst:GetIdleAnim()
+        inst.AnimState:PlayAnimation(idle_anim .. "_attune_off", false)
+        inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
         inst.AnimState:PushAnimation(inst:GetIdleAnim(), true)
 
         if inst.state == state then
@@ -73,8 +74,9 @@ local function WaxReplenishment(inst)
         inst.components.perishable:SetPercent(1)
     end
 
-    inst.AnimState:PlayAnimation("idle_full_attune_on", false)
-    inst.AnimState:PushAnimation(inst:GetIdleAnim(), true)
+    local idle_anim = inst:GetIdleAnim()
+    inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
+    inst.AnimState:PushAnimation(idle_anim, true)
 end
 
 local function OnPerish(inst)
