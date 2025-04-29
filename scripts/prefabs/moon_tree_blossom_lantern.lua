@@ -86,6 +86,14 @@ local function OnPerish(inst)
     end
 end
 
+local function OnHammered(inst, worker)
+    if inst.components.burnable ~= nil and inst.components.burnable:IsBurning() then
+        inst.components.burnable:Extinguish()
+    end
+    SpawnPrefab("collapse_small").Transform:SetPosition(inst.Transform:GetWorldPosition())
+    inst:Remove()
+end
+
 local function OnPerishChange(inst)
     local animation = inst:GetIdleAnim()
     if not inst.AnimState:IsCurrentAnimation(animation) then
@@ -179,6 +187,11 @@ local function fn()
     inst.components.perishable:SetPerishTime(TUNING.PERISH_FAST)
     inst.components.perishable:StartPerishing()
     inst.components.perishable:SetOnPerishFn(OnPerish)
+
+    inst:AddComponent("workable")
+    inst.components.workable:SetWorkLeft(1)
+    inst.components.workable:SetOnFinishCallback(OnHammered)
+    inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
 
     inst:AddComponent("hauntable")
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
