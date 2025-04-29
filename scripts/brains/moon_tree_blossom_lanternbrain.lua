@@ -24,9 +24,7 @@ function MoonTreeBlossomLanternBrain:OnStart()
             ShouldMove(self.inst)
         end, "ShouldMove",
             Wander(self.inst, function()
-                if self.inst.honor_the_memory then
-                    return self.inst.components.knownlocations:GetLocation("home")
-                end
+                return self.inst.components.knownlocations:GetLocation("home")
             end, TUNING.MINIBOATLANTERN_WANDER_DIST, WANDER_TIMES, getdirectionFn)
         ),
     }, 0.25)
