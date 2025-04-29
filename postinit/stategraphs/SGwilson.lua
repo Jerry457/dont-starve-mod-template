@@ -41,6 +41,7 @@ local states = {
         {
             EventHandler("animover", function(inst)
                 if inst.AnimState:AnimDone() then
+                    inst:PerformBufferedAction()
                     inst.sg:GoToState("honor_the_memory_pst")
                 end
             end),
@@ -56,7 +57,6 @@ local states = {
         {
             EventHandler("animover", function(inst)
                 if inst.AnimState:AnimDone() then
-                    inst:PerformBufferedAction()
                     inst.sg:GoToState("idle")
                 end
             end),
