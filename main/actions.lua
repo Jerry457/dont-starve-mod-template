@@ -15,6 +15,7 @@ if not rawget(_G, "HotReloading") then
         BEGIN_AGAIN = Action({priority = 1, rmb = true}),
         CONFIDE = Action({priority = 1, distance = 1.5, rmb = true}),
         HONOR_THE_MEMORY = Action({priority = 1, rmb = true, distance = 20}),
+        PYROPHASIC_TRANSITUS = Action({priority = 1, rmb = true, distance = 20}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -47,6 +48,20 @@ ACTIONS.HONOR_THE_MEMORY.fn = function(act)
     if act.target and not act.target:HasTag("honor_the_memory") then
         SpawnPrefab("attune_out_fx").Transform:SetPosition(act.target.Transform:GetWorldPosition())
         act.target:AddTag("honor_the_memory")
+    end
+    return true
+end
+
+ACTIONS.PYROPHASIC_TRANSITUS.fn = function(act)
+    local target, invobject = act.target, act.invobject
+    if target and target.SetState then
+        local map = {
+            petals = "petals",
+            petals_evil = "evil",
+            moon_tree_blossom = "moon",
+        }
+        target:SetState(map[invobject.prefab])
+        WS_UTIL.RemoveOneItem(invobject)
     end
     return true
 end
@@ -168,8 +183,12 @@ end)
 
 AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
-    if right and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
-        table.insert(actions, ACTIONS.CONFIDE)
+    if right and skilltreeupdater then
+        if skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") then
+            table.insert(actions, ACTIONS.CONFIDE)
+        elseif skilltreeupdater:IsActivated("wendy_smallghost_2") and inst:HasTag("petal") and target and target:HasTag("moon_tree_blossom_lantern") then
+            table.insert(actions, ACTIONS.PYROPHASIC_TRANSITUS)
+        end
     end
 end)
 

@@ -52,8 +52,7 @@ local function OnDeploy(inst, pt, deployer)
     SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
     grave.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
-    -- inst.components.stackable:Get():Remove()
-    inst:Remove()
+    WS_UTIL.RemoveOneItem(inst)
 end
 
 local function SetColor(inst, color)

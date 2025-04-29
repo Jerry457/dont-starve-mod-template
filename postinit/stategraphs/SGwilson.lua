@@ -10,6 +10,28 @@ local actionhandlers = {
 
 local states = {
     State{
+        name = "player_pray_handonly",
+        tags = { "doing", "busy", "player_pray_handonly" },
+
+        onenter = function(inst)
+            inst.AnimState:PlayAnimation("player_pray_pre")
+            inst.AnimState:PushAnimation("player_pray_pst", false)
+        end,
+
+        onexit = function(inst)
+            inst:PerformBufferedAction()
+        end,
+
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
         name = "honor_the_memory_pre",
         tags = { "doing", "busy", "honor_the_memory" },
 
@@ -35,13 +57,13 @@ local states = {
             inst.AnimState:PushAnimation("player_prayonly_loop", false)
         end,
         onexit = function(inst)
+            inst:PerformBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(1)
         end,
         events =
         {
             EventHandler("animover", function(inst)
                 if inst.AnimState:AnimDone() then
-                    inst:PerformBufferedAction()
                     inst.sg:GoToState("honor_the_memory_pst")
                 end
             end),

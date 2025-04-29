@@ -18,7 +18,7 @@ local function MakeButterfly(name, deploy_prefab)
         local flower = SpawnPrefab(deploy_prefab)
         if flower then
             flower.Transform:SetPosition(pt:Get())
-            inst.components.stackable:Get():Remove()
+            WS_UTIL.RemoveOneItem(inst)
             if deployer and deployer.SoundEmitter then
                 deployer.SoundEmitter:PlaySound("dontstarve/common/plant")
             end

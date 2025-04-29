@@ -12,6 +12,26 @@ local TIMEOUT = 2
 
 local states = {
     State{
+        name = "player_pray_handonly",
+        tags = { "doing", "busy", "player_pray_handonly" },
+        server_states = { "player_pray_handonly" },
+
+        onenter = function(inst)
+            inst:PerformPreviewBufferedAction()
+            inst.AnimState:PlayAnimation("player_pray_pre")
+            inst.AnimState:PushAnimation("player_pray_pst", false)
+        end,
+
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
         name = "honor_the_memory_pre",
         tags = { "doing", "busy", "honor_the_memory" },
         server_states = { "honor_the_memory_pre" },

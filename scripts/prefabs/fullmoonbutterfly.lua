@@ -69,7 +69,7 @@ local function OnDeploy(inst, pt, deployer)
     if moontree then
         moontree.Transform:SetPosition(pt:Get())
         moontree.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
-        inst.components.stackable:Get():Remove()
+        WS_UTIL.RemoveOneItem(inst)
     end
 end
 
