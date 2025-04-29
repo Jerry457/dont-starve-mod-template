@@ -67,6 +67,9 @@ end
 local function WaxReplenishment(inst)
     inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_get_bloodpump")
 
+    local idle_anim = inst:GetIdleAnim()
+    inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
+
     local percent = inst.components.perishable:GetPercent()
     if percent < 0.3 then
         inst.components.perishable:SetPercent(0.7999999)
@@ -74,8 +77,6 @@ local function WaxReplenishment(inst)
         inst.components.perishable:SetPercent(1)
     end
 
-    local idle_anim = inst:GetIdleAnim()
-    inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
     inst.AnimState:PushAnimation(idle_anim, true)
 end
 
