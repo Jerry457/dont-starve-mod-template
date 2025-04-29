@@ -45,6 +45,7 @@ end
 
 ACTIONS.HONOR_THE_MEMORY.fn = function(act)
     if act.target then
+        SpawnPrefab("attune_out_fx").Transform:SetPosition(act.target.Transform:GetWorldPosition())
         act.target.honor_the_memory = not act.target.honor_the_memory
     end
     return true
