@@ -21,6 +21,7 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_3_DESC", "�
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
 
+STRINGS.ACTIONS.HONOR_THE_MEMORY = "为逝者祈祷"
 STRINGS.ACTIONS.BEGIN_AGAIN = "重新出发"
 STRINGS.ACTIONS.CONFIDE = "倾诉"
 

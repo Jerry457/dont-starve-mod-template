@@ -14,7 +14,6 @@ local states = {
         tags = { "doing", "busy", "honor_the_memory" },
 
         onenter = function(inst)
-            inst:PerformBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("player_prayonly_pre")
         end,
@@ -57,6 +56,7 @@ local states = {
         {
             EventHandler("animover", function(inst)
                 if inst.AnimState:AnimDone() then
+                    inst:PerformBufferedAction()
                     inst.sg:GoToState("idle")
                 end
             end),
