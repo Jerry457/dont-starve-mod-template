@@ -17,6 +17,7 @@ local states = {
         server_states = { "wendy_channel_no" },
 
         onenter = function(inst)
+            inst:PerformPreviewBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:AddOverrideBuild("wendy_channel_no")
             inst.AnimState:PlayAnimation("wendy_channel_no")
@@ -24,9 +25,6 @@ local states = {
 
         timeline =
         {
-            TimeEvent(38 * FRAMES, function(inst)
-                inst:PerformPreviewBufferedAction()
-            end),
         },
 
         events =
