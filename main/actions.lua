@@ -160,7 +160,9 @@ end)
 AddComponentAction("SCENE", "knownlocations", function(inst, doer, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
     if right and skilltreeupdater:IsActivated("wendy_smallghost_2") and inst and inst:HasTag("moon_tree_blossom_lantern") then
-        table.insert(actions, ACTIONS.HONOR_THE_MEMORY)
+        if TheWorld.Map:IsOceanAtPoint(inst.Transform:GetWorldPosition()) then
+            table.insert(actions, ACTIONS.HONOR_THE_MEMORY)
+        end
     end
 end)
 
