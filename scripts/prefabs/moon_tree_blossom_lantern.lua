@@ -63,6 +63,20 @@ local function SetState(inst, state, onload)
     end
 end
 
+local function WaxReplenishment(inst)
+    inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_get_bloodpump")
+
+    local percent = inst.components.perishable:GetPercent()
+    if percent < 0.3 then
+        inst.components.perishable:SetPercent(0.7999999)
+    else
+        inst.components.perishable:SetPercent(1)
+    end
+
+    inst.AnimState:PlayAnimation("idle_full_attune_on", false)
+    inst.AnimState:PushAnimation(inst:GetIdleAnim(), true)
+end
+
 local function OnPerish(inst)
     local x, y, z = inst.Transform:GetWorldPosition()
     if TheWorld.Map:IsAboveGroundAtPoint(x, y, z) then
@@ -73,7 +87,10 @@ local function OnPerish(inst)
 end
 
 local function OnPerishChange(inst)
-    inst.AnimState:PlayAnimation(inst:GetIdleAnim(), true)
+    local animation = inst:GetIdleAnim()
+    if not inst.AnimState:IsCurrentAnimation(animation) then
+        inst.AnimState:PlayAnimation(animation, true)
+    end
 end
 
 local function SetOrientation(inst)
@@ -167,6 +184,7 @@ local function fn()
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_HUGE
 
+    inst.WaxReplenishment = WaxReplenishment
     inst.SetState = SetState
     inst.SetOrientation = SetOrientation
     inst.GetIdleAnim = GetIdleAnim

@@ -16,6 +16,7 @@ if not rawget(_G, "HotReloading") then
         CONFIDE = Action({priority = 1, distance = 1.5, rmb = true}),
         HONOR_THE_MEMORY = Action({priority = 1, rmb = true, distance = 20}),
         PYROPHASIC_TRANSITUS = Action({priority = 1, rmb = true, distance = 20}),
+        WAX_REPLENISHMENT = Action({priority = 1, rmb = true, distance = 20}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -61,6 +62,15 @@ ACTIONS.PYROPHASIC_TRANSITUS.fn = function(act)
             moon_tree_blossom = "moon",
         }
         target:SetState(map[invobject.prefab])
+        WS_UTIL.RemoveOneItem(invobject)
+    end
+    return true
+end
+
+ACTIONS.WAX_REPLENISHMENT.fn = function(act)
+    local target, invobject = act.target, act.invobject
+    if target and target.WaxReplenishment then
+        target:WaxReplenishment()
         WS_UTIL.RemoveOneItem(invobject)
     end
     return true
@@ -186,8 +196,12 @@ AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, acti
     if right and skilltreeupdater then
         if skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") then
             table.insert(actions, ACTIONS.CONFIDE)
-        elseif skilltreeupdater:IsActivated("wendy_smallghost_2") and inst:HasTag("petal") and target and target:HasTag("moon_tree_blossom_lantern") then
-            table.insert(actions, ACTIONS.PYROPHASIC_TRANSITUS)
+        elseif skilltreeupdater:IsActivated("wendy_smallghost_2") and target and target:HasTag("moon_tree_blossom_lantern") then
+            if inst:HasTag("petal") then
+                table.insert(actions, ACTIONS.PYROPHASIC_TRANSITUS)
+            elseif inst:HasTag("ghostflower") then
+                table.insert(actions, ACTIONS.WAX_REPLENISHMENT)
+            end
         end
     end
 end)
