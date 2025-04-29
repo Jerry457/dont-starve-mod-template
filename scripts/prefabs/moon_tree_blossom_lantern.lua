@@ -54,14 +54,16 @@ local function OnLoad(inst, data)
     if data then
         inst.scale = data.scale or 1
         inst.AnimState:SetScale(inst.scale, 1, 1)
-        inst.honor_the_memory = data.honor_the_memory
+        if data.honor_the_memory then
+            inst:AddTag("honor_the_memory")
+        end
         OnPerishChange(inst)
     end
 end
 
 local function OnSave(inst, data)
     data.scale = inst.scale
-    data.honor_the_memory = inst.honor_the_memory
+    data.honor_the_memory = inst:HasTag("honor_the_memory")
 end
 
 local function fn()
@@ -78,7 +80,10 @@ local function fn()
 
     inst.AnimState:SetBank("moon_tree_blossom_lantern")
     inst.AnimState:SetBuild("moon_tree_blossom_lantern")
-    -- c_select().AnimState:OverrideSymbol("fire", "moon_tree_blossom_lantern", "moon_fire")
+    inst.AnimState:OverrideSymbol("fire", "moon_tree_blossom_lantern", "fire_moon")
+    inst.AnimState:OverrideSymbol("glow", "moon_tree_blossom_lantern", "glow_moon")
+    inst.AnimState:OverrideSymbol("sprk_1 copy", "moon_tree_blossom_lantern", "sprk_1 copy_moon")
+    inst.AnimState:OverrideSymbol("sprk_2", "moon_tree_blossom_lantern", "sprk_2_moon")
 
     inst.Light:SetIntensity(0.819375)
     inst.Light:SetRadius(0.7125)
@@ -100,7 +105,6 @@ local function fn()
     end
 
     inst.scale = 1
-    inst.honor_the_memory = false
 
     inst:AddComponent("inspectable")
 
@@ -141,4 +145,4 @@ local function fn()
 end
 
 return Prefab("moon_tree_blossom_lantern", fn, assets),
-    MakePlacer("moon_tree_blossom_lantern_placer", "moon_tree_blossom_lantern", "moon_tree_blossom_lantern", "idle1_full")
+    MakePlacer("moon_tree_blossom_lantern_placer", "moon_tree_blossom_lantern", "moon_tree_blossom_lantern", "idle_full")

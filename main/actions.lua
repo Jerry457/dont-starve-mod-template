@@ -44,9 +44,9 @@ ACTIONS.SPIRITUALISM.fn = function(act)
 end
 
 ACTIONS.HONOR_THE_MEMORY.fn = function(act)
-    if act.target then
+    if act.target and not act.target:HasTag("honor_the_memory") then
         SpawnPrefab("attune_out_fx").Transform:SetPosition(act.target.Transform:GetWorldPosition())
-        act.target.honor_the_memory = not act.target.honor_the_memory
+        act.target:AddTag("honor_the_memory")
     end
     return true
 end

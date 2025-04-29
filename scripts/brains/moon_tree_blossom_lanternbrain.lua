@@ -8,7 +8,7 @@ local function getdirectionFn(inst)
 end
 
 local function ShouldMove(inst)
-    if inst.honor_the_memory then
+    if inst:HasTag("honor_the_memory") then
         return TheWorld.Map:IsOceanAtPoint(inst.Transform:GetWorldPosition())
     end
 end
@@ -20,7 +20,9 @@ end)
 function MoonTreeBlossomLanternBrain:OnStart()
     local root = PriorityNode(
     {
-		WhileNode(function() return ShouldMove(self.inst) end, "ShouldMove",
+		WhileNode(function() return
+            ShouldMove(self.inst)
+        end, "ShouldMove",
             Wander(self.inst, function()
                 if self.inst.honor_the_memory then
                     return self.inst.components.knownlocations:GetLocation("home")
