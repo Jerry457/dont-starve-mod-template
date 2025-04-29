@@ -14,6 +14,7 @@ if not rawget(_G, "HotReloading") then
         USE_GHOSTLYELIXIR = Action({priority = 1, rmb = true}),
         BEGIN_AGAIN = Action({priority = 1, rmb = true}),
         CONFIDE = Action({priority = 1, distance = 1.5, rmb = true}),
+        HONOR_THE_MEMORY = Action({priority = 1, rmb = true, distance = 20}),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -40,6 +41,13 @@ ACTIONS.SPIRITUALISM.fn = function(act)
         return doer.components.spiritualism:Summon(target)
     end
     return false
+end
+
+ACTIONS.HONOR_THE_MEMORY.fn = function(act)
+    if act.target then
+        act.target.honor_the_memory = not act.target.honor_the_memory
+    end
+    return true
 end
 
 ACTIONS.GRAVE_RELOCATION.fn = function(act)
@@ -141,18 +149,24 @@ ACTIONS.UPGRADE.strfn = function(act, ...)
     return UPGRADE_strfn(act, ...)
 end
 
+AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_1") then
+        table.insert(actions, ACTIONS.SPIRITUALISM)
+    end
+end)
+
+AddComponentAction("SCENE", "knownlocations", function(inst, doer, actions, right)
+    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
+    if right and skilltreeupdater:IsActivated("wendy_smallghost_2") and inst and inst:HasTag("moon_tree_blossom_lantern") then
+        table.insert(actions, ACTIONS.HONOR_THE_MEMORY)
+    end
+end)
+
 AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
     if right and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") and skilltreeupdater and skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") then
         table.insert(actions, ACTIONS.CONFIDE)
-    end
-end)
-
-AddComponentAction("SCENE", "gravediggable", function(inst, doer, actions, right)
-    local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
-
-    if right and skilltreeupdater and skilltreeupdater:IsActivated("wendy_smallghost_1") then
-        table.insert(actions, ACTIONS.SPIRITUALISM)
     end
 end)
 

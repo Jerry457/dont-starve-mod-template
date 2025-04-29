@@ -54,12 +54,14 @@ local function OnLoad(inst, data)
     if data then
         inst.scale = data.scale or 1
         inst.AnimState:SetScale(inst.scale, 1, 1)
+        inst.honor_the_memory = data.honor_the_memory
         OnPerishChange(inst)
     end
 end
 
 local function OnSave(inst, data)
     data.scale = inst.scale
+    data.honor_the_memory = inst.honor_the_memory
 end
 
 local function fn()
@@ -98,6 +100,7 @@ local function fn()
     end
 
     inst.scale = 1
+    inst.honor_the_memory = false
 
     inst:AddComponent("inspectable")
 

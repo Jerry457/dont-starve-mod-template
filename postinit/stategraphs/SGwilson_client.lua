@@ -12,6 +12,62 @@ local TIMEOUT = 2
 
 local states = {
     State{
+        name = "honor_the_memory_pre",
+        tags = { "doing", "busy", "honor_the_memory" },
+        server_states = { "honor_the_memory_pre" },
+
+        onenter = function(inst)
+            inst:PerformPreviewBufferedAction()
+            inst.components.locomotor:Stop()
+            inst.AnimState:PlayAnimation("player_prayonly_pre")
+        end,
+
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("honor_the_memory_loop")
+                end
+            end),
+        },
+    },
+    State{
+        name = "honor_the_memory_loop",
+        tags = { "doing", "busy", "honor_the_memory" },
+        server_states = { "honor_the_memory_loop" },
+        onenter = function(inst)
+            inst.AnimState:SetDeltaTimeMultiplier(2)
+            inst.AnimState:PushAnimation("player_prayonly_loop", false)
+        end,
+        onexit = function(inst)
+            inst.AnimState:SetDeltaTimeMultiplier(1)
+        end,
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("honor_the_memory_pst")
+                end
+            end),
+        },
+    },
+    State{
+        name = "honor_the_memory_pst",
+        tags = { "doing", "busy", "honor_the_memory" },
+        server_states = { "honor_the_memory_pst" },
+        onenter = function(inst)
+            inst.AnimState:PushAnimation("player_prayonly_pst", false)
+        end,
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
+    },
+    State{
         name = "wendy_channel_no",
         tags = { "doing", "busy", "wendy_channel_no" },
         server_states = { "wendy_channel_no" },

@@ -8,6 +8,7 @@ local AddStategraphPostInit = AddStategraphPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local actionhandlers = {
+    ActionHandler(ACTIONS.HONOR_THE_MEMORY, "honor_the_memory_pre"),
     ActionHandler(ACTIONS.CONFIDE, "player_prayonly_loop"),
     ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "wendy_recall_ghostflower"),
