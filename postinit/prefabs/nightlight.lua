@@ -14,6 +14,9 @@ local NightMarePhaseFire = {
 }
 
 local function OnNightMarePhaseChange(inst, phase)
+    if TheWorld.net.components.nightmareclock and TheWorld.net.components.nightmareclock:GetLockNightmarePhase() == "wild" then
+        phase = "look_wild"
+    end
     if not phase then
         return
     end
@@ -39,8 +42,8 @@ local function GazingShadow(inst)
     TheWorld:PushEvent("spiritualperceptionchange")
 
     inst:ListenForEvent("ms_locknightmarephase", function(inst, phase)
-        OnNightMarePhaseChange(inst, phase == "wild" and "look_wild" or nil)
-    end)
+        OnNightMarePhaseChange(inst, phase)
+    end, TheWorld)
     inst:WatchWorldState("nightmarephase", OnNightMarePhaseChange)
 
     local phase = TheWorld.state.nightmarephase

@@ -68,7 +68,6 @@ local function RegisterNetListeners(inst)
         inst:ListenForEvent("onactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
         inst:ListenForEvent("ondeactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
         OnSpiritualPerceptionChange(inst._parent)
-
     else
         inst:ListenForEvent("sisturnperishdirty", OnSisturnPerishDirty)
         inst:ListenForEvent("mourningflowerpercentdirty", OnMourningFlowerPercentDirty)
