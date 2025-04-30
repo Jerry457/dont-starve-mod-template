@@ -3,12 +3,26 @@
 local Widget = require("widgets/widget")
 local UIAnim = require("widgets/uianim")
 
-
-local function OnSkillChange(self)
-    if self.owner.components.skilltreeupdater and self.owner.components.skilltreeupdater:IsActivated("wendy_avenging_ghost") then
+local function OnSpiritualPerceptionChange(self, show)
+    if show then
         self:Show()
     else
         self:Hide()
+    end
+end
+
+
+local function OnNight(self, isnight)
+    if self.animation_data then
+        local symbol = self.animation_data.symbol
+        local animation = self.animation_data.animation
+        local fx_animation = self.animation_data.fx_animation
+        self:PlayerChangeFx(fx_animation)
+        self.inst:DoTaskInTime(15 * FRAMES, function()
+            self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
+            self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
+        end)
+        self.animation_data = nil
     end
 end
 
@@ -43,6 +57,9 @@ local function OnMoonPhaseChange(self, data)
         animation = animation,
         fx_animation = fx_animation,
     }
+    if self.alter then
+        OnNight(self)
+    end
 end
 
 local function force_nightmare_wild_anim(inst)
@@ -69,20 +86,6 @@ local function OnNightMarePhaseChange(self)
     else
         local animation = "nightmare_" .. TheWorld.state.nightmarephase:gsub("nightmare", "nightmare_")
         self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
-    end
-end
-
-local function OnNight(self, isnight)
-    if self.animation_data then
-        local symbol = self.animation_data.symbol
-        local animation = self.animation_data.animation
-        local fx_animation = self.animation_data.fx_animation
-        self:PlayerChangeFx(fx_animation)
-        self.inst:DoTaskInTime(15 * FRAMES, function()
-            self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
-            self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
-        end)
-        self.animation_data = nil
     end
 end
 
@@ -119,8 +122,8 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
         self.inst:ListenForEvent("moonphasestylechanged", self._OnMoonPhaseChange, TheWorld)
     end
 
-    self._OnSkillChange = function()
-        OnSkillChange(self)
+    self._OnSpiritualPerceptionChange = function(_, show)
+        OnSpiritualPerceptionChange(self, show)
         if TheWorld:HasTag("cave") then
             OnNightMarePhaseChange(self)
         else
@@ -128,9 +131,8 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
             OnNight(self)
         end
     end
-    self.inst:ListenForEvent("onactivateskill_client", self._OnSkillChange, owner)
-    self.inst:ListenForEvent("ondeactivateskill_client", self._OnSkillChange, owner)
-    self.inst:DoTaskInTime(0, self._OnSkillChange)
+    self.inst:ListenForEvent("spiritualperceptionchange", self._OnSpiritualPerceptionChange, owner)
+    self.inst:DoTaskInTime(0, self._OnSpiritualPerceptionChange)
 end)
 
 function SpiritualPerception:PlayerChangeFx(animation)

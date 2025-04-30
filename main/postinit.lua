@@ -22,6 +22,7 @@ local files = {
     "postinit/prefabs/ghostflower.lua",
     "postinit/prefabs/graveguard_ghost.lua",
     "postinit/prefabs/gravestone.lua",
+    "postinit/prefabs/moondial.lua",
     "postinit/prefabs/moon_tree_blossom.lua",
     "postinit/prefabs/mound.lua",
     "postinit/prefabs/petals.lua",

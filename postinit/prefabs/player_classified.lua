@@ -40,6 +40,17 @@ local function OnLockNightmarePhaseDirty(inst)
     inst._parent:PushEvent("locknightmarephasechange", inst.locknightmarephase:value())
 end
 
+local function OnSpiritualPerceptionChange(player)
+    local skilltreeupdater = player.components.skilltreeupdater
+    local moondial = TheSim:FindFirstEntityWithTag("moondial")
+    local shown = moondial ~= nil and skilltreeupdater ~= nil and skilltreeupdater:IsActivated("wendy_avenging_ghost")
+    player.player_classified.spiritualperception:set(shown)
+end
+
+local function OnSpiritualPerceptionDirty(inst)
+    inst._parent:PushEvent("spiritualperceptionchange", inst.spiritualperception:value())
+end
+
 local function RegisterNetListeners(inst)
     if TheWorld.ismastersim then
         inst._parent = inst.entity:GetParent()
@@ -48,6 +59,15 @@ local function RegisterNetListeners(inst)
         inst:ListenForEvent("ms_locknightmarephase", function(src, phase)
             OnLockNightmarePhaseChange(inst, phase)
         end, TheWorld)
+        inst:ListenForEvent("spawn_moondial", function(src, ent)
+            OnSpiritualPerceptionChange(inst._parent)
+        end, TheWorld)
+        inst:ListenForEvent("remove_moondial", function(src, ent)
+            OnSpiritualPerceptionChange(inst._parent)
+        end, TheWorld)
+        inst:ListenForEvent("onactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
+        inst:ListenForEvent("ondeactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
+        OnSpiritualPerceptionChange(inst._parent)
     else
         inst:ListenForEvent("sisturnperishdirty", OnSisturnPerishDirty)
         inst:ListenForEvent("mourningflowerpercentdirty", OnMourningFlowerPercentDirty)
@@ -55,6 +75,7 @@ local function RegisterNetListeners(inst)
 
     if not TheNet:IsDedicated() then
         inst:ListenForEvent("locknightmarephasedirty", OnLockNightmarePhaseDirty)
+        inst:ListenForEvent("spiritualperceptiondirty", OnSpiritualPerceptionDirty)
     end
 end
 
@@ -62,10 +83,12 @@ AddPrefabPostInit("player_classified", function(inst)
     inst.sisturnstate = net_string(inst.GUID, "sisturn.state", "sisturnperishdirty")
     inst.sisturnperish = net_float(inst.GUID, "sisturn.perish", "sisturnperishdirty")
     inst.locknightmarephase = net_string(inst.GUID, "lock.nightmarephase", "locknightmarephasedirty")
+    inst.spiritualperception = net_bool(inst.GUID, "spiritual.perception", "spiritualperceptiondirty")
 
     inst.mourningflowerpercent = net_float(inst.GUID, "mourningflower.perish", "mourningflowerpercentdirty")
     inst.mourningflowerlight = net_bool(inst.GUID, "mourningflower.light", "mourningflowerpercentdirty")
 
+    inst.spiritualperception:set(false)
     inst.locknightmarephase:set("")
     inst.sisturnstate:set("NORMAL")
     inst.sisturnperish:set(0)
