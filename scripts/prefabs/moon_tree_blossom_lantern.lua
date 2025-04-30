@@ -34,19 +34,18 @@ end
 local function SetState(inst, state, onload)
     if not onload then
         inst.SoundEmitter:PlaySound("wickerbottom_rework/book_spells/fire")
-        local idle_anim = inst:GetIdleAnim()
-        inst.AnimState:PlayAnimation(idle_anim .. "_attune_off", false)
-        inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
-        inst.AnimState:PushAnimation(inst:GetIdleAnim(), true)
-
         if inst.state == state then
             local percent = inst.components.perishable:GetPercent()
             if percent > 0.3 and percent < 0.8 then
-                inst.components.perishable:SetPercent(0.2999999)
+                inst.components.perishable:SetPercent(0.29)
             elseif percent >= 0.8 then
-                inst.components.perishable:SetPercent(0.7999999)
+                inst.components.perishable:SetPercent(0.79)
             end
         end
+        local idle_anim = inst:GetIdleAnim()
+        inst.AnimState:PlayAnimation(idle_anim .. "_attune_off", false)
+        inst.AnimState:PushAnimation(idle_anim .. "_attune_on", false)
+        inst.AnimState:PushAnimation(inst:GetIdleAnim(), true)
     end
 
     inst.state = state
@@ -57,26 +56,25 @@ local function SetState(inst, state, onload)
         inst.AnimState:OverrideSymbol("sprk_1 copy", "moon_tree_blossom_lantern", "sprk_1 copy_" .. state)
         inst.AnimState:OverrideSymbol("sprk_2", "moon_tree_blossom_lantern", "sprk_2_" .. state)
     else
-        inst.AnimState:ClearOverrideSymbol("fire")
-        inst.AnimState:ClearOverrideSymbol("glow")
-        inst.AnimState:ClearOverrideSymbol("sprk_1 copy")
-        inst.AnimState:ClearOverrideSymbol("sprk_2")
+        inst.AnimState:OverrideSymbol("fire", "moon_tree_blossom_lantern", "fire")
+        inst.AnimState:OverrideSymbol("glow", "moon_tree_blossom_lantern", "glow")
+        inst.AnimState:OverrideSymbol("sprk_1 copy", "moon_tree_blossom_lantern", "sprk_1 copy")
+        inst.AnimState:OverrideSymbol("sprk_2", "moon_tree_blossom_lantern", "sprk_2")
     end
 end
 
 local function WaxReplenishment(inst)
     inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_get_bloodpump")
 
-    local idle_anim = inst:GetIdleAnim()
-    inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
-
     local percent = inst.components.perishable:GetPercent()
     if percent < 0.3 then
-        inst.components.perishable:SetPercent(0.7999999)
+        inst.components.perishable:SetPercent(0.79)
     else
         inst.components.perishable:SetPercent(1)
     end
 
+    local idle_anim = inst:GetIdleAnim()
+    inst.AnimState:PlayAnimation(idle_anim .. "_attune_on", false)
     inst.AnimState:PushAnimation(idle_anim, true)
 end
 

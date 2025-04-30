@@ -49,7 +49,7 @@ end
 
 GlassicAPI.SkinHandler.AddModSkins({
     moon_tree_blossom_lantern = {
-        "moon_tree_blossom_lantern1",
-        "moon_tree_blossom_lantern2",
+        "moon_tree_blossom_lantern_wan",
+        "moon_tree_blossom_lantern_wax",
     }
 })

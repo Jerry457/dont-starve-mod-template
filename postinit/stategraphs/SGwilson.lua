@@ -14,8 +14,7 @@ local states = {
         tags = { "doing", "busy", "player_pray_handonly" },
 
         onenter = function(inst)
-            inst.AnimState:PlayAnimation("player_pray_pre")
-            inst.AnimState:PushAnimation("player_pray_pst", false)
+            inst.AnimState:PlayAnimation("player_pray_handonly")
         end,
 
         onexit = function(inst)

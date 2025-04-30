@@ -8,6 +8,7 @@ Assets = {
 
     Asset("ANIM", "anim/player_pray.zip" ),
     Asset("ANIM", "anim/player_prayonly.zip" ),
+    Asset("ANIM", "anim/player_pray_handonly.zip"),
 
     Asset("ANIM", "anim/mourningflower_ui.zip"),
     Asset("ANIM", "anim/abigail_ghost_flicker.zip"),

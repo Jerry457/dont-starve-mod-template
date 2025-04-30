@@ -69,6 +69,12 @@ STRINGS.NAMES.POSSESSED_GHOSTFLOWER = "被附身的哀悼荣耀"
 STRINGS.NAMES.MOON_TREE_BLOSSOM_LANTERN = "月树花灯"
 STRINGS.RECIPE_DESC.MOON_TREE_BLOSSOM_LANTERN = "逝者已逝，生者如斯"
 
+STRINGS.SKIN_NAMES.moon_tree_blossom_lantern_wan = "月树花灯（亏月）"
+STRINGS.SKIN_DESCRIPTIONS.moon_tree_blossom_lantern_wan = ""
+
+STRINGS.SKIN_NAMES.moon_tree_blossom_lantern_wax = "月树花灯（盈月)"
+STRINGS.SKIN_DESCRIPTIONS.moon_tree_blossom_lantern_wax = ""
+
 STRINGS.NAMES.MOURNINGFLOWER = "哀悼之花"
 
 STRINGS.NAMES.FULLMOONBUTTERFLYWINGS = "满月蛾翅膀"

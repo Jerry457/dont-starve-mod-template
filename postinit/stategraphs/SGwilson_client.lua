@@ -18,8 +18,7 @@ local states = {
 
         onenter = function(inst)
             inst:PerformPreviewBufferedAction()
-            inst.AnimState:PlayAnimation("player_pray_pre")
-            inst.AnimState:PushAnimation("player_pray_pst", false)
+            inst.AnimState:PlayAnimation("player_pray_handonly")
         end,
 
         events =
