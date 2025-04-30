@@ -159,8 +159,7 @@ end
 ACTIONS.GAZE_SHADOW.fn = function(act)
     local target, invobject = act.target, act.invobject
     if target and invobject then
-        target:AddTag("gazing_shadow")
-        TheWorld:PushEvent("spiritualperceptionchange")
+        target:GazingShadow()
         WS_UTIL.RemoveOneItem(invobject)
         return true
     end
@@ -214,6 +213,7 @@ AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, acti
                 table.insert(actions, ACTIONS.WAX_REPLENISHMENT)
             end
         elseif skilltreeupdater:IsActivated("wendy_avenging_ghost") and inst.prefab == "nightmare_timepiece"
+            and TheWorld:HasTag("cave")
             and target and target:HasTag("nightlight") and not target:HasTag("gazing_shadow") then
             table.insert(actions, ACTIONS.GAZE_SHADOW)
         end

@@ -59,7 +59,9 @@ local function RegisterNetListeners(inst)
         inst:ListenForEvent("ms_locknightmarephase", function(src, phase)
             OnLockNightmarePhaseChange(inst, phase)
         end, TheWorld)
-
+        if TheWorld.net.components.nightmareclock then
+            OnLockNightmarePhaseChange(inst, TheWorld.net.components.nightmareclock:GetLockNightmarePhase())
+        end
         inst:ListenForEvent("spiritualperceptionchange", function(src, ent)
             OnSpiritualPerceptionChange(inst._parent)
         end, TheWorld)

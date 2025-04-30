@@ -2,6 +2,7 @@ PrefabFiles = {
     "darkbutterfly",
     "fullmoonbutterfly",
     "fullmoonbutterflywings",
+    "gazing_shadow_fire",
     "ghostflower_scatter_fx",
     "ghostly_elixirs",
     "grave_bouquet",

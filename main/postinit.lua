@@ -8,6 +8,7 @@ local files = {
     "postinit/components/hauntable.lua",
     "postinit/components/inventoryitem_replica.lua",
     "postinit/components/locomotor.lua",
+    "postinit/components/nightmareclock.lua",
     "postinit/components/pethealthbar.lua",
     "postinit/components/playercontroller.lua",
     "postinit/components/skilltreedata.lua",
