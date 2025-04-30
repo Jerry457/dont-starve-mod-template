@@ -42,12 +42,14 @@ sisturn_clear_fn = function(inst, ...)
     end
 end
 
+moon_tree_blossom_lantern_clear_fn = function(inst)
+    inst.AnimState:ClearOverrideSymbol("moontree")
+    basic_clear_fn(inst, "moon_tree_blossom_lantern")
+end
+
 GlassicAPI.SkinHandler.AddModSkins({
-    -- goblinkiller = {
-    --     "goblinkiller_none",
-    -- },
-    -- goblinkiller_toothpick = {
-    --     "goblinkiller_toothpick_giant",
-    --     "goblinkiller_toothpick_rabbit",
-    -- }
+    moon_tree_blossom_lantern = {
+        "moon_tree_blossom_lantern1",
+        "moon_tree_blossom_lantern2",
+    }
 })
