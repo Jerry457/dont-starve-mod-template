@@ -21,6 +21,10 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_3_DESC", "�
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
 
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_TITLE", "灵性感知")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_DESC", "对神秘学的研究能让温蒂更敏锐地观测永恒领域力量周期变化了，当世界存在月晷和被铥矿徽章激活的暗夜灯时，温蒂可以感知到涨落周期。")
+
+STRINGS.ACTIONS.GAZE_SHADOW = "观测暗影"
 STRINGS.ACTIONS.WAX_REPLENISHMENT = "续蜡"
 STRINGS.ACTIONS.PYROPHASIC_TRANSITUS = "焰相轮回"
 STRINGS.ACTIONS.HONOR_THE_MEMORY = "为逝者祈祷"

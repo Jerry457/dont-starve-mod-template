@@ -42,13 +42,13 @@ end
 
 local function OnSpiritualPerceptionChange(player)
     local skilltreeupdater = player.components.skilltreeupdater
-    local moondial = TheSim:FindFirstEntityWithTag("moondial")
-    local shown = moondial ~= nil and skilltreeupdater ~= nil and skilltreeupdater:IsActivated("wendy_avenging_ghost")
+    local watcher = TheWorld:HasTag("cave") and TheSim:FindFirstEntityWithTag("gazing_shadow") or TheSim:FindFirstEntityWithTag("moondial")
+    local shown = watcher ~= nil and skilltreeupdater ~= nil and skilltreeupdater:IsActivated("wendy_avenging_ghost")
     player.player_classified.spiritualperception:set(shown)
 end
 
 local function OnSpiritualPerceptionDirty(inst)
-    inst._parent:PushEvent("spiritualperceptionchange", inst.spiritualperception:value())
+    inst._parent:PushEvent("spiritualperceptionshowchange", inst.spiritualperception:value())
 end
 
 local function RegisterNetListeners(inst)
@@ -59,15 +59,14 @@ local function RegisterNetListeners(inst)
         inst:ListenForEvent("ms_locknightmarephase", function(src, phase)
             OnLockNightmarePhaseChange(inst, phase)
         end, TheWorld)
-        inst:ListenForEvent("spawn_moondial", function(src, ent)
-            OnSpiritualPerceptionChange(inst._parent)
-        end, TheWorld)
-        inst:ListenForEvent("remove_moondial", function(src, ent)
+
+        inst:ListenForEvent("spiritualperceptionchange", function(src, ent)
             OnSpiritualPerceptionChange(inst._parent)
         end, TheWorld)
         inst:ListenForEvent("onactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
         inst:ListenForEvent("ondeactivateskill_server", OnSpiritualPerceptionChange, inst._parent)
         OnSpiritualPerceptionChange(inst._parent)
+
     else
         inst:ListenForEvent("sisturnperishdirty", OnSisturnPerishDirty)
         inst:ListenForEvent("mourningflowerpercentdirty", OnMourningFlowerPercentDirty)

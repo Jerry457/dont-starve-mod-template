@@ -1,4 +1,3 @@
-
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
@@ -6,9 +5,8 @@ local function OnRemove(inst)
     TheWorld:DoTaskInTime(0, TheWorld.PushEvent, "spiritualperceptionchange")
 end
 
-AddPrefabPostInit("moondial", function(inst)
-    inst:AddTag("moondial")
+AddPrefabPostInit("nightlight", function(inst)
+    inst:AddTag("nightlight")
 
-    TheWorld:PushEvent("spiritualperceptionchange")
     inst:ListenForEvent("onremove", OnRemove)
 end)

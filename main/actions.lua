@@ -17,6 +17,7 @@ if not rawget(_G, "HotReloading") then
         HONOR_THE_MEMORY = Action({priority = 1, rmb = true, distance = 20}),
         PYROPHASIC_TRANSITUS = Action({priority = 1, rmb = true, distance = 20}),
         WAX_REPLENISHMENT = Action({priority = 1, rmb = true, distance = 20}),
+        GAZE_SHADOW = Action({priority = 1, mount_valid=true, canforce=true, }),
     }
 
     for name, action in pairs(ACTIONS) do
@@ -155,6 +156,16 @@ ACTIONS.CONFIDE.fn = function(act)
     return true
 end
 
+ACTIONS.GAZE_SHADOW.fn = function(act)
+    local target, invobject = act.target, act.invobject
+    if target and invobject then
+        target:AddTag("gazing_shadow")
+        TheWorld:PushEvent("spiritualperceptionchange")
+        WS_UTIL.RemoveOneItem(invobject)
+        return true
+    end
+end
+
 local DEPLOY_strfn = ACTIONS.DEPLOY.strfn
 ACTIONS.DEPLOY.strfn = function(act, ...)
     if act.invobject then
@@ -202,6 +213,9 @@ AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, acti
             elseif inst:HasTag("ghostflower") then
                 table.insert(actions, ACTIONS.WAX_REPLENISHMENT)
             end
+        elseif skilltreeupdater:IsActivated("wendy_avenging_ghost") and inst.prefab == "nightmare_timepiece"
+            and target and target:HasTag("nightlight") and not target:HasTag("gazing_shadow") then
+            table.insert(actions, ACTIONS.GAZE_SHADOW)
         end
     end
 end)
@@ -253,7 +267,6 @@ local USEITEM = COMPONENT_ACTIONS.USEITEM
 local POINT = COMPONENT_ACTIONS.POINT
 local EQUIPPED = COMPONENT_ACTIONS.EQUIPPED
 local INVENTORY = COMPONENT_ACTIONS.INVENTORY
-
 
 local _SCENE_attunable = SCENE.attunable
 SCENE.attunable = function(inst, ...)

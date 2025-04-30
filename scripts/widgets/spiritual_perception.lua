@@ -3,15 +3,6 @@
 local Widget = require("widgets/widget")
 local UIAnim = require("widgets/uianim")
 
-local function OnSpiritualPerceptionChange(self, show)
-    if show then
-        self:Show()
-    else
-        self:Hide()
-    end
-end
-
-
 local function OnNight(self, isnight)
     if self.animation_data then
         local symbol = self.animation_data.symbol
@@ -76,17 +67,45 @@ local function OnNightMarePhaseChange(self)
         self.spiritual_perception.inst:RemoveEventCallback("animover", force_nightmare_wild_anim)
     end
 
-    self:PlayerChangeFx("nightmare")
-    if self.owner.player_classified.locknightmarephase:value() == "wild" then
-        self.spiritual_perception:GetAnimState():PlayAnimation("force_nightmare_wild_broken", true)
-    elseif self.owner.player_classified.locknightmarephase:value() == "wild_repaired" then
-        self.spiritual_perception:GetAnimState():PlayAnimation("force_nightmare_wild_idle")
-        self.lisented = true
-        self.spiritual_perception.inst:ListenForEvent("animover", force_nightmare_wild_anim)
-    else
-        local animation = "nightmare_" .. TheWorld.state.nightmarephase:gsub("nightmare", "nightmare_")
-        self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
+    local animation = "nightmare_" .. TheWorld.state.nightmarephase:gsub("nightmare", "nightmare_")
+    local loop = true
+    if self.owner.player_classified.locknightmarephase:value() == "wild_repaired" then
+        animation = "force_nightmare_wild_idle"
+        loop = false
+    elseif self.owner.player_classified.locknightmarephase:value() == "wild" then
+        animation = "force_nightmare_wild_broken"
     end
+
+    self:PlayerChangeFx("nightmare")
+    self.inst:DoTaskInTime(15 * FRAMES, function()
+        if animation == "force_nightmare_wild_idle" then
+            self.lisented = true
+            self.spiritual_perception.inst:ListenForEvent("animover", force_nightmare_wild_anim)
+        end
+        self.spiritual_perception:GetAnimState():PlayAnimation(animation, loop)
+    end)
+end
+
+local function OnSpiritualPerceptionShowChange(self, show)
+    if show then
+        self:Show()
+    end
+
+    if TheWorld:HasTag("cave") then
+        OnNightMarePhaseChange(self)
+    else
+        OnMoonPhaseChange(self, {style = self.alter and "alter_active" or nil})
+        OnNight(self)
+    end
+
+    self.inst:DoTaskInTime(13 * FRAMES, function()
+        if show then
+            self.spiritual_perception:Show()
+        else
+            self.spiritual_perception:Hide()
+            self:Hide()
+        end
+    end)
 end
 
 local SpiritualPerception =  Class(Widget, function(self, owner)
@@ -122,17 +141,12 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
         self.inst:ListenForEvent("moonphasestylechanged", self._OnMoonPhaseChange, TheWorld)
     end
 
-    self._OnSpiritualPerceptionChange = function(_, show)
-        OnSpiritualPerceptionChange(self, show)
-        if TheWorld:HasTag("cave") then
-            OnNightMarePhaseChange(self)
-        else
-            OnMoonPhaseChange(self)
-            OnNight(self)
-        end
+    self._OnSpiritualPerceptionShowChange = function(_, show)
+        self.alter = false
+        OnSpiritualPerceptionShowChange(self, show)
     end
-    self.inst:ListenForEvent("spiritualperceptionchange", self._OnSpiritualPerceptionChange, owner)
-    self.inst:DoTaskInTime(0, self._OnSpiritualPerceptionChange)
+    self.inst:ListenForEvent("spiritualperceptionshowchange", self._OnSpiritualPerceptionShowChange, owner)
+    self.inst:DoTaskInTime(0, self._OnSpiritualPerceptionShowChange)
 end)
 
 function SpiritualPerception:PlayerChangeFx(animation)
