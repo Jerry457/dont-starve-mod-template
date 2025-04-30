@@ -40,8 +40,10 @@ local function OnMoonPhaseChange(self, data)
     end
 
     self:PlayerChangeFx(fx_animation)
-    self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
-    self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
+    self.inst:DoTaskInTime(15, function()
+        self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
+        self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
+    end)
 end
 
 local function force_nightmare_wild_anim(inst)
