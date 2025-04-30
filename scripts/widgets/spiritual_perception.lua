@@ -38,12 +38,11 @@ local function OnMoonPhaseChange(self, data)
         animation = "moon_waning"
         fx_animation = "waning"
     end
-
-    self:PlayerChangeFx(fx_animation)
-    self.inst:DoTaskInTime(15, function()
-        self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
-        self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
-    end)
+    self.animation_data = {
+        symbol = symbol,
+        animation = animation,
+        fx_animation = fx_animation,
+    }
 end
 
 local function force_nightmare_wild_anim(inst)
@@ -73,6 +72,20 @@ local function OnNightMarePhaseChange(self)
     end
 end
 
+local function OnNight(self, isnight)
+    if self.animation_data then
+        local symbol = self.animation_data.symbol
+        local animation = self.animation_data.animation
+        local fx_animation = self.animation_data.fx_animation
+        self:PlayerChangeFx(fx_animation)
+        self.inst:DoTaskInTime(15 * FRAMES, function()
+            self.spiritual_perception:GetAnimState():OverrideSymbol("moon_phase", "spiritual_perception_moon_phase", symbol)
+            self.spiritual_perception:GetAnimState():PlayAnimation(animation, true)
+        end)
+        self.animation_data = nil
+    end
+end
+
 local SpiritualPerception =  Class(Widget, function(self, owner)
     Widget._ctor(self, "SpiritualPerception")
     self.owner = owner
@@ -91,11 +104,17 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
     self._OnMoonPhaseChange = function(src, data)
         OnMoonPhaseChange(self, data)
     end
+    self._OnNight = function(_, isnight)
+        if isnight then
+            OnNight(self)
+        end
+    end
 
     if TheWorld:HasTag("cave") then
         self.inst:ListenForEvent("locknightmarephasechange", self._OnNightMarePhaseChange, owner)
         self.inst:WatchWorldState("nightmarephase", self._OnNightMarePhaseChange)
     else
+        self.inst:WatchWorldState("isnight", self._OnNight)
         self.inst:WatchWorldState("moonphase", self._OnMoonPhaseChange)
         self.inst:ListenForEvent("moonphasestylechanged", self._OnMoonPhaseChange, TheWorld)
     end
@@ -106,6 +125,7 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
             OnNightMarePhaseChange(self)
         else
             OnMoonPhaseChange(self)
+            OnNight(self)
         end
     end
     self.inst:ListenForEvent("onactivateskill_client", self._OnSkillChange, owner)
