@@ -39,7 +39,8 @@ local files = {
     "postinit/stategraphs/SGwilson.lua",
     "postinit/stategraphs/SGwilson_client.lua",
     "postinit/widgets/healthbadge.lua",
-    "postinit/widgets/pethealthbadge.lua"
+    "postinit/widgets/pethealthbadge.lua",
+    "postinit/widgets/statusdisplays.lua"
 }
 
 for _, file in ipairs(files) do

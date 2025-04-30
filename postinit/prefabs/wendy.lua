@@ -20,8 +20,8 @@ local function CheckMoonState(inst, nosay)
     end
 
     local is_cave = TheWorld:HasTag("cave")
-    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not TheWorld.state.isnewmoon
-    local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not TheWorld.state.isfullmoon
+    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not TheWorld.state.isnewmoon  --月盈
+    local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not TheWorld.state.isfullmoon  -- 月亏
 
     local is_gestalt = ghost:HasTag("gestalt")
     local is_shadow = ghost:HasTag("shadow_abigail")
