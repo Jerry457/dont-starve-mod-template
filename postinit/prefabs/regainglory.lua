@@ -1,7 +1,7 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
-local function OnRegrow(prefab, modifier)
+local function OnRegrow(prefab, modifier, sound)
     return function(inst, doer)
         if type(prefab) == "function" then
             local success, message = prefab(inst, doer)
@@ -24,6 +24,8 @@ local function OnRegrow(prefab, modifier)
         if modifier and doer.components.talker then
             doer.components.talker:Say(GetString(doer, "ANNOUNCE_REGAIN_GLORY", modifier), nil, true)
         end
+
+        doer.SoundEmitter:PlaySound(sound or "dontstarve/ghost/bloodpump")
 
         return true
     end
@@ -54,8 +56,14 @@ AddPrefabPostInit("petals_evil", function(inst)
 
     inst:AddComponent("regainglory")
     inst.components.regainglory:SetOnRegrowFn(function(inst, doer)
-        if TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
-            return OnRegrow("darkbutterfly", "DARKBUTTERFLY")(inst, doer)
+        if (TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild)
+            or (
+                TheWorld.state.isnight
+                and not TheWorld.state.isfullmoon
+                and math.random() < 0.1
+            )
+        then
+            return OnRegrow("darkbutterfly", "DARKBUTTERFLY", "maxwell_rework/shadow_magic/cast")(inst, doer)
         end
         return OnRegrow("evilbutterfly", "EVILBUTTERFLY")(inst, doer)
     end)
@@ -68,8 +76,15 @@ AddPrefabPostInit("moon_tree_blossom", function(inst)
 
     inst:AddComponent("regainglory")
     inst.components.regainglory:SetOnRegrowFn(function(inst, doer)
-        if TheWorld.state.isfullmoon then
-            return OnRegrow("fullmoonbutterfly", "FULLMOONBUTTERFLY")(inst, doer)
+        if TheWorld.state.isfullmoon
+            or (
+                TheWorld.state.isnight
+                and not TheWorld.state.isnewmoon
+                and not TheWorld:HasTag("cave")
+                and math.random() < 0.1
+            )
+        then
+            return OnRegrow("fullmoonbutterfly", "FULLMOONBUTTERFLY", "meta2/wormwood/animation_sendup")(inst, doer)
         end
         return OnRegrow("moonbutterfly", "MOON_TREE_BLOSSOM")(inst, doer)
     end)
@@ -130,6 +145,7 @@ AddPrefabPostInit("chester_eyebone", function(inst)
             return false, "HAS_CHESTER"
         end
         RespawnChester(inst)
+        doer.SoundEmitter:PlaySound("dontstarve/ghost/bloodpump")
         return true
     end, "CHESTER"))
 end)
@@ -147,6 +163,7 @@ AddPrefabPostInit("hutch_fishbowl", function(inst)
             return false, "HUTCH_FISHBOWL"
         end
         RespawnHutch(inst)
+        doer.SoundEmitter:PlaySound("dontstarve/ghost/bloodpump")
         return true
     end, "HUTCH_FISHBOWL"))
 end)

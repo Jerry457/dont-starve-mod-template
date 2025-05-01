@@ -68,6 +68,10 @@ end
 
 local function OnDeploy(inst, pt, deployer)
     local moontree = SpawnPrefab("moon_tree_tall")
+    moontree.AnimState:PlayAnimation("grow_seed_to_short")
+    moontree.AnimState:PushAnimation("grow_short_to_normal")
+    moontree.AnimState:PushAnimation("grow_normal_to_tall")
+    moontree.AnimState:PushAnimation("idle_tall")
     if moontree then
         moontree.Transform:SetPosition(pt:Get())
         moontree.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
