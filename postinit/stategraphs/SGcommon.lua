@@ -53,13 +53,14 @@ local function SGwilson(sg)
     end
 
     local _run_start_onenter = sg.states["run_start"].onenter
-    local _ConfigureRunState = GlassicAPI.UpvalueUtil.GetUpvalue(_run_start_onenter, "ConfigureRunState")
+    local _ConfigureRunState, i = GlassicAPI.UpvalueUtil.GetUpvalue(_run_start_onenter, "ConfigureRunState")
     local function ConfigureRunState(inst)
         _ConfigureRunState(inst)
         if inst.replica.inventory:IsHeavyLifting() then
             inst.sg.statemem.heavy_fast = inst:HasTag("mightiness_mighty") or inst:HasTag("ghostlyelixir_speed")
         end
     end
+    debug.setupvalue(_run_start_onenter, i, ConfigureRunState)
 end
 
 AddStategraphPostInit("wilson", SGwilson)
