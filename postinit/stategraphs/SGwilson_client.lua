@@ -113,16 +113,61 @@ local states = {
         },
     },
     State{
-        name = "player_prayonly_loop",
-        tags = { "player_prayonly_loop" },
-        server_states = { "player_prayonly_loop" },
+        name = "player_prayonly_pre",
+        tags = { "doing", "busy", "player_prayonly" },
+        server_states = { "player_prayonly_pre" },
 
         onenter = function(inst)
             inst:PerformPreviewBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("player_prayonly_pre")
-            inst.AnimState:PushAnimation("player_prayonly_loop", true)
         end,
+
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("player_prayonly_loop")
+                end
+            end),
+        },
+    },
+    State{
+        name = "player_prayonly_loop",
+        tags = { "doing", "busy", "player_prayonly" },
+        server_states = { "player_prayonly_loop" },
+        onenter = function(inst)
+            inst.AnimState:SetDeltaTimeMultiplier(2)
+            inst.AnimState:PushAnimation("player_prayonly_loop", false)
+        end,
+        onexit = function(inst)
+            inst:PerformBufferedAction()
+            inst.AnimState:SetDeltaTimeMultiplier(1)
+        end,
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("player_prayonly_pst")
+                end
+            end),
+        },
+    },
+    State{
+        name = "player_prayonly_pst",
+        tags = { "doing", "busy", "player_prayonly" },
+        server_states = { "player_prayonly_pst" },
+        onenter = function(inst)
+            inst.AnimState:PushAnimation("player_prayonly_pst", false)
+        end,
+        events =
+        {
+            EventHandler("animover", function(inst)
+                if inst.AnimState:AnimDone() then
+                    inst.sg:GoToState("idle")
+                end
+            end),
+        },
     },
     State{
         name = "player_prayonly",
