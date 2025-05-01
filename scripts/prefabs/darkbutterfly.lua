@@ -8,6 +8,12 @@ SetSharedLootTable("darkbutterfly",
     {"nightmarefuel", 0.8},
 })
 
+local function OnDroppedFn(inst)
+    inst.AnimState:PlayAnimation("build")
+    inst.AnimState:PushAnimation("idle_loop", true)
+    inst.AnimState:SetFrame(math.random(inst.AnimState:GetCurrentAnimationNumFrames()) - 1)
+end
+
 local function MakeButterfly(name, deploy_prefab)
     local assets =
     {
@@ -75,6 +81,7 @@ local function MakeButterfly(name, deploy_prefab)
         inst.components.inventoryitem.canbepickedupalive = true
         inst.components.inventoryitem.nobounce = true
         inst.components.inventoryitem.pushlandedevents = false
+        inst.components.inventoryitem:SetOnDroppedFn(OnDroppedFn)
 
         inst:AddComponent("health")
         inst.components.health:SetMaxHealth(1)

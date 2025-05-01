@@ -1,7 +1,8 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
-local WENDY_PLACER_SNAP_TAGS = { "grave" }
+local WENDY_PLACER_SNAP_TAGS = { "mound" }
+local WENDY_PLACER_CANT_TAGS = { "has_gravestone" }
 local WENDY_PLACER_SNAP_DISTANCE = 1.0
 local function OnWritingEnded(inst, data)
     if not inst.components.writeable then return end
@@ -57,9 +58,7 @@ AddPrefabPostInit("wendy_recipe_gravestone", function(inst)
 end)
 
 local function wendy_placer_onupdatetransform(inst)
-    local mound = FindClosestEntity(inst, WENDY_PLACER_SNAP_DISTANCE, true, WENDY_PLACER_SNAP_TAGS, nil, nil , function(ent)
-        return ent.prefab == "mound"
-    end)
+    local mound = FindClosestEntity(inst, WENDY_PLACER_SNAP_DISTANCE, true, WENDY_PLACER_SNAP_TAGS, WENDY_PLACER_CANT_TAGS)
 
     if mound then
         local x, y, z = mound.Transform:GetWorldPosition()
