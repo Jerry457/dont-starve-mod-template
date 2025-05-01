@@ -9,8 +9,6 @@ SetSharedLootTable("fullmoonbutterfly",
     {"moonglass", 1.0},
 })
 
-AddIngredientValues({"fullmoonbutterfly"}, {decoration=2})
-
 local brain = require("brains/fullmoonbutterflybrain")
 
 local LIGHT_RADIUS = .5

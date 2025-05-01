@@ -8,6 +8,8 @@ local prefabs =
     "spoiled_food",
 }
 
+AddIngredientValues({"fullmoonbutterflywings"}, {decoration=2})
+
 local function fn()
     local inst = CreateEntity()
 
