@@ -31,6 +31,12 @@ local function GetIdleAnim(inst)
     end
 end
 
+local state_color = {
+    moon = {0.01, 0.35, 1},
+    evil = {0.8, 0.2, 0.4},
+    petals = {0.7, 0.7, 0.4}
+}
+
 local function SetState(inst, state, onload)
     if not onload then
         inst.SoundEmitter:PlaySound("wickerbottom_rework/book_spells/fire")
@@ -61,6 +67,8 @@ local function SetState(inst, state, onload)
         inst.AnimState:OverrideSymbol("sprk_1 copy", "moon_tree_blossom_lantern", "sprk_1 copy")
         inst.AnimState:OverrideSymbol("sprk_2", "moon_tree_blossom_lantern", "sprk_2")
     end
+
+    inst.Light:SetColour(unpack(state_color[state]))
 end
 
 local function WaxReplenishment(inst)
