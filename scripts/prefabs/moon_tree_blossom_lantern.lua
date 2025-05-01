@@ -22,9 +22,9 @@ end
 
 local function GetIdleAnim(inst)
     local percent = inst.components.perishable:GetPercent()
-    if percent < 0.3 then
+    if percent <= 0.3 then
         return "idle_less"
-    elseif percent < 0.8 then
+    elseif percent <= 0.8 then
         return "idle_half"
     else
         return "idle_full"
@@ -37,15 +37,23 @@ local state_color = {
     petals = {0.7, 0.7, 0.4}
 }
 
+local function SetPercent(inst, percent)  -- set precent but withnot event
+    local perishtime = inst.components.perishable.perishtime
+	if perishtime then
+        percent = math.clamp(percent, 0, 1)
+		inst.components.perishable.perishremainingtime = percent * perishtime
+    end
+end
+
 local function SetState(inst, state, onload)
     if not onload then
         inst.SoundEmitter:PlaySound("wickerbottom_rework/book_spells/fire")
         if inst.state == state then
             local percent = inst.components.perishable:GetPercent()
-            if percent > 0.3 and percent < 0.8 then
-                inst.components.perishable:SetPercent(0.29)
-            elseif percent >= 0.8 then
-                inst.components.perishable:SetPercent(0.79)
+            if percent > 0.3 and percent <= 0.8 then
+                inst:SetPercent(0.29999)
+            elseif percent > 0.8 then
+                inst:SetPercent(0.79999)
             end
         end
         local idle_anim = inst:GetIdleAnim()
@@ -75,10 +83,10 @@ local function WaxReplenishment(inst)
     inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_get_bloodpump")
 
     local percent = inst.components.perishable:GetPercent()
-    if percent < 0.3 then
-        inst.components.perishable:SetPercent(0.79)
+    if percent <= 0.3 then
+        inst:SetPercent(0.79999)
     else
-        inst.components.perishable:SetPercent(1)
+        inst:SetPercent(1)
     end
 
     local idle_anim = inst:GetIdleAnim()
@@ -206,6 +214,7 @@ local function fn()
     inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_HUGE
 
+    inst.SetPercent = SetPercent
     inst.WaxReplenishment = WaxReplenishment
     inst.SetState = SetState
     inst.SetOrientation = SetOrientation
