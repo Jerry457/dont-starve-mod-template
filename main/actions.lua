@@ -204,12 +204,13 @@ end)
 AddComponentAction("USEITEM", "inventoryitem", function(inst, doer, target, actions, right)
     local skilltreeupdater = (doer and doer.components.skilltreeupdater) or nil
     if right and skilltreeupdater then
-        if skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and inst:HasTag("ghostflower") and target and target:HasTag("active_sisturn") then
+        if skilltreeupdater:IsActivated("wendy_ghostflower_butterfly") and inst:HasTag("ghostflower")
+            and target and target:HasTag("active_sisturn") then
             table.insert(actions, ACTIONS.CONFIDE)
         elseif skilltreeupdater:IsActivated("wendy_smallghost_2") and target and target:HasTag("moon_tree_blossom_lantern") then
             if inst:HasTag("petal") then
                 table.insert(actions, ACTIONS.PYROPHASIC_TRANSITUS)
-            elseif inst:HasTag("ghostflower") then
+            elseif inst:HasTag("ghostflower") and target and target.AnimState and not target.AnimState:IsCurrentAnimation("idle_full") then
                 table.insert(actions, ACTIONS.WAX_REPLENISHMENT)
             end
         elseif skilltreeupdater:IsActivated("wendy_avenging_ghost") and inst.prefab == "nightmare_timepiece"
