@@ -89,14 +89,14 @@ local states = {
 
         onenter = function(inst)
             inst.components.locomotor:Stop()
-            inst.AnimState:SetSymbolBloom("flower_glow_green")
             inst.AnimState:AddOverrideBuild("wendy_channel_no")
+            inst.AnimState:SetSymbolBloom("flower_glow_green")
             inst.AnimState:PlayAnimation("wendy_channel_no")
         end,
 
         timeline =
         {
-            TimeEvent(38 * FRAMES, function(inst)
+            TimeEvent(10 * FRAMES, function(inst)
                 inst:PerformBufferedAction()
             end),
         },

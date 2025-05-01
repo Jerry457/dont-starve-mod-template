@@ -95,6 +95,7 @@ local states = {
             inst:PerformPreviewBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:AddOverrideBuild("wendy_channel_no")
+            inst.AnimState:SetSymbolBloom("flower_glow_green")
             inst.AnimState:PlayAnimation("wendy_channel_no")
         end,
 
