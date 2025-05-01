@@ -67,16 +67,23 @@ local function OnWorked(inst, worker)
 end
 
 local function OnDeploy(inst, pt, deployer)
-    local moontree = SpawnPrefab("moon_tree_tall")
-    moontree.AnimState:PlayAnimation("grow_seed_to_short")
-    moontree.AnimState:PushAnimation("grow_short_to_normal")
-    moontree.AnimState:PushAnimation("grow_normal_to_tall")
-    moontree.AnimState:PushAnimation("idle_tall")
-    if moontree then
+
+    local sapling = SpawnPrefab("moonbutterfly_sapling")
+    sapling.Transform:SetPosition(pt:Get())
+
+    sapling:DoTaskInTime(10*FRAMES, function()
+        local moontree = SpawnPrefab("moon_tree")
         moontree.Transform:SetPosition(pt:Get())
-        moontree.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
-        WS_UTIL.RemoveOneItem(inst)
-    end
+        moontree:growfromseed()
+        sapling:Remove()
+        moontree:DoTaskInTime(16*FRAMES, function()
+            moontree.components.growable:DoGrowth()
+            moontree:DoTaskInTime(21*FRAMES, function()
+                moontree.components.growable:DoGrowth()
+            end)
+        end)
+    end)
+    WS_UTIL.RemoveOneItem(inst)
 end
 
 local function OnDeath(inst)
