@@ -37,6 +37,15 @@ local function OnNightMarePhaseChange(inst, phase)
     inst.gazing_shadow_fire.SoundEmitter:SetParameter("fire", "intensity", params.soundintensity)
 end
 
+local function ShowGlobalMapIcon(inst)
+    inst.icon = SpawnPrefab("globalmapicon")
+    inst.icon.MiniMapEntity:SetPriority(30)
+    inst.icon:TrackEntity(inst)
+    inst.MiniMapEntity:SetCanUseCache(false)
+    inst.MiniMapEntity:SetDrawOverFogOfWar(true)
+    inst.icon.MiniMapEntity:SetIcon("nightlight_link.tex")
+end
+
 local function GazingShadow(inst)
     inst:AddTag("gazing_shadow")
     TheWorld:PushEvent("spiritualperceptionchange")
@@ -51,6 +60,8 @@ local function GazingShadow(inst)
         phase = "look_wild"
     end
     OnNightMarePhaseChange(inst, phase)
+
+    ShowGlobalMapIcon(inst)
 end
 
 AddPrefabPostInit("nightlight", function(inst)
