@@ -22,7 +22,6 @@ local FLOWER_LAYERS =
     "flower2",
 }
 
-
 local function ShowGlobalMapIcon(inst, show)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
@@ -281,7 +280,6 @@ local function update_abigail_status(inst)
     end
 end
 
-
 local function remove_decor(inst, data)
     OnSisturnStateChange(inst)
 
@@ -355,11 +353,13 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
+    inst.components.container.restrictedtag = player.userid
     ShowGlobalMapIcon(inst, true)
     OnSisturnStateChange(inst)
 end
 
 local function onunlink(inst, player, isloading)
+    inst.components.container.restrictedtag = nil
     ShowGlobalMapIcon(inst, false)
     OnSisturnStateChange(inst)
 end
