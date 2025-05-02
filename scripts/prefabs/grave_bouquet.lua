@@ -19,6 +19,11 @@ local function TrySpawnFlower(inst, prefab)
     end
 end
 
+local function OnReplaced(inst, goop)
+    local x, y, z = inst.Transform:GetWorldPosition()
+    goop.Transform:SetPosition(x + 0.8, y, z + 0.8)
+end
+
 local function OnLoad(inst, data)
     if data and data.anim then
         inst.AnimState:PlayAnimation(data.anim)
@@ -72,6 +77,7 @@ local function MakeGraveHouquet(petals, flower)
         inst:AddComponent("perishable")
         inst.components.perishable.perishtime = TUNING.PERISH_FAST
         inst.components.perishable.onperishreplacement = "ghostflower"
+        inst.components.perishable.onreplacedfn = OnReplaced
 
         inst:AddComponent("timer")
         inst.components.timer:StartTimer("spawn_flower", 240)
