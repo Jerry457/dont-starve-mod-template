@@ -71,6 +71,7 @@ local function OnDeploy(inst, pt, deployer)
 
     sapling:DoTaskInTime(10*FRAMES, function()
         local moontree = SpawnPrefab("moon_tree")
+        moontree.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
         moontree.Transform:SetPosition(pt:Get())
         moontree:growfromseed()
         sapling:Remove()

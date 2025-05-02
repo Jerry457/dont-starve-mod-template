@@ -1,7 +1,13 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
+
 local function SpawnGraveBouquet(inst, record)
+    if inst.grave_bouquet then
+        inst.grave_bouquet:Remove()
+        inst.grave_bouquet = nil
+    end
+
     inst.grave_bouquet = inst:SpawnChild(record.prefab)
     inst.grave_bouquet.gravestone = inst
     if record.data then
@@ -23,6 +29,10 @@ end
 local MOUND_POSITION_OFFSET = { 0.45355339059327, 0, 0.45355339059327 }
 local function initiate_flower_state(inst, flower)
     TheWorld.components.decoratedgrave_ghostmanager:RegisterDecoratedGrave(inst)
+end
+
+local function OnStageAdvancefn(inst)
+    inst.components.upgradeable:SetStage(1)
 end
 
 local function OnDecorated(inst, upgrade_performer, flower)
@@ -85,7 +95,7 @@ AddPrefabPostInit("gravestone", function(inst)
 
     GlassicAPI.UpvalueUtil.SetUpvalue(inst.components.upgradeable.onstageadvancefn, "initiate_flower_state", initiate_flower_state)
     inst.components.upgradeable.upgradesperstage = 1
-    inst.components.upgradeable.onstageadvancefn = nil
+    inst.components.upgradeable.onstageadvancefn = OnStageAdvancefn
     inst.components.upgradeable:SetOnUpgradeFn(OnDecorated)
 
     local _OnLoad = inst.OnLoad
