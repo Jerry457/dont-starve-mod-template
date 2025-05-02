@@ -42,7 +42,9 @@ local function MakeGraveHouquet(petals, flower)
 
     local function OnPerishChange(inst)
         local percent = inst.components.perishable:GetPercent()
-        inst.AnimState:OverrideSymbol("petals", "grave_bouquet", petals .. "_decay")
+        if percent <= 0.3 then
+            inst.AnimState:OverrideSymbol("petals", "grave_bouquet", petals .. "_decay")
+        end
     end
 
     local function fn()
