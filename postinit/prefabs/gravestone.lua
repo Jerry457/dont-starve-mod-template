@@ -1,20 +1,21 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
-local FLOWER_TAG = {"flower"}
-local FLOWER_SPAWN_RADIUS = 1.5
-local function TrySpawnFlower(inst, prefab)
-    if TheWorld.state.iswinter then return end
-
-    local ix, iy, iz = inst.Transform:GetWorldPosition()
-    if TheSim:CountEntities(ix, iy, iz, 2 * FLOWER_SPAWN_RADIUS, FLOWER_TAG) < 12 then
-        local random_angle = PI2 * math.random()
-        ix = ix + (FLOWER_SPAWN_RADIUS * math.cos(random_angle))
-        iz = iz - (FLOWER_SPAWN_RADIUS * math.sin(random_angle))
-        local flower = SpawnPrefab(prefab)
-        flower.Transform:SetPosition(ix, iy, iz)
-        SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
+local function SpawnGraveBouquet(inst, record)
+    inst.grave_bouquet = inst:SpawnChild(record.prefab)
+    inst.grave_bouquet.gravestone = inst
+    if record.data then
+        inst.grave_bouquet:SetPersistData(record.data)
+    else
+        inst.grave_bouquet.components.perishable.perishremainingtime = record.perishremainingtime
+        inst.grave_bouquet.components.perishable:StartPerishing()
     end
+    inst.grave_bouquet:OnPerishChange()
+    inst.grave_bouquet.Follower:FollowSymbol(inst.GUID, "gravestone01", 0, 0, 0)
+    inst:ListenForEvent("onremove", function()
+        inst.grave_bouquet = nil
+        inst.components.upgradeable:SetStage(1)
+    end, inst.grave_bouquet)
 end
 
 -- NOTES(DiogoW): This used to be TheCamera:GetDownVec()*.5, probably legacy code from DS,
@@ -22,46 +23,18 @@ end
 local MOUND_POSITION_OFFSET = { 0.45355339059327, 0, 0.45355339059327 }
 local function initiate_flower_state(inst, flower)
     TheWorld.components.decoratedgrave_ghostmanager:RegisterDecoratedGrave(inst)
-
-    if inst.components.timer:TimerExists("spawn_petals_evil") then
-        inst.grave_bouquet = inst:SpawnChild("grave_bouquet_evil")
-    else
-        inst.grave_bouquet = inst:SpawnChild("grave_bouquet")
-    end
-
-    inst.grave_bouquet.Follower:FollowSymbol(inst.GUID, "gravestone01", 0, 0, 0)
-    -- inst.grave_bouquet.Transform:SetPosition(unpack(MOUND_POSITION_OFFSET))
 end
 
 local function OnDecorated(inst, upgrade_performer, flower)
     local ix, iy, iz = inst.Transform:GetWorldPosition()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(ix, iy, iz)
 
-    if not inst.components.timer:TimerExists("grave_bouquet_decay") then
-        inst.components.timer:StartTimer("grave_bouquet_decay", flower.components.perishable.perishremainingtime)
-    end
-
-    if not inst.components.timer:TimerExists("spawn_" .. flower.prefab) then
-        inst.components.timer:StartTimer("spawn_" .. flower.prefab, 240)
-    end
+    SpawnGraveBouquet(inst, {
+        prefab = "grave_bouquet" .. flower.prefab,
+        perishremainingtime = flower.components.perishable.perishremainingtime
+    })
 
     initiate_flower_state(inst)
-end
-
-local function OnTimerDone(inst, data)
-    if data.name == "grave_bouquet_decay" then
-        local x, y, z = inst.grave_bouquet.Transform:GetWorldPosition()
-        inst.grave_bouquet:Remove()
-        inst.grave_bouquet = nil
-        SpawnPrefab("ghostflower").Transform:SetPosition(x + 0.8, y, z + 0.8)
-
-        inst.components.upgradeable:SetStage(1)
-        inst.components.timer:StopTimer("spawn_petals_evil")
-        inst.components.timer:StopTimer("spawn_petals")
-    elseif data.name == "spawn_petals_evil" or data.name == "spawn_petals" then
-        TrySpawnFlower(inst, string.gsub(data.name, "spawn_petals", "flower"))
-        inst.components.timer:StartTimer(data.name, 240)
-    end
 end
 
 AddPrefabPostInit("gravestone", function(inst)
@@ -77,5 +50,28 @@ AddPrefabPostInit("gravestone", function(inst)
     inst.components.upgradeable.onstageadvancefn = nil
     inst.components.upgradeable:SetOnUpgradeFn(OnDecorated)
 
-    inst:ListenForEvent("timerdone", OnTimerDone)
+    local _OnLoad = inst.OnLoad
+    function inst:OnLoad(data, ...)
+        if _OnLoad then
+            _OnLoad(self, data, ...)
+        end
+        if data.grave_bouquet then
+            SpawnGraveBouquet(inst, data.grave_bouquet)
+        end
+    end
+
+    local _OnSave = inst.OnSave
+    function inst:OnSave(data, newents, ...)
+        local refs
+        if _OnSave then
+            refs = _OnSave(inst, data, newents, ...)
+        end
+
+
+        if inst and inst.grave_bouquet then
+            data.grave_bouquet = inst.grave_bouquet:GetSaveRecord()
+        end
+
+        return refs
+    end
 end)

@@ -17,6 +17,7 @@ local files = {
     "postinit/components/stunnable.lua",
     "postinit/prefabs/abigail.lua",
     "postinit/prefabs/abigail_flower.lua",
+    "postinit/prefabs/blossom.lua",
     "postinit/prefabs/elixir_container.lua",
     "postinit/prefabs/flower_evil.lua",
     "postinit/prefabs/ghost.lua",
