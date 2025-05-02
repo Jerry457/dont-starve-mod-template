@@ -53,15 +53,17 @@ local function HasMoonTreeBlossomLantern(inst)
         if inst.components.timer:TimerExists("spawn_moontree_blossom") then
             inst.components.timer:StopTimer("spawn_moontree_blossom")
         end
-        return
-    end
+        inst:RemoveTag("gravestone_shade")
+    else
+        inst:AddTag("gravestone_shade")
 
-    local fx = SpawnPrefab("gravestone_light_loop")
-    inst:AddChild(fx)
-    fx.Transform:SetPosition(0, 0, 0)
+        local fx = SpawnPrefab("gravestone_light_loop")
+        inst:AddChild(fx)
+        fx.Transform:SetPosition(0, 0, 0)
 
-    if not inst.components.timer:TimerExists("spawn_moontree_blossom") then
-        inst.components.timer:StartTimer("spawn_moontree_blossom", 240)
+        if not inst.components.timer:TimerExists("spawn_moontree_blossom") then
+            inst.components.timer:StartTimer("spawn_moontree_blossom", 240)
+        end
     end
 end
 
