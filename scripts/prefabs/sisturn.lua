@@ -356,12 +356,18 @@ local function onlink(inst, player, isloading)
     inst.components.container.restrictedtag = player.userid
     ShowGlobalMapIcon(inst, true)
     OnSisturnStateChange(inst)
+
+    inst.OnPlayerReroll = inst.OnPlayerReroll or function(inst, player)
+        inst.components.attunable:UnlinkFromPlayer(player)
+    end
+    inst:ListenForEvent("ms_playerreroll", inst.OnPlayerReroll, player)
 end
 
 local function onunlink(inst, player, isloading)
     inst.components.container.restrictedtag = nil
     ShowGlobalMapIcon(inst, false)
     OnSisturnStateChange(inst)
+    inst:RemoveEventCallback("ms_playerreroll", inst.OnPlayerReroll, player)
 end
 
 local function getstatus(inst)
