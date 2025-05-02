@@ -143,11 +143,11 @@ local states = {
         name = "player_prayonly_loop",
         tags = { "doing", "busy", "player_prayonly" },
         onenter = function(inst)
+            inst:PerformBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(2)
             inst.AnimState:PushAnimation("player_prayonly_loop", false)
         end,
         onexit = function(inst)
-            inst:PerformBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(1)
         end,
         events =

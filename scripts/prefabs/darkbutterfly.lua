@@ -14,7 +14,7 @@ local function OnDroppedFn(inst)
     inst.AnimState:SetFrame(math.random(inst.AnimState:GetCurrentAnimationNumFrames()) - 1)
 end
 
-local function MakeButterfly(name, deploy_prefab)
+local function MakeButterfly(name, deploy_prefab, murdersound)
     local assets =
     {
         Asset("ANIM", "anim/" .. name ..".zip"),
@@ -29,6 +29,10 @@ local function MakeButterfly(name, deploy_prefab)
                 deployer.SoundEmitter:PlaySound("dontstarve/common/plant")
             end
         end
+    end
+
+    local function OnDeath(inst)
+        inst.SoundEmitter:PlaySound(murdersound)
     end
 
     local function fn()
@@ -84,6 +88,7 @@ local function MakeButterfly(name, deploy_prefab)
         inst.components.inventoryitem:SetOnDroppedFn(OnDroppedFn)
 
         inst:AddComponent("health")
+        inst.components.health.murdersound = murdersound
         inst.components.health:SetMaxHealth(1)
 
         inst:AddComponent("stackable")
@@ -96,6 +101,8 @@ local function MakeButterfly(name, deploy_prefab)
         inst.components.deployable:SetDeployMode(DEPLOYMODE.PLANT)
         inst.components.deployable:SetDeploySpacing(DEPLOYSPACING.LESS)
 
+        inst:ListenForEvent("death", OnDeath)
+
         MakeHauntablePanicAndIgnite(inst)
 
         return inst
@@ -104,7 +111,7 @@ local function MakeButterfly(name, deploy_prefab)
     return Prefab(name, fn, assets)
 end
 
-return MakeButterfly("evilbutterfly", "flower_evil"),
-    MakeButterfly("darkbutterfly", "flower_rose"),
+return MakeButterfly("evilbutterfly", "flower_evil", "dontstarve/impacts/impact_insect_sml_dull"),
+    MakeButterfly("darkbutterfly", "flower_rose", "maxwell_rework/shadow_magic/sanity_creature_fx"),
     MakePlacer("evilbutterfly_placer", "flowers_evil", "flowers_evil", "f" .. math.random(8)),
     MakePlacer("darkbutterfly_placer", "flowers", "flowers", "rose")

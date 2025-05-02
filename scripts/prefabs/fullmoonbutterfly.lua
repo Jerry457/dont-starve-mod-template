@@ -22,13 +22,13 @@ local function OnUpdateFlicker(inst, starttime)
     inst.Light:SetIntensity(LIGHT_INTENSITY + .05 * flicker)
 end
 
-local function WatchMoon(inst)
-    if not inst:IsInLimbo()
-    and (TheWorld:HasTag("cave") or TheWorld.state.isnewmoon)
-    then
-        inst.components.health:SetVal(0)
-    end
-end
+-- local function WatchMoon(inst)
+--     if not inst:IsInLimbo()
+--     and (TheWorld:HasTag("cave") or TheWorld.state.isnewmoon)
+--     then
+--         inst.components.health:SetVal(0)
+--     end
+-- end
 
 local function OnDropped(inst)
     inst.components.knownlocations:RememberLocation("home", inst:GetPosition())
@@ -43,14 +43,14 @@ local function OnDropped(inst)
     while inst.components.stackable:StackSize() > 1 do
         local item = inst.components.stackable:Get()
         if item ~= nil then
-		item.Physics:Teleport(inst.Transform:GetWorldPosition())
+        item.Physics:Teleport(inst.Transform:GetWorldPosition())
             if item.components.inventoryitem ~= nil then
                 item.components.inventoryitem:OnDropped()
             end
         end
     end
 
-    WatchMoon(inst)
+    -- WatchMoon(inst)
 end
 
 local function OnPickedUp(inst)
@@ -86,7 +86,8 @@ end
 
 local function OnDeath(inst)
     inst.Light:Enable(false)
-	inst.AnimState:SetLightOverride(0)
+    inst.AnimState:SetLightOverride(0)
+    inst.SoundEmitter:PlaySound("turnoftides/common/together/moon_glass/break")
 end
 
 local function fn()
@@ -108,8 +109,8 @@ local function fn()
     inst.AnimState:SetBank("butterfly")
     inst.AnimState:PlayAnimation("idle")
     inst.AnimState:SetRayTestOnBB(true)
-	inst.AnimState:SetLightOverride(0.15)
-	inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
+    inst.AnimState:SetLightOverride(0.15)
+    inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
 
     inst.Light:SetFalloff(LIGHT_FALLOFF)
     inst.Light:SetIntensity(LIGHT_INTENSITY)
@@ -156,6 +157,7 @@ local function fn()
     inst.components.inventoryitem.pushlandedevents = false
 
     inst:AddComponent("health")
+    inst.components.health.murdersound = "turnoftides/common/together/moon_glass/break"
     inst.components.health:SetMaxHealth(1)
 
     inst:AddComponent("combat")
@@ -179,7 +181,7 @@ local function fn()
     inst:AddComponent("deployable")
     inst.components.deployable.ondeploy = OnDeploy
     inst.components.deployable:SetDeployMode(DEPLOYMODE.PLANT)
-	inst.components.deployable:SetDeploySpacing(DEPLOYSPACING.PLACER_DEFAULT)
+    inst.components.deployable:SetDeploySpacing(DEPLOYSPACING.PLACER_DEFAULT)
 
     MakeHauntablePanicAndIgnite(inst)
     MakeFeedableSmallLivestock(inst, TUNING.BUTTERFLY_PERISH_TIME, OnPickedUp, OnDropped)
@@ -187,9 +189,9 @@ local function fn()
     inst:SetStateGraph("SGbutterfly")
     inst:SetBrain(brain)
 
-	inst:ListenForEvent("death", OnDeath)
-    inst:WatchWorldState("isnewmoon", WatchMoon)
-    WatchMoon(inst)
+    inst:ListenForEvent("death", OnDeath)
+    -- inst:WatchWorldState("isnewmoon", WatchMoon)
+    -- WatchMoon(inst)
 
     return inst
 end

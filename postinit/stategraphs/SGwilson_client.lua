@@ -118,7 +118,6 @@ local states = {
         server_states = { "player_prayonly_pre" },
 
         onenter = function(inst)
-            inst:PerformPreviewBufferedAction()
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("player_prayonly_pre")
         end,
@@ -137,11 +136,11 @@ local states = {
         tags = { "doing", "busy", "player_prayonly" },
         server_states = { "player_prayonly_loop" },
         onenter = function(inst)
+            inst:PerformPreviewBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(2)
             inst.AnimState:PushAnimation("player_prayonly_loop", false)
         end,
         onexit = function(inst)
-            inst:PerformBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(1)
         end,
         events =

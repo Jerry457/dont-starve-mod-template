@@ -8,8 +8,6 @@ local prefabs =
     "spoiled_food",
 }
 
-AddIngredientValues({"fullmoonbutterflywings"}, {decoration=2})
-
 local function fn()
     local inst = CreateEntity()
 
@@ -36,7 +34,7 @@ local function fn()
     inst:AddComponent("edible")
     inst.components.edible.healthvalue = 12
     inst.components.edible.hungervalue = 9.375
-	inst.components.edible.sanityvalue = 25
+    inst.components.edible.sanityvalue = 25
     inst.components.edible.foodtype = FOODTYPE.VEGGIE
 
     inst:AddComponent("stackable")
