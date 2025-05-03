@@ -56,6 +56,7 @@ local function MakeGraveHouquet(petals, flower)
         inst.entity:AddNetwork()
 
         inst:AddTag("Fx")
+        inst:AddTag("gravestone_shade")
         inst:AddTag("NOBLOCK")
         inst:AddTag("NOCLICK")
 

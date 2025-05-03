@@ -15,7 +15,7 @@ local transform_when_haunt = {
             return TheWorld.state.isfullmoon and "EVIL_BLOSSOM" or "EVIL_FORGETMELOTS"
         end,
         produce = function()
-            return TheWorld.state.isfullmoon and "blossom" or "forgetmelots"
+            return TheWorld.state.isfullmoon and "moon_tree_blossom" or "forgetmelots"
         end
     },
     weed_firenettle = weed_transform,

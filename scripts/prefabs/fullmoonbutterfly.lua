@@ -68,10 +68,10 @@ local function OnDeploy(inst, pt, deployer)
 
     local sapling = SpawnPrefab("moonbutterfly_sapling")
     sapling.Transform:SetPosition(pt:Get())
+    sapling.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
 
     sapling:DoTaskInTime(10*FRAMES, function()
         local moontree = SpawnPrefab("moon_tree")
-        moontree.SoundEmitter:PlaySound("dontstarve/wilson/plant_tree")
         moontree.Transform:SetPosition(pt:Get())
         moontree:growfromseed()
         sapling:Remove()
