@@ -1,6 +1,7 @@
 modimport("main/prefab_files")
 
 Assets = {
+    Asset("ATLAS", "images/ws_cookbook.xml" ),
     Asset("ATLAS", "images/wendy_skillicons.xml" ),
     Asset("ATLAS", "images/wendy_spellbook_bg.xml"),
     Asset("ATLAS", "images/ws_inventoryimages.xml"),

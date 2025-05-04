@@ -1,0 +1,7 @@
+<Atlas>
+    <Texture filename="ws_cookbook.tex" />
+    <Elements>
+        <Element name="cookbook_lethean_cake.tex" u1="0.0009765625" v1="0.001953125" u2="0.4990234375" v2="0.998046875" />
+        <Element name="cookbook_nightmare_lethean_cake.tex" u1="0.5009765625" v1="0.001953125" u2="0.9990234375" v2="0.998046875" />
+    </Elements>
+</Atlas>
