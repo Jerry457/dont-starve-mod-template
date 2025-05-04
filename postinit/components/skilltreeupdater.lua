@@ -16,3 +16,7 @@ function HookSkillTreeUpdaterIsActivated(original_skill, replace_skill, fn, ...)
     SkillTreeUpdater.IsActivated = _IsActivated
     return unpack(ret)
 end
+
+function SkillTreeUpdater:HasActivatedSkill()
+    return self.skilltree.activatedskills and self.skilltree.activatedskills[self.inst.prefab] and not IsTableEmpty(self.skilltree.activatedskills[self.inst.prefab])
+end

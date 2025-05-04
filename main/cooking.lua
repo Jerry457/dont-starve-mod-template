@@ -116,6 +116,14 @@ local ws_foods = {
                 return
             end
 
+            if not skilltreeupdater:HasActivatedSkill() then
+                return
+            end
+
+            if eater and eater.components.sanity then
+                eater.components.sanity:DoDelta(150)
+            end
+
             local branches = {}
             local skilldef = skilltree_defs.SKILLTREE_DEFS[eater.prefab]
             for skill, data in pairs(skilldef) do
