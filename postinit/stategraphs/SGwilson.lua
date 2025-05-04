@@ -52,7 +52,7 @@ local states = {
     },
     State{
         name = "honor_the_memory_loop",
-        tags = { "doing", "busy", "honor_the_memory" },
+        tags = { "doing", "honor_the_memory" },
         onenter = function(inst)
             inst.AnimState:SetDeltaTimeMultiplier(2)
             inst.AnimState:PushAnimation("player_prayonly_loop", false)
@@ -72,7 +72,7 @@ local states = {
     },
     State{
         name = "honor_the_memory_pst",
-        tags = { "doing", "busy", "honor_the_memory" },
+        tags = { "doing", "honor_the_memory" },
         onenter = function(inst)
             inst.AnimState:PushAnimation("player_prayonly_pst", false)
         end,
