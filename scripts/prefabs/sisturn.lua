@@ -353,7 +353,7 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
-    inst.components.container.restrictedtag = player.userid
+    inst.components.container.restrictedtag = tostring(player.userid)
     ShowGlobalMapIcon(inst, true)
     OnSisturnStateChange(inst)
 

@@ -228,5 +228,9 @@ local function fn()
     return inst
 end
 
+local function placer_postinit_fn(inst)
+    inst.AnimState:Hide("FIRE")
+end
+
 return Prefab("moon_tree_blossom_lantern", fn, assets),
-    MakePlacer("moon_tree_blossom_lantern_placer", "moon_tree_blossom_lantern", "moon_tree_blossom_lantern", "idle_full")
+    MakePlacer("moon_tree_blossom_lantern_placer", "moon_tree_blossom_lantern", "moon_tree_blossom_lantern", "idle_full", nil, nil, nil, nil, nil, nil, placer_postinit_fn)

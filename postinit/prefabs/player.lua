@@ -2,7 +2,7 @@ local AddPlayerPostInit = AddPlayerPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local function OnInit(inst)
-    inst:AddTag(inst.userid)
+    inst:AddTag(tostring(inst.userid))
 end
 
 AddPlayerPostInit(function(player)

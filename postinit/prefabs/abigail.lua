@@ -175,8 +175,13 @@ local function OnGhostCommandHitOther(inst, data)
         inst.gestalt_command_attack = false
     end
 
+end
+
+local function ExtendFlickerCooldown(inst, fn, ...)
     if not inst.components.timer:TimerExists("flicker_cooldown") then
         inst.components.timer:StartTimer("flicker_cooldown", 5)
+    else
+        inst.components.timer:SetTimeLeft("flicker_cooldown", 5)
     end
 end
 
@@ -241,6 +246,8 @@ AddPrefabPostInit("abigail", function(inst)
     end
     inst:ListenForEvent("do_ghost_attackat", DoGhostAttackAt)
     inst:ListenForEvent("onhitother", OnGhostCommandHitOther)
+    inst:ListenForEvent("onattackother", ExtendFlickerCooldown)
+    inst:ListenForEvent("attacked", ExtendFlickerCooldown)
 
     -- local _OnAttacked = inst:GetEventCallbacks("attacked", inst, "scripts/prefabs/abigail.lua")
     -- local function OnAttacked(inst, ...)

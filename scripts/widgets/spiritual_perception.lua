@@ -146,7 +146,7 @@ local SpiritualPerception =  Class(Widget, function(self, owner)
         OnSpiritualPerceptionShowChange(self, show)
     end
     self.inst:ListenForEvent("spiritualperceptionshowchange", self._OnSpiritualPerceptionShowChange, owner)
-    -- self.inst:DoTaskInTime(0, self._OnSpiritualPerceptionShowChange)
+    OnSpiritualPerceptionShowChange(self, false)
 end)
 
 function SpiritualPerception:PlayerChangeFx(animation)

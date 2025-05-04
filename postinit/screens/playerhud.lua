@@ -7,7 +7,7 @@ local _OpenSpellWheel = PlayerHud.OpenSpellWheel
 function PlayerHud:OpenSpellWheel(invobject, items, radius, focus_radius, bgdata, ...)
     _OpenSpellWheel(self, invobject, items, radius, focus_radius, bgdata, ...)
 
-    if not self.controls.spellwheel.bg then
+    if not self.controls.spellwheel.bg and self.owner.player_classified and self.owner.player_classified.sisturnstate:value() ~= "NORMAL" then
         local bg = self.controls.spellwheel:AddChild(SisturnPerish(self.owner, #items))
         bg:MoveToBack()
         -- bg:SetScale(bgdata.widget_scale)

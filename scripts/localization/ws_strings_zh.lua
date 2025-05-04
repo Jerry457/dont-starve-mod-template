@@ -25,6 +25,7 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_TITLE", "�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_DESC", "对神秘学的研究能让温蒂更敏锐地观测永恒领域力量周期变化了，当世界存在月晷和被铥矿徽章激活的暗夜灯时，温蒂可以感知到涨落周期。")
 
 ModifyTranslatedStrings("STRINGS.CHARACTERS.WENDY.ACTIONFAIL.RUMMAGE.RESTRICTED", "这里寄托的不是我的花")
+ModifyTranslatedStrings("STRINGS.CHARACTERS.WENDY.ACTIONFAIL.STORE.RESTRICTED", "这里寄托的不是我的花")
 
 STRINGS.CHARACTERS.WENDY.USE_ELIXIR_CONTAINER_WITHNOT_SKILL = "不一定会永远得不到想要的东西，但有些人永远只会被唾弃"
 

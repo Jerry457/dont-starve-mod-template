@@ -141,9 +141,11 @@ local states = {
         tags = { "doing", "busy", "player_prayonly" },
         server_states = { "player_prayonly_loop" },
         onenter = function(inst)
+            local bufferedaction = inst:GetBufferedAction()
+            inst.sg.statemem.loop = bufferedaction and bufferedaction.action and bufferedaction.action == ACTIONS.CONFIDE
             inst:PerformPreviewBufferedAction()
             inst.AnimState:SetDeltaTimeMultiplier(2)
-            inst.AnimState:PushAnimation("player_prayonly_loop", false)
+            inst.AnimState:PushAnimation("player_prayonly_loop", inst.sg.statemem.loop)
         end,
         onexit = function(inst)
             inst.AnimState:SetDeltaTimeMultiplier(1)
@@ -151,7 +153,7 @@ local states = {
         events =
         {
             EventHandler("animover", function(inst)
-                if inst.AnimState:AnimDone() then
+                if inst.AnimState:AnimDone() and not inst.sg.statemem.loop then
                     inst.sg:GoToState("player_prayonly_pst")
                 end
             end),
