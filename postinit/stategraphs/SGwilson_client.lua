@@ -18,7 +18,12 @@ local states = {
 
         onenter = function(inst)
             inst:PerformPreviewBufferedAction()
+            inst.AnimState:SetDeltaTimeMultiplier(1.5)
             inst.AnimState:PlayAnimation("player_pray_handonly")
+        end,
+
+        onexit = function(inst)
+            inst.AnimState:SetDeltaTimeMultiplier(1)
         end,
 
         events =

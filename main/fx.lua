@@ -136,7 +136,7 @@ local fxs = {
         anim = "gravestone_light_loop",
         fn = function(inst)
             inst.AnimState:SetMultColour(1, 1, 1, .5)
-            -- inst.AnimState:SetFinalOffset(-1)
+            inst.AnimState:SetFinalOffset(-1)
         end,
     },
 
