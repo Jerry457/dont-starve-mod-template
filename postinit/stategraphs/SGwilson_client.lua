@@ -138,7 +138,7 @@ local states = {
     },
     State{
         name = "player_prayonly_loop",
-        tags = { "doing", "player_prayonly" },
+        tags = { "player_prayonly" },
         server_states = { "player_prayonly_loop" },
         onenter = function(inst)
             local bufferedaction = inst:GetBufferedAction()
@@ -161,7 +161,7 @@ local states = {
     },
     State{
         name = "player_prayonly_pst",
-        tags = { "doing", "player_prayonly" },
+        tags = { "player_prayonly" },
         server_states = { "player_prayonly_pst" },
         onenter = function(inst)
             inst.AnimState:PushAnimation("player_prayonly_pst", false)

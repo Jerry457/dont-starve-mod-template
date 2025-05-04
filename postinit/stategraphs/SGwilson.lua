@@ -143,7 +143,7 @@ local states = {
     },
     State{
         name = "player_prayonly_loop",
-        tags = { "doing", "busy", "player_prayonly" },
+        tags = { "player_prayonly" },
         onenter = function(inst)
             local bufferedaction = inst:GetBufferedAction()
             inst.sg.statemem.loop = bufferedaction and bufferedaction.action and bufferedaction.action == ACTIONS.CONFIDE
@@ -165,7 +165,7 @@ local states = {
     },
     State{
         name = "player_prayonly_pst",
-        tags = { "doing", "busy", "player_prayonly" },
+        tags = { "player_prayonly" },
         onenter = function(inst)
             inst.AnimState:PushAnimation("player_prayonly_pst", false)
         end,

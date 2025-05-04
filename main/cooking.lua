@@ -157,3 +157,11 @@ for name, data in pairs(ws_foods) do
 
     preparedfoods[name] = data
 end
+
+GenerateSpicedFoods(ws_foods)  -- 香料
+local spicedfoods = require("spicedfoods")
+for _, recipe in pairs(spicedfoods) do
+    if ws_foods[recipe.basename] then
+        AddCookerRecipe("portablespicer", recipe)
+    end
+end

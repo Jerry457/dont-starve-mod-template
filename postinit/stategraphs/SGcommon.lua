@@ -13,7 +13,7 @@ local actionhandlers = {
     ActionHandler(ACTIONS.PYROPHASIC_TRANSITUS, "player_pray_handonly"),
     ActionHandler(ACTIONS.HONOR_THE_MEMORY, "honor_the_memory_pre"),
     ActionHandler(ACTIONS.CONFIDE, "player_prayonly_pre"),
-    ActionHandler(ACTIONS.SPIRITUALISM, "player_prayonly_pre"),
+    ActionHandler(ACTIONS.SPIRITUALISM, "honor_the_memory_pre"),
     ActionHandler(ACTIONS.GRAVE_RELOCATION, "wendy_recall_ghostflower"),
     ActionHandler(ACTIONS.PRESENT, "give"),
     ActionHandler(ACTIONS.REGAIN_GLORY, "wendy_channel_no"),
