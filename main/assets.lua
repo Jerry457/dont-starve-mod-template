@@ -21,6 +21,8 @@ Assets = {
     Asset("ANIM", "anim/spiritual_perception.zip"),
 
     Asset("ANIM", "anim/gravestone_light_loop.zip"),
+
+    Asset("ANIM", "anim/moon_tree_blossom_new.zip"),
 }
 
 PreloadAssets = {
