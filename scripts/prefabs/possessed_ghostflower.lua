@@ -67,8 +67,10 @@ local function OnSave(inst, data)
 end
 
 local function OnLoad(inst, data)
-    SetColor(inst, data.color)
-    inst.grave_data = data.grave_data
+    if data then
+        SetColor(inst, data.color)
+        inst.grave_data = data.grave_data
+    end
 end
 
 local function fn()

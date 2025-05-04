@@ -782,7 +782,9 @@ local function buff_skill_modifier_fn(inst, doer, target)
 end
 
 local function OnLoad(inst, data)
-    inst.player_to_ghost = data.player_to_ghost
+    if data then
+        inst.player_to_ghost = data.player_to_ghost
+    end
 end
 
 local function OnSave(inst, data)

@@ -9,3 +9,8 @@ function params.elixir_container.itemtestfn(container, item, slot, ...)
         (item and (item:HasTag("petal") or item:HasTag("mourningflower")))
         or _elixir_container_itemtestfn(container, item, slot, ...)
 end
+
+local _sisturn_itemtestfn = params.sisturn.itemtestfn
+function params.sisturn.itemtestfn(...)
+    return HookSkillTreeUpdaterIsActivated("wendy_sisturn_3", "wendy_sisturn_2", _sisturn_itemtestfn, ...)
+end

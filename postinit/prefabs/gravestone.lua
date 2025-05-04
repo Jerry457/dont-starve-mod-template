@@ -107,7 +107,7 @@ AddPrefabPostInit("gravestone", function(inst)
         if _OnLoad then
             _OnLoad(self, data, ...)
         end
-        if data.grave_bouquet then
+        if data and data.grave_bouquet then
             SpawnGraveBouquet(inst, data.grave_bouquet)
         end
     end
