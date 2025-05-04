@@ -8,7 +8,7 @@ local moon_states = {
 }
 
 local last_moon_state
-local function CheckMoonState(inst, nosay)
+local function CheckMoonState(inst, nosay, nochange)
     if not inst.components.ghostlybond then
         return
     end
@@ -52,10 +52,14 @@ local function CheckMoonState(inst, nosay)
         end
     end
 
-    if last_moon_state == moon_state then
-        return
+    if nochange then
+        moon_state = last_moon_state
+    else
+        if last_moon_state == moon_state then
+            return
+        end
+        last_moon_state = moon_state
     end
-    last_moon_state = moon_state
 
     local function say(stringtype)
         -- if elixir_buff then
