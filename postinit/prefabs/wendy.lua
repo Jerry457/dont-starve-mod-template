@@ -144,7 +144,7 @@ local function OnSisturnStateChange(inst, data)
         end
     end
 
-    CheckMoonState(inst, true)
+    CheckMoonState(inst, true, true)
 
     ghost:updatehealingbuffs()
     inst.components.ghostlybond:SetBondTimeMultiplier("sisturn", is_active and TUNING.ABIGAIL_BOND_LEVELUP_TIME_MULT or nil)

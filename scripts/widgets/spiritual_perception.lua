@@ -91,11 +91,13 @@ local function OnSpiritualPerceptionShowChange(self, show)
         self:Show()
     end
 
-    if TheWorld:HasTag("cave") then
-        OnNightMarePhaseChange(self)
-    else
-        OnMoonPhaseChange(self, {style = self.alter and "alter_active" or nil})
-        OnNight(self)
+    if self.owner.player_classified then
+        if TheWorld:HasTag("cave") then
+            OnNightMarePhaseChange(self)
+        else
+            OnMoonPhaseChange(self, {style = self.alter and "alter_active" or nil})
+            OnNight(self)
+        end
     end
 
     self.inst:DoTaskInTime(13 * FRAMES, function()
