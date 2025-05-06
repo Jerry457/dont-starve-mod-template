@@ -103,11 +103,6 @@ local states = {
             inst.AnimState:SetSymbolBloom("flower_glow_green")
             inst.AnimState:PlayAnimation("wendy_channel_no")
         end,
-
-        timeline =
-        {
-        },
-
         events =
         {
             EventHandler("animover", function(inst)
