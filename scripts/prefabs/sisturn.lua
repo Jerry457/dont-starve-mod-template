@@ -22,10 +22,11 @@ local FLOWER_LAYERS =
     "flower2",
 }
 
-local function ShowGlobalMapIcon(inst, show)
+local function ShowGlobalMapIcon(inst, show, userid)
     if show and not inst.icon then
         inst.icon = SpawnPrefab("globalmapicon")
         inst.icon.MiniMapEntity:SetPriority(30)
+        inst.icon.MiniMapEntity:SetRestriction(userid)
         inst.icon:TrackEntity(inst)
         inst.MiniMapEntity:SetCanUseCache(false)
         inst.MiniMapEntity:SetDrawOverFogOfWar(true)
@@ -361,8 +362,9 @@ local function onopen(inst, data)
 end
 
 local function onlink(inst, player, isloading)
-    inst.components.container.restrictedtag = tostring(player.userid)
-    ShowGlobalMapIcon(inst, true)
+    local userid = tostring(player.userid)
+    inst.components.container.restrictedtag = userid
+    ShowGlobalMapIcon(inst, true, userid)
     OnSisturnStateChange(inst)
 
     inst.OnPlayerReroll = inst.OnPlayerReroll or function(inst, player)
