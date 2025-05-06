@@ -23,6 +23,8 @@ for i = 1, 6 do
 
         inst:SetPrefabNameOverride("moon_tree_blossom")
 
+        inst:AddTag("petal")
+        inst:AddTag("flower")
         inst:AddTag("cattoy")
         inst:AddTag("vasedecoration")
 
