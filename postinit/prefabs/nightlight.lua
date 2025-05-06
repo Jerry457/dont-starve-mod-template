@@ -41,8 +41,8 @@ local function ShowGlobalMapIcon(inst)
     inst.icon = SpawnPrefab("globalmapicon")
     inst.icon.MiniMapEntity:SetPriority(30)
     inst.icon:TrackEntity(inst)
-    inst.MiniMapEntity:SetCanUseCache(false)
-    inst.MiniMapEntity:SetDrawOverFogOfWar(true)
+    -- inst.MiniMapEntity:SetCanUseCache(false)
+    -- inst.MiniMapEntity:SetDrawOverFogOfWar(true)
     inst.icon.MiniMapEntity:SetIcon("nightlight_link.tex")
 end
 
