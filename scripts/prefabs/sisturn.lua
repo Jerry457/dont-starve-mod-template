@@ -28,13 +28,13 @@ local function ShowGlobalMapIcon(inst, show, userid)
         inst.icon.MiniMapEntity:SetPriority(30)
         inst.icon.MiniMapEntity:SetRestriction(userid)
         inst.icon:TrackEntity(inst)
-        inst.MiniMapEntity:SetCanUseCache(false)
-        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
+        -- inst.MiniMapEntity:SetCanUseCache(false)
+        -- inst.MiniMapEntity:SetDrawOverFogOfWar(true)
     elseif not show and inst.icon then
         inst.icon:Remove()
         inst.icon = nil
-        inst.MiniMapEntity:SetCanUseCache(false)
-        inst.MiniMapEntity:SetDrawOverFogOfWar(true)
+        -- inst.MiniMapEntity:SetCanUseCache(false)
+        -- inst.MiniMapEntity:SetDrawOverFogOfWar(true)
     end
 end
 
