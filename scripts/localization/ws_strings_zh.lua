@@ -5,20 +5,20 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_REVIVE_TITLE", "�
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SMALLGHOST_1_DESC", "温蒂研究的神秘学帮助她通灵能力逐渐变强了，能通过墓碑直接呼唤小惊吓了，小惊吓与温蒂更亲近了，会更高效率地回赠哀悼荣耀。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SMALLGHOST_2_DESC", "温蒂通灵的能力更强了，能使用哀悼荣耀帮助灵魂和坟墓寻找新的安息之地了，温蒂能以三种花瓣为媒介向鬼魂哀悼了，温蒂可以使用花瓣与大惊吓直接交换哀悼荣耀。可以用月树花制作祭奠逝者的灯。")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SMALLGHOST_3_DESC", "（暂未更新尽请期待）温蒂的通灵能力极其强大了，可以单独使用通灵板与鬼魂沟通判断他们的需求并获得回报。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SMALLGHOST_3_DESC", "（暂未更新敬请期待）温蒂的通灵能力极其强大了，可以单独使用通灵板与鬼魂沟通判断他们的需求并获得回报。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_CONTAINER_DESC", "温蒂想起了每一个与阿比盖尔一起去花田的野餐美梦，温蒂可以制作收纳灵体草药、哀悼荣耀和花瓣的野餐篮了。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_POTION_REVIVE_DESC", "阿比盖尔很喜欢必忘我花，它舒缓的作用能帮助阿比盖尔忘掉那次恐怖经历，获得更强大的精神力量维持更高血量上限。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_1_DESC", "寒冷的死亡气息能让花瓣在姐妹骨灰罐中保存得更久，每一片帮助温蒂哀悼阿比盖尔的花瓣最终都会变为哀悼的荣耀。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_2_DESC", "现在骨灰罐内可以放入月树花和深色花瓣了，同一种花瓣协同的力量能让阿比盖尔获得像冒险家一样较强的抵抗，当温蒂学习更强大的不同亲和时，月树花或深色花瓣的魔力将会更彻底的释放。")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "（暂未更新尽请期待）温蒂会制作随身供品罐了，能够让永恒领域的新冒险家阿比盖尔体验到更多不同的永恒领域力量了")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_SISTURN_3_DESC", "（暂未更新敬请期待）温蒂会制作随身供品罐了，能够让永恒领域的新冒险家阿比盖尔体验到更多不同的永恒领域力量了")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_BUTTERFLY_DESC", "从哀悼中开出的花，让花儿重新出发，也帮助切斯特、哈奇和友好果蝇重新出发。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_1_DESC", "温蒂可以提醒阿比盖尔，她是一个幽灵，可以从敌人视野消失，从而快速逃脱和攻击。")
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_2_DESC", "阿比盖尔可以利用她作为幽灵的力量来惊吓和作祟，并且作为永恒领域之外的逝者，她的作祟似乎有更强大的力量，不过在其他形态下这个力量会消失。")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_3_DESC", "（暂未更新尽请期待）或许拥有真正强大的魔力并不是花瓣，而是通过花瓣联结起来的姐妹情感。花瓣只是一个喻体，一个纽带，一个包含过去所有美好的纪念品。透过花瓣，温蒂看到了曾经的阿比盖尔有可能在永恒领域做到的一切。")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTCOMMAND_3_DESC", "（暂未更新敬请期待）或许拥有真正强大的魔力并不是花瓣，而是通过花瓣联结起来的姐妹情感。花瓣只是一个喻体，一个纽带，一个包含过去所有美好的纪念品。透过花瓣，温蒂看到了曾经的阿比盖尔有可能在永恒领域做到的一切。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GHOSTFLOWER_HAT_DESC", "幽灵们的谢礼可以帮助温蒂更好的重新出发，药剂的力量能通过哀悼之花散发给持有花的角色了，散发的药效与幽灵的药效似乎不同。")
 
@@ -26,10 +26,10 @@ ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_TITLE", "�
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_AVENGING_GHOST_DESC", "对神秘学的研究能让温蒂更敏锐地观测永恒领域力量周期变化了，当世界存在月晷和被铥矿徽章激活的暗夜灯时，温蒂可以感知到涨落周期。")
 
 ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GRAVESTONE_1_TITLE", "温蒂的诗集")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GRAVESTONE_1_DESC", "（暂未更新尽请期待）温蒂无比怀念她的那些诗集，她或许可以在一切中寻找灵感，并重新默写编篡起来")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GRAVESTONE_1_DESC", "（暂未更新敬请期待）温蒂无比怀念她的那些诗集，她或许可以在一切中寻找灵感，并重新默写编篡起来")
 
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GRAVESTONE_1_TITLE", "阿比盖尔的园艺笔记")
-ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_GRAVESTONE_1_DESC", "暂未更新尽请期待）温蒂记起阿比盖尔很喜欢花园，温蒂想和阿比盖尔一起耕作农田照顾植物")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_MAKEGRAVEMOUNDS_TITLE", "阿比盖尔的园艺笔记")
+ModifyTranslatedStrings("STRINGS.SKILLTREE.WENDY.WENDY_MAKEGRAVEMOUNDS_DESC", "（暂未更新敬请期待）温蒂记起阿比盖尔很喜欢花园，温蒂想和阿比盖尔一起耕作农田照顾植物")
 
 ModifyTranslatedStrings("STRINGS.CHARACTERS.WENDY.ACTIONFAIL.RUMMAGE.RESTRICTED", "这里寄托的不是我的花")
 ModifyTranslatedStrings("STRINGS.CHARACTERS.WENDY.ACTIONFAIL.STORE.RESTRICTED", "这里寄托的不是我的花")

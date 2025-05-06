@@ -2,13 +2,11 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local skilltree_defs = require("prefabs/skilltree_defs")
 
-
 local skillTreeIconsAtlasLookup = GlassicAPI.UpvalueUtil.GetUpvalue(GetSkilltreeIconAtlas, "skillTreeIconsAtlasLookup")
 skillTreeIconsAtlasLookup["wendy_lunar_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_shadow_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_smallghost_2.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_smallghost_3.tex"] = "images/wendy_skillicons.xml"
-
 
 skillTreeIconsAtlasLookup["wendy_avenging_ghost.tex"] = "images/wendy_skillicons.xml"
 skillTreeIconsAtlasLookup["wendy_gravestone_1.tex"] = "images/wendy_skillicons.xml"
@@ -47,6 +45,10 @@ end
 
 local function debug_enable()
     return true
+end
+
+local function debug_disenable()
+    return false
 end
 
 package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
@@ -161,11 +163,20 @@ package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
         end
     end
 
-    skills_data.SKILLS["wendy_lunar_lock_1"].lock_open = debug_enable
-    skills_data.SKILLS["wendy_lunar_lock_2"].lock_open = debug_enable
+    if IS_DEV then
+        skills_data.SKILLS["wendy_lunar_lock_1"].lock_open = debug_enable
+        skills_data.SKILLS["wendy_lunar_lock_2"].lock_open = debug_enable
 
-    skills_data.SKILLS["wendy_shadow_lock_1"].lock_open = debug_enable
-    skills_data.SKILLS["wendy_shadow_lock_2"].lock_open = debug_enable
+        skills_data.SKILLS["wendy_shadow_lock_1"].lock_open = debug_enable
+        skills_data.SKILLS["wendy_shadow_lock_2"].lock_open = debug_enable
+    else
+        skills_data.SKILLS["wendy_smallghost_3"].lock_open = debug_disenable
+        skills_data.SKILLS["wendy_sisturn_3"].lock_open = debug_disenable
+        skills_data.SKILLS["wendy_ghostcommand_3"].lock_open = debug_disenable
+        skills_data.SKILLS["wendy_gravestone_1"].lock_open = debug_disenable
+        skills_data.SKILLS["wendy_makegravemounds"].lock_open = debug_disenable
+    end
+
 
     return skills_data
 end

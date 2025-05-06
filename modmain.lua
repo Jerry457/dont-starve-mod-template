@@ -1,3 +1,6 @@
+IS_DEV = not modname:find("workshop")
+GLOBAL.IS_DEV = IS_DEV
+
 require("utils/ws_util")
 
 modimport("main/assets")
