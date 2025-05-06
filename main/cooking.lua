@@ -74,7 +74,7 @@ local ws_foods = {
 
         hunger = 20,
         sanity = 30,
-        health = 3,
+        health = -3,
         oneatenfn  = function(inst, eater)
             local skilltreeupdater = eater and eater.components.skilltreeupdater
             if not skilltreeupdater then
@@ -109,7 +109,7 @@ local ws_foods = {
 
         hunger = 20,
         sanity = 0,
-        health = 3,
+        health = -3,
         oneatenfn = function(inst, eater)
             local skilltreeupdater = eater and eater.components.skilltreeupdater
             if not skilltreeupdater then
