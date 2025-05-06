@@ -143,23 +143,31 @@ local function OnSisturnStateChange(inst)
 end
 
 -- Skill tree reactions
-local function ConfigureSkillTreeUpgrades(inst, builder)
-    local skilltreeupdater = (builder and builder.components.skilltreeupdater) or nil
+local function ConfigureSkillTreeUpgrades(inst, user)
+    local skilltreeupdater = (user and user.components.skilltreeupdater) or nil
     if not skilltreeupdater then
         return false
     end
 
-    local petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
-    local wendy_sisturn_2 = skilltreeupdater:IsActivated("wendy_sisturn_2")
-    local lunar_3 = skilltreeupdater:IsActivated("wendy_lunar_3")
-    local shadow_3 = skilltreeupdater:IsActivated("wendy_shadow_3")
+    local petal_preserve = inst._petal_preserve
+    local lunar_3 = inst._lunar_3
+    local shadow_3 = inst._shadow_3
+
+    if user.userid == inst._builder_id then
+        petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
+    end
+
+    for player in pairs(inst.components.attunable.attuned_players) do
+        if user.userid == player.userid then
+            lunar_3 = skilltreeupdater:IsActivated("wendy_lunar_3")
+            shadow_3 = skilltreeupdater:IsActivated("wendy_shadow_3")
+        end
+    end
 
     local dirty = (inst._petal_preserve ~= petal_preserve)
-        or (inst._wendy_sisturn_2 ~= wendy_sisturn_2)
         or (inst._lunar_3 ~= lunar_3)
         or (inst._shadow_3 ~= shadow_3)
 
-    inst._wendy_sisturn_2 = wendy_sisturn_2
     inst._petal_preserve = petal_preserve
     inst._lunar_3 = lunar_3
     inst._shadow_3 = shadow_3
@@ -181,10 +189,9 @@ local function ApplySkillModifiers(inst)
 end
 
 local function OnSkillTreeUpgrades(inst, user)
-    if user.userid == inst._builder_id and not inst:HasTag("burnt")
-        and ConfigureSkillTreeUpgrades(inst, user)
+    if not inst:HasTag("burnt") and ConfigureSkillTreeUpgrades(inst, user)
     then
-        ApplySkillModifiers(inst)
+        ApplySkillModifiers(inst, user)
     end
 end
 
@@ -347,7 +354,8 @@ end
 
 local function onopen(inst, data)
     local doer = data and data.doer or nil
-    if doer and doer.userid == inst._builder_id and inst._wendy_sisturn_2 then
+    if doer and doer.components.skilltreeupdater and doer.components.skilltreeupdater:IsActivated("wendy_sisturn_2")
+    then
         inst.components.attunable:LinkToPlayer(doer)
     end
 end
@@ -370,6 +378,12 @@ local function onunlink(inst, player, isloading)
     inst:RemoveEventCallback("ms_playerreroll", inst.OnPlayerReroll, player)
 end
 
+local function on_burnt(inst)
+    for player in pairs(inst.components.attunable.attuned_players) do
+        inst.components.attunable:UnlinkFromPlayer(player)
+    end
+end
+
 local function getstatus(inst)
     local container = inst.components.container
     local num_decor = (container ~= nil and container:NumItems()) or 0
@@ -389,7 +403,6 @@ local function OnSave(inst, data)
     data.preserve_rate = inst._preserve_rate
     data.builder_id = inst._builder_id
     data.petal_preserve = inst._petal_preserve
-    data.wendy_sisturn_2 = inst._wendy_sisturn_2
     data.lunar_3 = inst._lunar_3
     data.shadow_3 = inst._shadow_3
 end
@@ -402,7 +415,6 @@ local function OnLoad(inst, data)
             inst._builder_id = data.builder_id
             inst._preserve_rate = data.preserve_rate
             inst._petal_preserve = data.petal_preserve
-            inst._wendy_sisturn_2 = data.wendy_sisturn_2
             inst._lunar_3 = data.lunar_3
             inst._shadow_3 = data.shadow_3
 
@@ -477,6 +489,7 @@ local function fn()
     inst:ListenForEvent("itemget", add_decor)
     inst:ListenForEvent("itemlose", remove_decor)
     inst:ListenForEvent("onbuilt", on_built)
+    inst:ListenForEvent("onburnt", on_burnt)
 
     inst.getsisturnfeel = GetSisturnFeel
     inst.OnPerishChange = function(item)
