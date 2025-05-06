@@ -47,10 +47,6 @@ local function debug_enable()
     return true
 end
 
-local function debug_disenable()
-    return false
-end
-
 package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
     local skills_data = BuildSkillsData(SkillTreeFns, ...)
 
@@ -169,14 +165,7 @@ package.loaded["prefabs/skilltree_wendy"] = function(SkillTreeFns, ...)
 
         skills_data.SKILLS["wendy_shadow_lock_1"].lock_open = debug_enable
         skills_data.SKILLS["wendy_shadow_lock_2"].lock_open = debug_enable
-    else
-        skills_data.SKILLS["wendy_smallghost_3"].lock_open = debug_disenable
-        skills_data.SKILLS["wendy_sisturn_3"].lock_open = debug_disenable
-        skills_data.SKILLS["wendy_ghostcommand_3"].lock_open = debug_disenable
-        skills_data.SKILLS["wendy_gravestone_1"].lock_open = debug_disenable
-        skills_data.SKILLS["wendy_makegravemounds"].lock_open = debug_disenable
     end
-
 
     return skills_data
 end
