@@ -113,7 +113,7 @@ local function CheckMoonState(inst, nosay)
 end
 
 local function OnMoonPhaseChange(inst)
-    CheckMoonState(inst, true)
+    CheckMoonState(inst)
 end
 
 local function OnSisturnStateChange(inst, data)
