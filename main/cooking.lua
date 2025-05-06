@@ -133,14 +133,25 @@ local ws_foods = {
                 eater.components.sanity:DoDelta(150)
             end
 
-            local branches = {}
-            local skilldef = skilltree_defs.SKILLTREE_DEFS[eater.prefab]
-            for skill, data in pairs(skilldef) do
-                if data.root then
-                    table.insert(branches, sorted_skills(skilldef, skill))
+            local skilldefs = skilltree_defs.SKILLTREE_DEFS[eater.prefab]
+            if skilldefs ~= nil then
+                local attempts = 50
+                while attempts > 0 do -- FIXME(JBK): This needs to be done in skilltreeupdater and carefully handled for server and client sync.
+                    local keepgoing = false
+                    for skill, data in pairs(skilldefs) do
+                        if data.rpc_id then
+                            if skilltreeupdater:IsActivated(skill) then
+                                keepgoing = true
+                                skilltreeupdater:DeactivateSkill(skill)
+                            end
+                        end
+                    end
+                    if not keepgoing then
+                        break
+                    end
+                    attempts = attempts - 1
                 end
             end
-            unlock_branches(skilltreeupdater, branches)
         end,
 
         -- floater = {nil, 0.1, {0.7, 0.6, 0.7}},  -- 飘浮
