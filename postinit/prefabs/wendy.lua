@@ -22,8 +22,12 @@ local function CheckMoonState(inst, nosay)
     local is_cave = TheWorld:HasTag("cave")
     local is_full_moon = TheWorld.state.moonphase == "full"
     local is_new_moon = TheWorld.state.moonphase == "new"
-    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not is_new_moon  --月盈
+    local is_waxing_moon = not is_cave and TheWorld.state.iswaxingmoon and not is_new_moon  --月盈
     local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not is_full_moon  -- 月亏
+
+    local is_nightmarewild = TheWorld.state.nightmarephase == "nightmarewild"
+    local is_nightmarewarn = TheWorld.state.nightmarephase == "nightmarewarn"
+    local is_nightmaredawn = TheWorld.state.nightmarephase == "nightmaredawn"
 
     local is_gestalt = ghost:HasTag("gestalt")
     local is_shadow = ghost:HasTag("shadow_abigail")
@@ -42,11 +46,11 @@ local function CheckMoonState(inst, nosay)
             moon_state = moon_states.normal
         end
     elseif is_shadow then
-        if is_new_moon or TheWorld.state.isnightmarewild then
+        if is_new_moon or is_nightmarewild then
             moon_state = moon_states.strong
         elseif is_waning_moon
-            or TheWorld.state.isnightmarewarn
-            or TheWorld.state.isnightmaredawn
+            or is_nightmarewarn
+            or is_nightmaredawn
             or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_shadow_buff")
             or (player_to_ghost_elixir_buff and player_to_ghost_elixir_buff.prefab == "ghostlyelixir_shadow_buff")
         then
@@ -106,6 +110,10 @@ local function CheckMoonState(inst, nosay)
             say("ANNOUNCE_ABIGAIL_NORMAL_MOON")
         end
     end
+end
+
+local function OnMoonPhaseChange(inst)
+    CheckMoonState(inst, true)
 end
 
 local function OnSisturnStateChange(inst, data)
@@ -184,9 +192,9 @@ AddPrefabPostInit("wendy", function(inst)
 
     inst.CheckMoonState = CheckMoonState
     if TheWorld:HasTag("cave") then
-        inst:WatchWorldState("nightmarephase", CheckMoonState)
+        inst:WatchWorldState("nightmarephase", OnMoonPhaseChange)
     else
-        inst:WatchWorldState("moonphase", CheckMoonState)
+        inst:WatchWorldState("moonphase", OnMoonPhaseChange)
     end
     CheckMoonState(inst, true)
 
