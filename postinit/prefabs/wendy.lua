@@ -8,7 +8,7 @@ local moon_states = {
 }
 
 local last_moon_state
-local function CheckMoonState(inst, nosay, nochange)
+local function CheckMoonState(inst, nosay)
     if not inst.components.ghostlybond then
         return
     end
@@ -20,8 +20,10 @@ local function CheckMoonState(inst, nosay, nochange)
     end
 
     local is_cave = TheWorld:HasTag("cave")
-    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not TheWorld.state.isnewmoon  --月盈
-    local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not TheWorld.state.isfullmoon  -- 月亏
+    local is_full_moon = TheWorld.state.moonphase == "full"
+    local is_new_moon = TheWorld.state.moonphase == "new"
+    local is_waxing_moon = not TheWorld:HasTag("cave") and TheWorld.state.iswaxingmoon and not is_new_moon  --月盈
+    local is_waning_moon = not is_cave and not TheWorld.state.iswaxingmoon and not is_full_moon  -- 月亏
 
     local is_gestalt = ghost:HasTag("gestalt")
     local is_shadow = ghost:HasTag("shadow_abigail")
@@ -31,7 +33,7 @@ local function CheckMoonState(inst, nosay, nochange)
 
     local moon_state = moon_states.reverse
     if is_gestalt then
-        if TheWorld.state.isfullmoon then
+        if is_full_moon then
             moon_state = moon_states.strong
         elseif is_waxing_moon
             or (elixir_buff and elixir_buff.prefab == "ghostlyelixir_lunar_buff")
@@ -40,7 +42,7 @@ local function CheckMoonState(inst, nosay, nochange)
             moon_state = moon_states.normal
         end
     elseif is_shadow then
-        if TheWorld.state.isnewmoon or TheWorld.state.isnightmarewild then
+        if is_new_moon or TheWorld.state.isnightmarewild then
             moon_state = moon_states.strong
         elseif is_waning_moon
             or TheWorld.state.isnightmarewarn
@@ -52,14 +54,11 @@ local function CheckMoonState(inst, nosay, nochange)
         end
     end
 
-    if nochange then
-        moon_state = last_moon_state
-    else
-        if last_moon_state == moon_state then
-            return
-        end
-        last_moon_state = moon_state
+    if last_moon_state == moon_state then
+        return
     end
+    last_moon_state = moon_state
+    inst.last_moon_state = last_moon_state
 
     local function say(stringtype)
         -- if elixir_buff then
@@ -109,12 +108,6 @@ local function CheckMoonState(inst, nosay, nochange)
     end
 end
 
-local function OnMoonStateChange(inst)
-    if TheWorld.state.isnight or TheWorld:HasTag("cave") then
-        inst:DoTaskInTime(0, CheckMoonState)
-    end
-end
-
 local function OnSisturnStateChange(inst, data)
     local is_active = data and data.is_active or false
     local state = data and data.state or "NORMAL"
@@ -144,7 +137,7 @@ local function OnSisturnStateChange(inst, data)
         end
     end
 
-    CheckMoonState(inst, true, true)
+    CheckMoonState(inst, true)
 
     ghost:updatehealingbuffs()
     inst.components.ghostlybond:SetBondTimeMultiplier("sisturn", is_active and TUNING.ABIGAIL_BOND_LEVELUP_TIME_MULT or nil)
@@ -190,13 +183,12 @@ AddPrefabPostInit("wendy", function(inst)
     inst:ListenForEvent("onsisturnstatechange", OnSisturnStateChange)
 
     inst.CheckMoonState = CheckMoonState
-    -- inst:WatchWorldState("moonphase", CheckMoonState)
-    -- inst:WatchWorldState("cavemoonphase", CheckMoonState)
     if TheWorld:HasTag("cave") then
-        inst:WatchWorldState("nightmarephase", OnMoonStateChange)
+        inst:WatchWorldState("nightmarephase", CheckMoonState)
     else
-        inst:WatchWorldState("isnight", OnMoonStateChange)
+        inst:WatchWorldState("moonphase", CheckMoonState)
     end
+    CheckMoonState(inst, true)
 
     inst:ListenForEvent("onnewtarget")
 

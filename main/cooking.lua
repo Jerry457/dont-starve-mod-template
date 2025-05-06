@@ -71,6 +71,7 @@ local ws_foods = {
 
         priority = 30,
         foodtype = FOODTYPE.GOODIES,  -- 零食
+        oneat_desc = STRINGS.UI.COOKBOOK.LETHEAN_CAKE,
 
         hunger = 20,
         sanity = 30,
@@ -108,13 +109,14 @@ local ws_foods = {
 
         priority = 30,
         foodtype = FOODTYPE.GOODIES,  -- 零食
+        oneat_desc = STRINGS.UI.COOKBOOK.NIGHTMARE_LETHEAN_CAKE,
 
         hunger = 20,
         sanity = 0.0000000000000001,
         health = -3,
         oneatenfn = function(inst, eater)
             eater.SoundEmitter:PlaySound("meta4/shadow_merm/buff_pst")
-            eater:DoTaskInTime(1,function()
+            eater:DoTaskInTime(FRAMES * 20, function()
                 eater.SoundEmitter:PlaySound("wilson_rework/ui/unlock_gatedskill")
             end)
 
