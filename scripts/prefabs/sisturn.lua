@@ -365,12 +365,17 @@ local function onlink(inst, player, isloading)
     local userid = tostring(player.userid)
     inst.components.container.restrictedtag = userid
     ShowGlobalMapIcon(inst, true, userid)
-    OnSisturnStateChange(inst)
 
     inst.OnPlayerReroll = inst.OnPlayerReroll or function(inst, player)
         inst.components.attunable:UnlinkFromPlayer(player)
     end
     inst:ListenForEvent("ms_playerreroll", inst.OnPlayerReroll, player)
+
+    if isloading then
+        inst:DoTaskInTime(0, OnSisturnStateChange)
+    else
+        OnSisturnStateChange(inst)
+    end
 end
 
 local function onunlink(inst, player, isloading)
