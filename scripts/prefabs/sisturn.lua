@@ -153,6 +153,7 @@ local function ConfigureSkillTreeUpgrades(inst, user)
     local petal_preserve = inst._petal_preserve
     local lunar_3 = inst._lunar_3
     local shadow_3 = inst._shadow_3
+    local wendy_sisturn_2 = false
 
     if user.userid == inst._builder_id then
         petal_preserve = skilltreeupdater:IsActivated("wendy_sisturn_1")
@@ -162,13 +163,16 @@ local function ConfigureSkillTreeUpgrades(inst, user)
         if user.userid == player.userid then
             lunar_3 = skilltreeupdater:IsActivated("wendy_lunar_3")
             shadow_3 = skilltreeupdater:IsActivated("wendy_shadow_3")
+            wendy_sisturn_2 = skilltreeupdater:IsActivated("wendy_sisturn_2")
         end
     end
 
     local dirty = (inst._petal_preserve ~= petal_preserve)
         or (inst._lunar_3 ~= lunar_3)
         or (inst._shadow_3 ~= shadow_3)
+        or (inst._wendy_sisturn_2 ~= wendy_sisturn_2)
 
+    inst._wendy_sisturn_2 = wendy_sisturn_2
     inst._petal_preserve = petal_preserve
     inst._lunar_3 = lunar_3
     inst._shadow_3 = shadow_3
@@ -184,7 +188,7 @@ local function ApplySkillModifiers(inst)
             StartListenItem(inst, item)
         end
     end
-    if inst._lunar_3 or inst._shadow_3 then
+    if inst._lunar_3 or inst._shadow_3 or inst._wendy_sisturn_2 then
         OnSisturnStateChange(inst)
     end
 end
@@ -371,11 +375,7 @@ local function onlink(inst, player, isloading)
     end
     inst:ListenForEvent("ms_playerreroll", inst.OnPlayerReroll, player)
 
-    if isloading then
-        inst:DoTaskInTime(1, OnSisturnStateChange)
-    else
-        OnSisturnStateChange(inst)
-    end
+    OnSisturnStateChange(inst)
 end
 
 local function onunlink(inst, player, isloading)
