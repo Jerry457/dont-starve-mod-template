@@ -4,14 +4,14 @@ end)
 
 function Grave_Relocation_Item:Relocation(doer, grave, ghostflower)
     if grave:HasTag("skeleton") then  -- "收殓"
-        doer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
-        doer.SoundEmitter:PlaySound("meta5/wendy/place_gravestone")
+        self.inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        self.inst.SoundEmitter:PlaySound("dontstarve/creatures/together/stalker/bone_drop")
     elseif grave.prefab == "mound" then -- "移灵"
-        doer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
-        doer.SoundEmitter:PlaySound("dontstarve/common/plant")
+        self.inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        self.inst.SoundEmitter:PlaySound("dontstarve/common/plant")
     else  -- "改葬"
-        doer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
-        doer.SoundEmitter:PlaySound("dontstarve/creatures/together/stalker/bone_drop")
+        self.inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        self.inst.SoundEmitter:PlaySound("meta5/wendy/place_gravestone")
     end
 
     local grave_pos = grave:GetPosition()
@@ -21,7 +21,7 @@ function Grave_Relocation_Item:Relocation(doer, grave, ghostflower)
     end
     local grave_data = grave:GetSaveRecord()
     SpawnPrefab("attune_out_fx").Transform:SetPosition(grave_pos:Get())
-    self.inst.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
+    -- self.inst.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
     grave:Remove()
 
     WS_UTIL.RemoveOneItem(ghostflower)

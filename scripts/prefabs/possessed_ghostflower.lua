@@ -50,14 +50,17 @@ local function OnDeploy(inst, pt, deployer)
     local grave = SpawnSaveRecord(inst.grave_data)
     grave.Transform:SetPosition(x, y, z)
     SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
-    grave.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
+    -- grave.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
     if grave:HasTag("skeleton") then  -- "收殓"
-        deployer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
-        deployer.SoundEmitter:PlaySound("meta5/wendy/place_gravestone")
+        -- grave.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        -- grave.SoundEmitter:PlaySound("dontstarve/creatures/together/stalker/bone_drop")
     elseif grave.prefab == "mound" then -- "移灵"
-        deployer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
-        deployer.SoundEmitter:PlaySound("dontstarve/common/plant")
+        grave.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        grave.SoundEmitter:PlaySound("dontstarve/common/plant")
+    else  -- "改葬"
+        grave.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        grave.SoundEmitter:PlaySound("meta5/wendy/place_gravestone")
     end
 
     WS_UTIL.RemoveOneItem(inst)
