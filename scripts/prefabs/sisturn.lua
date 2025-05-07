@@ -381,8 +381,13 @@ end
 local function onunlink(inst, player, isloading)
     inst.components.container.restrictedtag = nil
     ShowGlobalMapIcon(inst, false)
-    OnSisturnStateChange(inst)
     inst:RemoveEventCallback("ms_playerreroll", inst.OnPlayerReroll, player)
+
+    if isloading then
+        inst:DoTaskInTime(1, OnSisturnStateChange)
+    else
+        OnSisturnStateChange(inst)
+    end
 end
 
 local function on_burnt(inst)

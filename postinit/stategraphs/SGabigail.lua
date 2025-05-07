@@ -71,6 +71,33 @@ end
 AddStategraphPostInit("abigail", function(sg)
     GlassicAPI.UpvalueUtil.SetUpvalue(sg.states["idle"].onenter, "getidleanim", getidleanim)
 
+    local abigail_attack_start = sg.states.abigail_attack_start
+    if abigail_attack_start then
+        abigail_attack_start.timeline = { --思考了一下还是覆盖法最好
+            FrameEvent(10, function(inst)
+                inst.sg.mem.aoe_attack_times = {}
+
+                if not inst:HasTag("gestalt") then
+                    inst.Light:SetColour(255/255, 32/255, 32/255)
+                    inst.SoundEmitter:PlaySound("dontstarve/characters/wendy/abigail/attack_LP", "angry")
+                    inst.AnimState:SetMultColour(207/255, 92/255, 92/255, 1)
+
+                    inst.sg.mem.abigail_attack_fx = SpawnPrefab("abigail_attack_fx")
+                    inst:AddChild(inst.sg.mem.abigail_attack_fx)
+
+                    local attack_anim = "attack" .. tostring(inst.attack_level or 1)
+
+                    inst.sg.mem.abigail_attack_fx.AnimState:PlayAnimation(attack_anim .. "_pre")
+                    inst.sg.mem.abigail_attack_fx.AnimState:PushAnimation(attack_anim .. "_loop", true)
+                    local skin_build = inst:GetSkinBuild()
+                    if skin_build then
+                        inst.sg.mem.abigail_attack_fx.AnimState:OverrideItemSkinSymbol("flower", skin_build, "flower", inst.GUID, "abigail_attack_fx")
+                    end
+                end
+            end)
+        }
+    end
+
     local _abigail_attack_start_onenter = sg.states["abigail_attack_start"].onenter
     sg.states["abigail_attack_start"].onenter = function(inst, pos)
         if pos and inst.shadow_command_attack then
