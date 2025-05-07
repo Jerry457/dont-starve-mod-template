@@ -372,7 +372,7 @@ local function onlink(inst, player, isloading)
     inst:ListenForEvent("ms_playerreroll", inst.OnPlayerReroll, player)
 
     if isloading then
-        inst:DoTaskInTime(0, OnSisturnStateChange)
+        inst:DoTaskInTime(1, OnSisturnStateChange)
     else
         OnSisturnStateChange(inst)
     end
