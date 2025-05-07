@@ -52,6 +52,14 @@ local function OnDeploy(inst, pt, deployer)
     SpawnPrefab("attune_out_fx").Transform:SetPosition(x, y, z)
     grave.SoundEmitter:PlaySound("meta5/wendy/tombstone_place")
 
+    if grave:HasTag("skeleton") then  -- "收殓"
+        deployer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        deployer.SoundEmitter:PlaySound("meta5/wendy/place_gravestone")
+    elseif grave.prefab == "mound" then -- "移灵"
+        deployer.SoundEmitter:PlaySound("dontstarve/ghost/ghost_haunt")
+        deployer.SoundEmitter:PlaySound("dontstarve/common/plant")
+    end
+
     WS_UTIL.RemoveOneItem(inst)
 end
 
