@@ -1,4 +1,4 @@
-IS_DEV = not modname:find("workshop")
+IS_DEV = not GLOBAL.IsWorkshopMod(modname)
 GLOBAL.IS_DEV = IS_DEV
 
 require("utils/ws_util")
